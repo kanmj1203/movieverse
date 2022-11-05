@@ -252,7 +252,7 @@ justify-content: center;
 display: block;
 
 width: 100%;
-height: 394px;
+height: 300px;
 left: 0px;
 bottom:0px;
 
@@ -264,12 +264,27 @@ background: #0b0a0a;
 margin : 0 auto;
 font-family: 'Noto Sans KR';
 font-style: normal;
-font-weight: 500;
-font-size: 24px;
+font-weight: 300;
+font-size: 20px;
 line-height: 1.5;
 display : block;
 /* align-items: center; */
 color: #FFFFFF;
+}
+
+.footer_logos{
+    width : 100%;
+     text-align: center;
+      margin : 0 auto;
+}
+
+.footer_img {
+    background-color : #cecece;
+    width : 80px;
+    height : 80px;
+    border-radius : 100px;
+    display : inline-block;
+    margin : 30px;
 }
 .user_img{
 position: absolute;

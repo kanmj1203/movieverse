@@ -290,15 +290,11 @@ List = [];  // 배열 생성
 <?php
                 }
 ?>
-    <div style="width : 100%; text-align: center; margin : 0 auto;">
-                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block;margin : 50px 35px"></div>
-                                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block; margin : 50px  35px"></div>
-                                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block; margin : 50px  35px"></div>
-                                                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block; margin : 50px  35px"></div>
+    <div class="footer_logos">
+                <div class="footer_img"></div>
+                <div class="footer_img"></div>
+                <div class="footer_img"></div>
+                <div class="footer_img"></div>
     </div>
                 <p class="footer_text">신구대학교 팀프로젝트 6조
                     <br>
@@ -316,7 +312,7 @@ List = [];  // 배열 생성
 // 스크롤 시 header fade-in
 $(function(){
     $(document).on('scroll', function(){
-        if($(window).scrollTop() > 150){
+        if($(window).scrollTop() > 100){
             $("header").removeClass("header_scroll_top");
             $("header").addClass("header_scroll_down");
         }else{
