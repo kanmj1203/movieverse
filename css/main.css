@@ -27,7 +27,7 @@ ul.ul_tag li {
 /* position: absolute; */
 top : 0px;
 width: 100%;
-height: 991px;
+height: 1024px;
 display : block;
 width : 100%;
 /* height : 100%; 원본 비율 유지 */
@@ -41,23 +41,30 @@ z-index:2;
   height : 200px;
   width : 100%;
   top : 0;
-  background: linear-gradient(#000 33%, rgba(0,0,0,.3) 80%, rgba(0,0,0,0));
+  background: linear-gradient(rgba(0,0,0,.85) 10%, 
+
+  rgba(0,0,0,.5) 40%,
+
+  rgba(0,0,0,0) 80%);
   z-index:2;
   
 }
 
 .main_img_gradient_bottom {
   position : absolute;
-  height : 991px;
+  height : 1024px;
   width : 100%;
   top : 0;
-  background: linear-gradient(0deg,#191717 0%, rgba(10,9,9,.5) 5%, rgba(10,9,9,0) 10%);
+  background: linear-gradient(0deg,#191717 1%,
+   rgba(10,9,9,.8) 3%,
+  rgba(10,9,9,.5) 6%,
+  rgba(10,9,9, .1) 10%);
   z-index:2;
 }
 
 .main_text {
   position :absolute;
-  top : 600px;
+  top : 630px;
   width : 100%;
   text-align: center;
   z-index: 3;
@@ -85,18 +92,16 @@ color: white;
 .main_scenario{
 	color:white;
 /* position: absolute; */
-width : max-content;
-margin : 15px auto;
+width : 80%;
+margin : 30px auto;
 
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 300;
 font-size: 24px;
 line-height: 32px;
-display: flex;
+/* display: flex; */
 align-items: center;
-
-
 
 }
 .main_view_detail{
@@ -177,27 +182,50 @@ text-align: center;
 color: #fff;
 
 }
-.movies{
-z-index: 3;
-overflow:  hidden;
-position: relative;
-margin-top : 60px;
-left : 3%;
-/* top : 60px; */
-
-width: auto;
-overflow: hidden;
-
-/* padding-left */
-}
-
 
 
 .show{
 /* top : 100px; */
-width: 100%;
+width: 100;
 overflow: hidden;
 }
+
+.movies{
+z-index: 3;
+/* position: relative; */
+margin-top : 60px;
+margin-left : 5px;
+/* top : 60px; */
+overflow:  hidden;
+white-space: nowrap; 
+/* display: flex;  */
+/* width: 100; */
+
+/* padding-left */
+}
+
+/* 메인페이지 포스터 이미지 감싸는 div 스타일 */
+.main_poster_img_wrap {
+  position:relative; 
+  width : auto; 
+  height : 407px; /*18.5vw*/
+  overflow:hidden;
+  text-align:center;
+  margin:0px 8px;
+  display : inline-block;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* 메인 포스터 이미지 설정
+div안에 꽉채우게 & 윗부분 빈칸 없게 */
+.main_poster_img {
+  width : 100%;
+  height : 100%;
+  display : flex;
+  object-fit:cover;
+}
+
 .movie{
 z-index:1;
 position: relative;
@@ -206,7 +234,6 @@ overflow:  hidden;
 left:0px;
 padding-top: 0px;
 float:left;
-
 border-radius: 10px;
 }
 
@@ -262,23 +289,24 @@ filter: blur(3px);
 
   -webkit-transition-duration:0.4s;
   -webkit-transition-timing-function:ease;
+  cursor:pointer;
 }
 
 .left{
 	position: absolute; 
-width: 50px;
-height: 270px;
-left: 0;
+  width: 50px;
+  height: 407px;
+  left: 0;
 
-	cursor:pointer;
+  background-color: rgba(0,0,0,.3);
 }
 .right{
 	position: absolute;
-width: 50px;
-height: 270px;
-right : 0;
+  width: 50px;
+  height: 407px;
+  right : 0;
+  background-color: rgba(0,0,0,.3);
 
-	cursor:pointer;
 }
 .main_img1_logos{
 width:250px;

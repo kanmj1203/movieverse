@@ -118,6 +118,8 @@ position: relative;
 margin-left: 360px;
 top: 246px;
 width:1400px;
+/* white-space: nowrap; 
+display: flex;  */
 }
 .movie{
 	position: absolute;

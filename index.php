@@ -1,3 +1,144 @@
+<?php
+
+/*
+넷플 : 
+{
+    "display_priority": 0,
+    "logo_path": "/9A1JSVmSxsyaBK4SUFsYVqbAYfW.jpg",
+    "provider_name": "Netflix",
+    "provider_id": 8
+    },
+
+왓챠 :
+{
+    "display_priority": 3,
+    "logo_path": "/cNi4Nv5EPsnvf5WmgwhfWDsdMUd.jpg",
+    "provider_name": "Watcha",
+    "provider_id": 97
+},
+
+디즈니 : 
+{
+    "display_priority": 1,
+    "logo_path": "/dgPueyEdOwpQ10fjuhL2WYFQwQs.jpg",
+    "provider_name": "Disney Plus",
+    "provider_id": 337
+},
+
+웨이브 :
+{
+    "display_priority": 2,
+    "logo_path": "/8N0DNa4BO3lH24KWv1EjJh4TxoD.jpg",
+    "provider_name": "wavve",
+    "provider_id": 356
+},
+*/
+
+$method = "GET";
+$api_key = '13e4eba426cd07a638195e968ac8cf19';
+
+// 영화 데이터
+$data = array( 
+    // 최신순
+    array(
+        'api_key' => $api_key,
+        'with_watch_providers' => 8,
+        'with_watch_providers' => 337,
+        'with_watch_providers' => 97,
+        'with_watch_providers' => 356,
+        'sort_by' => 'release_date.desc',
+        'watch_region' => 'KR',
+        'language' => 'ko',
+        'page' => 1
+    ),
+    // 인기순
+    array(
+        'api_key' => $api_key,
+        'with_watch_providers' => 8,
+        'with_watch_providers' => 337,
+        'with_watch_providers' => 97,
+        'with_watch_providers' => 356,
+        'sort_by' => 'popularity.desc',
+        'watch_region' => 'KR',
+        'language' => 'ko',
+        'page' => 1
+    ),
+    // 플랫폼 가져오기
+    array(
+        'api_key' => $api_key
+    )
+);
+
+// 드라마/시리즈 데이터
+// $tv_data = array(
+//     'api_key' => '13e4eba426cd07a638195e968ac8cf19',
+//     'with_watch_providers' => 8,
+//     'watch_region' => 'KR',
+//     'language' => 'ko',
+//     'page' => 1
+// );
+
+// URL 지정
+$base_url = 'https://api.themoviedb.org/3';
+
+$url = array(
+    // 최신순
+    $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
+    $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
+    // 인기순
+    $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
+    $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
+    // 플랫폼
+    $base_url . "/watch/providers/tv?" . http_build_query($data[2], '', )
+);
+
+// TMDB API에서 데이터 불러오기
+for($i = 0; $i < count($url); $i++){
+    $ch = curl_init();                                 //curl 초기화
+    curl_setopt($ch, CURLOPT_URL, $url[$i]);               //URL 지정하기
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    //요청 결과를 문자열로 반환 
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);      //connection timeout 10초 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   //원격 서버의 인증서가 유효한지 검사 안함 
+    //curl_setopt($ch, CURLOPT_SSLVERSION, 3); // SSL 버젼 (https 접속시에 필요)
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    
+    $response = curl_exec($ch);
+
+    $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
+
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+}
+
+// 플랫폼 id 리스트
+$providers_id = [8, 337, 97, 356];
+
+// TMDB에서 이미지 가져오기
+$tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
+
+// 시나리오
+$overview = $sResponse[2]['results'][0]['overview'];
+// 공백문자, 줄바꿈 치환
+$overview = str_replace(" ", "&nbsp;", $overview); //공백
+$overview = str_replace("\n", "<br>", $overview); //줄바꿈
+
+// return $response;
+// function getTitle($count) {
+    // $a = $sResponse['results'];
+    // for ($i=0; $i<count($sResponse['results']); $i++) {
+    //     // print($sResponse['results'][$i]['title']);
+    //     // $a =  $sResponse['results'];
+    //     print_r($sResponse['results'][$i]);
+    //     print("<br><br>");
+        
+    // }
+// }
+// print("<br><br><br>" . $url);
+
+             
+        ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,16 +257,16 @@ List = [];  // 배열 생성
         </header>
         <div id='wrap'>
             <div class="main_img_div"><!--메인 이미지-->
-                <img class="main_img" src="img/main_img.jpg">
+                <!-- 인기 영화 메인화면에 출력 -->
+                <img class="main_img" src="<?=$tmdb_img_base_url.$sResponse[2]['results'][0]['backdrop_path']?>">
                 <div style="width : 100%;" class="main_text">
-                    <span class="main_title">MovieVerse</span>
-                    <p class="main_scenario">다양한 스트리밍 독점작들을 한 곳에서 편리하게 확인해보세요.<br>
-                줄간격<br>확인</p>
+                    <span class="main_title"><?=$sResponse[2]['results'][0]['title']?></span>
+                    <p class="main_scenario"><?=$overview?></p>
                     <a href="#"class="main_view_detail">상세 보기</a>
                 </div>
 
-         <div class="main_img_gradient_top"></div>
-                <div class="main_img_gradient_bottom"></div>
+            <div class="main_img_gradient_top"></div>
+            <div class="main_img_gradient_bottom"></div>
             </div><!--main_img_div END-->
 
             <!-- 페이지 기능 설명 이미지-->
@@ -137,168 +278,82 @@ List = [];  // 배열 생성
                 <p>
             </div> -->
            
+<?php
+$list_arr = [["영화 최신 순", "movie_release_list", "movie"],
+            ["드라마 최신 순", "drama_release_list", "drama"],
+            ["영화 인기 순", "movie_popularity_list", "movie"],
+            ["드라마 인기 순","drama_popularity_list", "drama"]];
+
+$list_count = 0;   
+
+foreach($list_arr as $main_lists){
+?>
             <div class="main_content_view">
                 <!--드라마 리스트-->
-                <p class="tv">드라마/시리즈</p>
-                <p class="plus" onclick="location.href='drama.php?bid=';">ALL</p>
+                <p class="tv"><?=$main_lists[0]?></p>
+                <p class="plus" onclick="location.href='movie.php?bid=';">ALL</p>
                 <!--드라마 좌우이동-->
                 <div class="move_buttons">
-                    <img onclick='move("left","first")' class="left" src="img/left.png">
-                    <img onclick='move("right","first")' class="right" src="img/right.png">
+                    <div class="left" onclick='move("left","<?=$main_lists[1]?>")' text="<"></div>  
+                    <div class="right" onclick='move("right","<?=$main_lists[1]?>")' text=">"></div>  
                 </div>
                 <div class="show"><!--리스트 보여지는 틀-->
                     <div class="movies"><!--드라마 리스트 이미지 출력-->
 <?php
                     $pxs=0;
+             
+    for ($i = 0; $i < count($sResponse[0]['results']); $i++) {
+    ?>
+                        <div class="main_poster_img_wrap" onclick="location.href='choice.php?choice=<?=$main_lists[2]?>&id=<?=$sResponse[$list_count]['results'][$i]['id']?>';">
+                            <img class="main_poster_img" 
+                            src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
+                            alt=""
+                            onerror="this.style.display='none'">
+                        </div>
+    <?php
+        }
 
-                    $query3 = $db->query("SELECT *  , GROUP_CONCAT(genres.genres_name) AS genrs_names  from tv left join genres ON tv.genre_id LIKE  CONCAT('%',genres.genre_id,'%')  group by tv.id 
-                    limit 0,9"); 
-                    while ($row = $query3->fetch()) {
-
-	?>
-
-                        <div class="banner_img" style="margin-left:<?=$pxs?>px;" onclick="location.href='choice.php?choice=tv&id=<?=$row['id'];?>';">
-                            <img src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-							<p style="text-align:center; margin:10px; " 		class="hover_text"><?=$row['title']?></p>
-                            <p style="top:80px; text-align:center; margin:10px;" class="hover_text"><?=$row['release_date']?></p>
-                            <p style="top:130px;text-align:center; margin:10px;" class="hover_text"><?=$row['age']?></p>
-                            <p style="top:180px;text-align:center; margin:10px;" class="hover_text"><?=$row['genrs_names']?></p>
-                        </div>
-                        <div class="banner_img" style="margin-left:<?=$pxs?>px;" onclick="location.href='choice.php?choice=tv&id=<?=$row['id'];?>';">
-                            <img src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-							<p style="text-align:center; margin:10px; " 		class="hover_text"><?=$row['title']?></p>
-                            <p style="top:80px; text-align:center; margin:10px;" class="hover_text"><?=$row['release_date']?></p>
-                            <p style="top:130px;text-align:center; margin:10px;" class="hover_text"><?=$row['age']?></p>
-                            <p style="top:180px;text-align:center; margin:10px;" class="hover_text"><?=$row['genrs_names']?></p>
-                        </div>
-                        <div class="banner_img" style="margin-left:<?=$pxs?>px;" onclick="location.href='choice.php?choice=tv&id=<?=$row['id'];?>';">
-                            <img src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-							<p style="text-align:center; margin:10px; " 		class="hover_text"><?=$row['title']?></p>
-                            <p style="top:80px; text-align:center; margin:10px;" class="hover_text"><?=$row['release_date']?></p>
-                            <p style="top:130px;text-align:center; margin:10px;" class="hover_text"><?=$row['age']?></p>
-                            <p style="top:180px;text-align:center; margin:10px;" class="hover_text"><?=$row['genrs_names']?></p>
-                        </div>
-                        <div class="banner_img" style="margin-left:<?=$pxs?>px;" onclick="location.href='choice.php?choice=tv&id=<?=$row['id'];?>';">
-                            <img src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-							<p style="text-align:center; margin:10px; " 		class="hover_text"><?=$row['title']?></p>
-                            <p style="top:80px; text-align:center; margin:10px;" class="hover_text"><?=$row['release_date']?></p>
-                            <p style="top:130px;text-align:center; margin:10px;" class="hover_text"><?=$row['age']?></p>
-                            <p style="top:180px;text-align:center; margin:10px;" class="hover_text"><?=$row['genrs_names']?></p>
-                        </div>
+        ?>
 
 <?php
-                        $pxs=24;
-                    }
+                    $pxs=24;
+                    $list_count++;
 ?>
                     </div>
                 </div> <!--show END-->
             </div>  <!--main_content_view-->
-            <div class="main_content_view">
-                <p class="tv">영화</p>
-                <p class="plus" onclick="location.href='movie.php?bid=';">ALL</p>
-                
-                <!--영화 좌우이동-->
-                <div class="move_buttons">
-                    <img onclick='move("left","second")' class="left" src="img/left.png">
-                    <img onclick='move("right","second")' class="right" src="img/right.png">
-                </div>
-                <div class="show">
-                <!--영화 리스트-->
-                    <div class="movies">
-                        <?php
-                        $pxs=0;
 
-                            
-                        // $query3 = $db->query("SELECT *   , GROUP_CONCAT(genres.genres_name) AS genrs_names  from movie left join genres ON movie.genre_id LIKE  CONCAT('%',genres.genre_id,'%')  group by movie.id 
-                        // limit 0,9"); 
-                        $query3 = $db->query("SELECT *  , GROUP_CONCAT(genres.genres_name) AS genrs_names  from tv left join genres ON tv.genre_id LIKE  CONCAT('%',genres.genre_id,'%')  group by tv.id 
-                        limit 0,9"); 
-                        if (!empty($query3)) {
-                        while ($row = $query3->fetch()) {
+            <?php
+            }
 
-                        ?>
-                            <div class="banner_img" style=" margin-left:<?=$pxs?>px;" onclick="location.href='choice.php?choice=movie&id=<?=$row['id'];?>';">
-                            <img src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-                            <p style="text-align:center; margin:10px;" class="hover_text"><?=$row['title']?></p>
-                            <p style="top:80px;text-align:center; margin:10px;" class="hover_text"><?=$row['release_date']?></p>
-                            <p style="top:130px;text-align:center;margin:10px;" class="hover_text"><?=$row['age']?></p>
-                            <p style="top:180px;text-align:center;margin:10px;" class="hover_text"><?=$row['genrs_names']?></p>
-                        
-                        </div>
-<?php
-                        $pxs=24;
-                        }
-                        } else {
-                            ?>
-<?php
-                        }
-?>
-                    </div> <!--movies END-->
-                </div>  <!--show END-->
-            </div>
-
-            <div class="main_content_view">
-                <p class="tv">인기 순</p>
-                <p class="plus" onclick="location.href='movie.php?bid=';">ALL</p>
-                
-                <!--영화 좌우이동-->
-                <div class="move_buttons">
-                    <img onclick='move("left","third")' class="left" src="img/left.png">
-                    <img onclick='move("right","third")' class="right" src="img/right.png">
-                </div>
-                <div class="show">
-                <!--영화 리스트-->
-                    <div class="movies">
-                        <?php
-                        $pxs=0;
-
-                            
-                        $query3 = $db->query("SELECT *   , GROUP_CONCAT(genres.genres_name) AS genrs_names  from movie left join genres ON movie.genre_id LIKE  CONCAT('%',genres.genre_id,'%')  group by movie.id 
-                        limit 0,9"); 
-                        while ($row = $query3->fetch()) {
-
-                        ?>
-                            <div class="banner_img" style=" margin-left:<?=$pxs?>px;" onclick="location.href='choice.php?choice=movie&id=<?=$row['id'];?>';">
-                            <img src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-                            <p style="text-align:center; margin:10px;" class="hover_text"><?=$row['title']?></p>
-                            <p style="top:80px;text-align:center; margin:10px;" class="hover_text"><?=$row['release_date']?></p>
-                            <p style="top:130px;text-align:center;margin:10px;" class="hover_text"><?=$row['age']?></p>
-                            <p style="top:180px;text-align:center;margin:10px;" class="hover_text"><?=$row['genrs_names']?></p>
-                        </div>
-<?php
-                        $pxs=24;
-                        }
-?>
-     <p>sdfjkdshfik;d</p>
-     <p>sdfjkdshfik;d</p>
-     <p>sdfjkdshfik;d</p>
-     <p>sdfjkdshfik;d</p>
-                        </div>
-                    </div> <!--movies END-->
-                </div>  <!--show END-->
+            ?>
+        
             </div>
         </div><!--main END-->
 
             <!--footer-->
             <footer class="footer">
-            <?php           
-                //클릭 시 해당 플랫폼으로 영화 페이지 이동
-	            $query3 = $db->query("select * FROM streaming ");
-                while ($row = $query3->fetch()) {
-?>
-                    <img onclick="location.href='movie.php?platform=<?=$row['provider_id']?>';" style="margin-left:10px;"class="logoicon"src="img/<?=$row['logo_path']?>">
-<?php
-                }
-?>
-    <div style="width : 100%; text-align: center; margin : 0 auto;">
-                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block;margin : 50px 35px"></div>
-                                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block; margin : 50px  35px"></div>
-                                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block; margin : 50px  35px"></div>
-                                                <div style="background-color : #cecece; width : 104px; height : 104px; border-radius : 100px;
-                display : inline-block; margin : 50px  35px"></div>
+                <div class="footer_logos">
+        <?php
+
+$provider_logo_path = [];
+for ($res_count=0; $res_count < count($sResponse[4]["results"]); $res_count++) {
+    foreach ($providers_id as $prov_id) {
+        if ($prov_id == $sResponse[4]["results"][$res_count]['provider_id']) {
+            array_push($provider_logo_path, $sResponse[4]["results"][$res_count]['logo_path']);
+        } else {
+        }
+    }
+}
+
+$prov_count = 0;
+foreach($provider_logo_path as $prov_logo_path){
+        ?>
+                <div class="footer_img" onclick="location.href='movie.php?platform=<?=$providers_id[$prov_count]?>';"><img src="<?=$tmdb_img_base_url.$prov_logo_path?>"></div>
+    <?php
+    $prov_count++;
+}
+    ?>
     </div>
                 <p class="footer_text">신구대학교 팀프로젝트 6조
                     <br>
@@ -313,10 +368,16 @@ List = [];  // 배열 생성
 
 <script>
 
+//브라우저 실시간 크기 가져오기
+let windowWidth = window.innerWidth;
+$(window).resize(function() {
+    windowWidth = window.innerWidth;
+    // console.log(windowWidth);
+}).resize(); 
 // 스크롤 시 header fade-in
 $(function(){
     $(document).on('scroll', function(){
-        if($(window).scrollTop() > 150){
+        if($(window).scrollTop() > 100){
             $("header").removeClass("header_scroll_top");
             $("header").addClass("header_scroll_down");
         }else{
@@ -330,46 +391,80 @@ $(function(){
     // 마우스 오버시 좌우 이동 보이게
     let show = document.querySelectorAll('.show');
     let move_buttons = document.querySelectorAll('.move_buttons');
+    let left_btn = document.querySelectorAll('.left');
+    let right_btn = document.querySelectorAll('.right');
 
-    for(var i = 0; i < show.length; i++){
-        show[0].addEventListener("mouseover", function () {
-            move_buttons[0].style.opacity = "100";
+    for(let i = 0; i < show.length; i++){
+        show[i].addEventListener("mouseover", function () {
+            move_buttons[i].style.opacity = "100";
         }, false);
     
 
-        move_buttons[0].addEventListener("mouseover", function () {
-            move_buttons[0].style.opacity = "100";
+        move_buttons[i].addEventListener("mouseover", function () {
+            move_buttons[i].style.opacity = "100";
         }, false);
     
 
-        show[0].addEventListener("mouseout", function(){
-            move_buttons[0].style.opacity = "0";
+        show[i].addEventListener("mouseout", function(){
+            move_buttons[i].style.opacity = "0";
         }, false);
     }
 
     // 리스트 화면 이동 기능
     function move(type, check) {
-        if (check == 'first') {
+        if (check == 'movie_release_list') {
             var check = 0;
-        } else if (check == 'second') {
+        } else if (check == 'drama_release_list') {
             var check = 1;
-        } else if (check == 'third') {
+        } else if (check == 'movie_popularity_list') {
             var check = 2;
+        } else if (check == 'drama_popularity_list') {
+            var check = 3;
         }
         var tab = document.querySelectorAll('.movies');
         var marginLeft = window.getComputedStyle(tab[check]).getPropertyValue('margin-left');
+
+        // let aaa = document.querySelector('.main_poster_img');
+        // var aaa1 = window.getComputedStyle(aaa[0]).getPropertyValue('width');
+
+        let slide_count = 0;
         marginLeft = parseInt(marginLeft);
         console.log(marginLeft);
-        if (type === 'right' && marginLeft != -612) {
-            var a = marginLeft - 204;
-            tab[check].style.marginLeft = a + 'px';  // 마진값 변경하여 좌 우 이동
-            tab[check].style.transition = `${0.1}s ease-out`;    // 이동 시 딜레이 주어 부드럽게
+        console.log(tab[check].scrollWidth);
+        // if (type === 'right' && marginLeft != - windowWidth) {
+        //     var a = marginLeft - windowWidth;
+        //     tab[check].style.marginLeft = a + 'px';  // 마진값 변경하여 좌 우 이동
+        //     tab[check].style.transition = `${0.4}s ease-out`;    // 이동 시 딜레이 주어 부드럽게
 
-        } else if (type === 'left' && marginLeft != 0) {
-            var a = marginLeft + 204;
+        // } else if (type === 'left' && marginLeft != 0) {
+        //     var a = marginLeft + windowWidth;
+        //     tab[check].style.marginLeft = a + 'px';
+        //     tab[check].style.transition = `${0.4}s ease-out`;
+        // }
+        move_buttons[check].style.pointerEvents = 'none';
+        if (type === 'right' && marginLeft > -tab[check].scrollWidth) {
+            // marginLeft = marginLeft > 0 ? 0 : marginLeft;
+            var a = marginLeft - windowWidth;
+
+            tab[check].style.marginLeft = a + 'px';  // 마진값 변경하여 좌 우 이동
+            tab[check].style.transition = `${0.4}s ease-out`;    // 이동 시 딜레이 주어 부드럽게
+            
+
+        } 
+        if (type === 'left' && marginLeft < 0) {
+            // marginLeft = marginLeft < 0 ? 0 : marginLeft;
+            var a = marginLeft + windowWidth;
+
             tab[check].style.marginLeft = a + 'px';
-            tab[check].style.transition = `${0.1}s ease-out`;
+            tab[check].style.transition = `${0.4}s ease-out`;
+            
+        } else {
+            
         }
+        // 중복 클릭 방지
+        setTimeout(() => { 
+            move_buttons[check].style.pointerEvents = 'auto';
+        }, 400);
     }
 
 </script>
