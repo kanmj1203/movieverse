@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css); 
+@import url(https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap);
 
 html, body {
   /* height: 100%; */
@@ -51,7 +52,8 @@ header {
     top : 0;
     right : 0;
     left : 0;
-    z-index: 999;
+    z-index: 99;
+    width : 100%;
 }
 
 /*헤더*/
@@ -66,13 +68,14 @@ left: 0px;
 color : #fff;
 box-sizing: border-box;
 z-index : 1;
-font-size: 24px;
-
+font-size: 1.5rem;
+vertical-align: top;
 }
 
 /*스크롤에 따른 헤더 디자인 변경*/
 .header_scroll_top {
-    padding : 64px 0px;
+
+    padding : max(6.5vh, 64px) 0px;
     background-color: transparent;
     transition-duration : 0.5s;
     transition-timing-function: ease;
@@ -82,7 +85,8 @@ font-size: 24px;
 }
 
 .header_scroll_down {
-    padding : 40px 0px 64px 0px;
+
+    padding : max(4.4vh, 40px) 0px max(4.6vh, 40px) 0px;
     background-color: rgba(0, 0, 0, 0.3);
 
     transition-duration : 0.5s;
@@ -92,70 +96,152 @@ font-size: 24px;
     -webkit-transition-timing-function:ease;
 }
 
-.header_left {
-    position: absolute;
-    width : auto;
-    left: 3.5%;
-    font-size: 24px;
-    cursor:pointer;
+.header_left, .header_right {
+    /* position: absolute; */
+    font-size: 1.5rem;
     font-weight:300;
+    display: inline-block;
+}
+
+.header_left {
+    margin-left: 3.5%;
+    text-align: left;
+    width : 70%;
+}
+
+.header_left ul li {
+    margin-right: 5%;
+    display : inline-block;
+    cursor:pointer;
+    vertical-align: top;
+}
+
+.header_right {
+    position : absolute;
+    right : 3.5%;
+    text-align: right;
+    width : 30%;
+}
+
+.header_right ul li {
+    margin-left: 5%;
+    display : inline-block;
+    cursor:pointer;
+    vertical-align: middle;
 }
 
 /*로고*/
 .logo{
-position: absolute;
-width: auto;
+width: 100%;
 height: auto;
-/* left: 4.3%; */
+display : block;
+margin : 0;
+padding : 0;
+object-fit:cover;
 }
 
-/*드라마 GNB*/
-.dramatap{
-position: absolute;
-width: max-content;
-left : 390px; 
-/* height: 26px; */
-
-/* font-style: normal; */
-/* font-weight:300; */
-/* line-height: 26px; */
-/* identical to box height */
-
-display: flex;
-align-items: center;
-/* 
-color: #030303; */
-}
-
-/*영화 GNB*/
-.movietap{
+/* GNB 리스트들 */
+.header_gnb{
 cursor:pointer;
-position: absolute;
 width: max-content;
-left : 290px;
-
-/* font-family: 'Noto Sans KR'; */
 font-style: normal;
-/* font-weight:300; */
-/* font-size: 18px; */
-/* line-height: 26px; */
-/* identical to box height */
+
+display : inline-block;
+align-items: center;
+
+}
+
+/* 검색 GNB */
+.search_button {
+    display: inline-block;
+}
+
+/* 검색 버튼 이미지 */
+.search_img {
+    width : 28px;
+    height : auto;
+}
+
+/* 로그인 버튼 */
+.login_btn{
+outline:0;
+border:0;
+
+display: inline-block;
+flex-direction: row;
+align-items: flex-start;
+
+height: 30px;
+right: 3.5%;
+
+font-family: 'Noto Sans KR';
+font-style: normal;
+font-weight: 300;
+font-size: 1.5rem;
 
 display: flex;
 align-items: center;
+text-align: center;
 
-/* color: #030303; */
+color : white;
+background: none;
+
+flex: none;
+order: 0;
+flex-grow: 0;
+cursor: pointer;
 }
 
-.admintap{
-    cursor:pointer;
-    position: absolute;
-    width: max-content;
-    left : 590px;
+
+button:active,
+button:hover{
+ /* letter-spacing: 2px; */
+    /* transform: scale(1.2); */
+	/* width:auto; */
 }
+
+
+/* 검색 모달창 */
+.search_modal {
+    position : fixed;
+    width : 100%;
+    height : 100%;
+    background: rgba(0,0,0,0.8);
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 100;
+}
+
+.search_wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* margin: auto; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search_modal_close {
+    font-family: 'Nanum Gothic Coding', monospace;
+    width : 32px;
+    height : 32px;
+    /* background: white; */
+    color : white;
+    font-size : 48px;
+    position:absolute;
+    top : 8%;
+    right : 8.5%;
+    z-index: 101;
+    cursor: pointer;
+}
+
 
 /*검색 이미지*/
-.serch_Img{
+.search_Img{
     position: absolute;
     width: 24px;
     height: auto;
@@ -165,12 +251,10 @@ align-items: center;
     margin-top : 3px;
 }
 
-.serch{
-	/* 검색하기 */
-position: absolute;
+.search{
+/* position: absolute;
 left: 50%;
-/* width : 500px; */
-/* top: 37px; */
+top: 50%; */
 }
 
 input#searchInput{
@@ -200,45 +284,6 @@ padding : 0px 10px;
     background-color:rgba(255,255,255,.1);
 }
 
-/* 로그인 버튼 */
-.login_btn{
-outline:0;
-border:0;
-
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-
-position: absolute;
-
-height: 30px;
-right: 3.5%;
-
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 300;
-font-size: 24px;
-
-display: flex;
-align-items: center;
-text-align: center;
-
-color : white;
-background: none;
-
-flex: none;
-order: 0;
-flex-grow: 0;
-cursor: pointer;
-}
-
-
-button:active,
-button:hover{
- /* letter-spacing: 2px; */
-    /* transform: scale(1.2); */
-	/* width:auto; */
-}
 
 /* wrapper 푸더 하단 고정 */
 #wrap {
@@ -250,29 +295,28 @@ button:hover{
     /* border-bottom : 1px solid #707070; */
   }
 
-footer{
+.footer{
 justify-content: center;
 display: block;
 
 width: 100%;
-height: 300px;
-left: 0px;
-bottom:0px;
+height: 100%;
 
 background: #0b0a0a;
+padding-bottom : 5vh;
 }
-.footer_text{
 
+.footer_text{
     text-align: center;
-margin : 0 auto;
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 300;
-font-size: 20px;
-line-height: 1.5;
-display : block;
-/* align-items: center; */
-color: #FFFFFF;
+    margin : 0 auto;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    display : block;
+    /* align-items: center; */
+    color: #FFFFFF;
 }
 
 .footer_logos{
@@ -300,26 +344,23 @@ color: #FFFFFF;
     
 }
 .user_img{
-position: absolute;
+/* position: absolute; */
 width: 48px;
 height: 48px;
 right : 3.5%;
-top: -8px;
 border-radius:100px;
+cursor:pointer;
+}
 
-}
-.user_img:hover{
-	 cursor:pointer;
-     
-}
 #userDiv{
 position:absolute;
-
-z-index:15;
+/* opacity: 0; */
+/* z-index:15; */
 
 width: 200px;
-height: 270px;
-margin-top : 60px;
+height : auto;
+/* top : 15vh; */
+margin-top: 5vh;
 right : 3.5%;
 /* margin-left: 1360px; */
 
@@ -327,44 +368,48 @@ right : 3.5%;
 background: #191717;
 /* border-radius: 5px; */
 box-shadow: 0px 3px 14.4px 1.6px rgba(0, 0, 0, 0.92);
+
 }
+
+.hide {
+    display : none;
+}
+
 #userDiv h3{
 	margin-top:6px;
     text-align:center;
     display: flex;
     align-items: center;
+    color : white;
+    
 }
 #userDiv ul{
-/* margin-left: -39px; */
-}
-#userDiv li{
- display:block;
- text-decoration:none; 
-color : white;
-height:45px;
-
-
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 500;
-font-size: 18px;
-line-height: 20px;
-display: flex;
-align-items: center;
-text-align: center;
-
-transition-duration : 0.4s;
+    transition-duration : 0.4s;
 transition-timing-function: ease;
 
 -webkit-transition-duration:0.4s;
 -webkit-transition-timing-function:ease;
+}
+#userDiv ul li{
+ display:block;
+ text-decoration:none; 
+color : white;
+/* height:auto; */
+font-family: 'Noto Sans KR';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+align-items: center;
+text-align: center;
+padding : 8px 0px;
 
 }
 .userimg{
 margin-right:15px;
 margin-left:21px;
-width: 20px;
-height: 20px;
+width: 40px;
+height: 40px;
+border-radius: 100%;
 }
 .userimg_2{
 margin-right:18px;
@@ -383,4 +428,173 @@ margin-left:13px;
  
      -webkit-transition-duration:0.1s;
      -webkit-transition-timing-function:ease;
+}
+
+/* 화면 줄어들었을 때 보여질 로고 */
+.width_768px_logo {
+    width : 200px;
+    height : auto;
+    position : absolute;
+    left : 5%;
+    margin : 0;
+    display : none;
+}
+
+/* 햄버거 메뉴 */
+/* input중에 id가 menu_icon인거 */
+input[id=menu_icon] {
+    display: none;
+    right : 0;
+}
+
+/* label중에 for가 menu_icon인거 */
+label[for=menu_icon] {
+    display: none;
+    width : 30px;
+    height : 20px;
+    /* display : block; */
+    position: absolute;
+    cursor: pointer;
+    right : 5%;
+}
+
+/* label 중에 for가 menu_icon인 항목 안의 span */
+label[for=menu_icon] span {
+    display: block;
+    height: 2px;
+    background-color: white;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    transition: 0.3s;
+    z-index: 99; 
+}
+
+/* label[for=trigger] > span의 n번째 요소 */
+label[for=menu_icon] span:nth-child(1) {
+    top:0;
+}
+
+label[for=menu_icon] span:nth-child(2) {
+    top:50%;
+}
+
+label[for=menu_icon] span:nth-child(3) {
+    top:100%;
+}
+
+
+/* check시 변하는 label[for=trigger] > span의 n번째 요소  */
+input[id=menu_icon]:checked + label span:nth-child(1) {
+    top: 50%;
+    transform: rotate(45deg);
+}
+
+input[id=menu_icon]:checked + label span:nth-child(2) {
+    opacity: 0;
+}
+
+input[id=menu_icon]:checked + label span:nth-child(3) {
+    top: 50%;
+    transform: rotate(-45deg);
+}
+
+/* 사이드바 */
+.menu_sidebar {
+    display: none;
+    width: 250px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    right: -250px;
+    transition: 0.3s;
+    color : white;
+}
+
+.menu_sidebar_wrapper {
+    position: relative;
+    top : 13.8%;
+}
+
+.menu_sidebar_wrapper li{
+    color : white;
+    margin : auto;
+    text-align:center;
+    align-items: center;
+    padding : 2vh 0;
+}
+
+
+.menu_userimg {
+    width: max(8vh, 80px);
+    height: max(8vh, 80px);
+    border-radius: 100%;
+}
+
+.menu_sidebar_wrapper li:hover {
+    cursor:pointer;
+    background: rgba(0, 0, 0, 0.5);
+
+    transition-duration : 0.1s;
+    transition-timing-function: ease;
+
+    -webkit-transition-duration:0.1s;
+    -webkit-transition-timing-function:ease;
+}
+
+.menu_font_size a{
+    font-size : 1.3rem;
+}
+
+.menu_sidebar_wrapper li:nth-child(1) {
+    margin-bottom: 3vh;
+}
+
+/* input[id=menu_icon]가 체크되었을 때 사이드바가 나오는 형제 인접자 */
+input[id=menu_icon]:checked ~ .menu_sidebar {
+    right: 0;
+    transition: 0.3s;
+}
+
+/* check시 같이 밀려나가는 CSS 햄버거 메뉴 */
+input[id=menu_icon]:checked + label[for=menu_icon] {
+    /* left: 210px; */
+    transition: 0.3s;
+}
+
+
+@media screen and (min-width:1024px) {
+	/* Desktop */
+
+}
+@media screen and (min-width:768px) and (max-width: 1023px) {
+	/* Tablet */
+    
+    .head {display : none;}
+    .header_scroll_top {padding-top : max(6.5vh, 60px);}
+    .header_scroll_down {padding : max(5vh, 50px) 0px max(6vh, 50px) 0px;}
+    #userDiv {display : none;}
+
+    .menu_sidebar, label[for=menu_icon] {display : block;}
+    .width_768px_logo {display : block;}
+
+
+    .footer_img {width : 10vw; height : 10vw; margin : 2.5vh 5vw;}
+    .footer_text{font-size: 1rem;}
+}
+@media screen and (max-width:767px){ 
+	/* Mobile */
+
+    .head {display : none;}
+    .header_scroll_top {padding-top : max(6.5vh, 60px);}
+    .header_scroll_down {padding : max(5vh, 50px) 0px max(6vh, 50px) 0px;}
+    #userDiv {display : none;}
+
+    .menu_sidebar, label[for=menu_icon] {display : block;}
+    .width_768px_logo {display : block;}
+
+    .footer_img {width : 15vw; height : 15vw; margin : 2.5vh 3vw;}
+    .footer_text{font-size: 1rem;}
 }

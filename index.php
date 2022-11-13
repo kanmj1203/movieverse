@@ -143,6 +143,7 @@ $overview = str_replace("\n", "<br>", $overview); //줄바꿈
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MovieVerse</title>
     <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
 
@@ -196,65 +197,123 @@ List = [];  // 배열 생성
     <div class="all"> <!--전체 너비 설정-->
         <header class="header_scroll_top">
             <div class="head">  <!--header GNB-->
-                <div class="header_left">
-                    <img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png">
-                    <!-- <a style="color: #3482EA;" class="home" onclick="location.href='index.php?bid='"> 홈 </a> -->
-                    <a class="movietap" onclick="location.href='movie.php?bid=';"> 영화</a>
-                    <a class="dramatap" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a>
+            <div class="header_left">
+                <ul>
+                    <li><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></li>
+                    <li><a class="header_gnb" onclick="location.href='movie.php?bid=';"> 영화</a></li>
+                    <li><a class="header_gnb" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a></li>
 
                     <?php 
                         if($_SESSION["userId"]=="admin") {
                     ?>
-                        <a class="admintap" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a>
+                        <li><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
                     <?php  
                     } 
                     ?>
-                </div>  <!--header_left END-->
-                
-			    <form class="serch" action="search_result.php" method="get">
-                    <input class="serch_Img" name="button" type="image" src="img/search_img.png" />
-                    <input id="searchInput" type="text" name="search" 
-                    placeholder="Search" onfocus="this.placeholder=''" onblur="this.placeholder='Search'"
-                    size="50" required="required"/>
-                </form>
-                <?php 
-                // 사용자 프로필 사진
-                if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
-                    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
-                    while ($row = $query3->fetch()) {
-                        $iset=$row['img_link'];
-                    }
-                ?>
-                    <script>
-                        function doDisplay() {
-                            var asd = document.getElementById("userDiv");
-                            if (asd.style.display == 'none') {
-                                asd.style.display = 'block';
-                            } else {
-                                asd.style.display = 'none';
-                            }
-                        }
-                    </script>
-                    <img class="user_img" onclick="javascript:doDisplay();" src="user_img/<?= $iset?>">
-                <?php
-	             }else{ // 로그아웃일 경우
-?>
-                    <button class="login_btn" onclick="location.href='login.php';">로그인</button>
-                <?php	   
-                }
-?>
-            </div> <!--header END-->
+                </ul><!--header_left END-->
+            </div>
 
-            <div style="display: none;" id="userDiv"><!--유저 정보 프로필-->
-                <h3><img style="width:40px;height:40px;"class="userimg" src="user_img/<?= $iset?>"><?=$_SESSION["userName"]?></h3>
+            <div class="header_right">
+                <ul>   <!-- header_right -->
+                <!-- 검색 버튼 -->
+                <li>
+                    <div class="search_button">
+                        <input class="search_img" name="button" type="image" src="img/search_img.png" />
+                    </div>
+                </li>
+                <li>
+<?php 
+// 사용자 프로필 사진
+if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
+    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    while ($row = $query3->fetch()) {
+        $iset=$row['img_link'];
+    }
+?>
+                        <img class="user_img" src="user_img/<?= $iset?>">
+<?php
+}else{ // 로그아웃일 경우
+?>
+                        <button class="login_btn" onclick="location.href='login.php';">로그인</button>
+<?php	   
+}
+?>              
+                    </li>
+                </ul>  <!-- header_right END -->
+            </div>
+            
+        </div> <!--header END-->
+        
+            <div  class="hide" id="userDiv"><!--유저 정보 프로필-->
                 <ul>
-                    <li onclick="location.href='myinfo.php';"><img class="userimg" src="img/user.png">내 계정정보</li>
-                    <li onclick="location.href='pwre.php';"><img class="userimg" src="img/lock.png">비밀번호 수정</li>
-                    <li onclick="location.href='mybook.php';"><img class="userimg" src="img/bookmark.png">내 북마크</li>
-                    <li onclick="location.href='myreview.php';"><img class="userimg" src="img/review.png">작성한 평가</li>
-                    <li onclick="location.href='log_out.php';"><img class="userimg" src="img/logout.png">로그아웃 </li>
+                    <li><h3><img class="userimg" src="user_img/<?= $iset?>"><?=$_SESSION["userName"]?></h3></li>
+                    <li onclick="location.href='myinfo.php';">내 계정정보</li> 
+                    <!-- <img class="userimg" src="img/user.png"> -->
+                    <li onclick="location.href='pwre.php';">비밀번호 수정</li>
+                    <!-- <img class="userimg" src="img/lock.png"> -->
+                    <li onclick="location.href='mybook.php';">내 북마크</li>
+                    <!-- <img class="userimg" src="img/bookmark.png"> -->
+                    <li onclick="location.href='myreview.php';">작성한 평가</li>
+                    <!-- <img class="userimg" src="img/review.png"> -->
+                    <li onclick="location.href='log_out.php';">로그아웃 </li>
+                    <!-- <img class="userimg" src="img/logout.png"> -->
+                </ul>
             </div>  <!--userDiv END-->
+
+            <!-- min-width:768px부터 header, 햄버거 메뉴 -->
+            <div class="width_768px_logo"><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></div>
+            <input type="checkbox" id="menu_icon">
+            <label for="menu_icon">  
+                <!--label은 인라인 스타일-->
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <div class="menu_sidebar">
+                <ul class="menu_sidebar_wrapper">
+                    <!-- 로그인 상태 여부 -->
+<?php
+if ($_SESSION["userId"] != "") {
+?>
+                <li class="menu_font_size"><img class="menu_userimg" src="user_img/<?= $iset?>"><h3><?=$_SESSION["userName"]?></h3></li>          
+<?php
+} else {
+?>
+                    <li class="menu_font_size"><button class="login_btn" onclick="location.href='login.php';">로그인</button></li>          
+<?php
+}
+?>
+
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='movie.php?bid=';"> 영화</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a></li>
+<?php 
+if($_SESSION["userId"]=="admin") {
+?>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
+<?php  
+} 
+?>
+                </ul>
+                <ul class="menu_sidebar_wrapper">
+                </ul>
+            </div>
         </header>
+
+        <!-- 검색창 -->
+        <div class="search_modal">
+            <div class="search_modal_close">
+                X
+            </div>
+            <div class="search_wrapper">
+                    <form class="search" action="search_result.php" method="get">
+                        <input class="search_Img" name="button" type="image" src="img/search_img.png" />
+                        <input id="searchInput" type="text" name="search" 
+                        placeholder="Search" onfocus="this.placeholder=''" onblur="this.placeholder='Search'"
+                        size="50" required="required"/>
+                    </form>
+            </div>
+        </div>
+
         <div id='wrap'>
             <div class="main_img_div"><!--메인 이미지-->
                 <!-- 인기 영화 메인화면에 출력 -->
@@ -268,15 +327,6 @@ List = [];  // 배열 생성
             <div class="main_img_gradient_top"></div>
             <div class="main_img_gradient_bottom"></div>
             </div><!--main_img_div END-->
-
-            <!-- 페이지 기능 설명 이미지-->
-            <!-- <div class="img_logose">    
-                <img style="margin-left:374px" class="main_img1_logos" src="img/main11.png"/>    
-                <img style="margin-left:690px" class="main_img1_logos" src="img/main22.png"/>
-                <img style="margin-left:1030px" class="main_img1_logos" src="img/main33.png"/>
-                <img style="margin-left:1330px" class="main_img1_logos" src="img/main4.png"/>
-                <p>
-            </div> -->
            
 <?php
 $list_arr = [["영화 최신 순", "movie_release_list", "movie"],
@@ -285,23 +335,35 @@ $list_arr = [["영화 최신 순", "movie_release_list", "movie"],
             ["드라마 인기 순","drama_popularity_list", "drama"]];
 
 $list_count = 0;   
+$title_change = '';
 
 foreach($list_arr as $main_lists){
 ?>
             <div class="main_content_view">
                 <!--드라마 리스트-->
-                <p class="tv"><?=$main_lists[0]?></p>
-                <p class="plus" onclick="location.href='movie.php?bid=';">ALL</p>
+                <p class="main_slide_title"><?=$main_lists[0]?></p>
+                <span class="remote_wrapper">
+                    <p class="more_view" onclick="location.href='movie.php?bid=';">ALL</p>
+                    <div class="move_buttons_remote">
+                        <div class="prev_remote" onclick='move("left","<?=$main_lists[1]?>")'><</div>  
+                        <div class="next_remote" onclick='move("right","<?=$main_lists[1]?>")'>></div>  
+                    </div>
+                </span>
                 <!--드라마 좌우이동-->
                 <div class="move_buttons">
-                    <div class="left" onclick='move("left","<?=$main_lists[1]?>")' text="<"></div>  
-                    <div class="right" onclick='move("right","<?=$main_lists[1]?>")' text=">"></div>  
+                    <div class="left" onclick='move("left","<?=$main_lists[1]?>")'><</div>  
+                    <div class="right" onclick='move("right","<?=$main_lists[1]?>")'>></div>  
                 </div>
                 <div class="show"><!--리스트 보여지는 틀-->
-                    <div class="movies"><!--드라마 리스트 이미지 출력-->
+                    <div class="main_slide_lists"><!--리스트 이미지 출력-->
 <?php
                     $pxs=0;
-             
+    if ($list_count % 2 == 0) {
+        $title_change = 'name';
+        echo '<script>console.log("name")</script>';
+    } else {
+        $title_change = 'title';
+    }
     for ($i = 0; $i < count($sResponse[0]['results']); $i++) {
     ?>
                         <div class="main_poster_img_wrap" onclick="location.href='choice.php?choice=<?=$main_lists[2]?>&id=<?=$sResponse[$list_count]['results'][$i]['id']?>';">
@@ -355,12 +417,12 @@ foreach($provider_logo_path as $prov_logo_path){
 }
     ?>
     </div>
-                <p class="footer_text">신구대학교 팀프로젝트 6조
+                <div class="footer_text">신구대학교 팀프로젝트 6조
                     <br>
                     권은진 강민지 천서정 시지원 김나영
                     <br><br>
                     성남시 중원구 광명로377(금광2동 2685) 신구대학교 산학관 110호 
-                </p>
+                </div>
             </footer>
             <!--footer END-->
 </body>
@@ -372,10 +434,16 @@ foreach($provider_logo_path as $prov_logo_path){
 let windowWidth = window.innerWidth;
 $(window).resize(function() {
     windowWidth = window.innerWidth;
-    // console.log(windowWidth);
+
+    // 화면 사이즈 조절 시 열려있는 메뉴 닫히게
+    // 사이즈 1023 이상 : 햄버거 체크 해제, ~이하 : 프로필 메뉴 안보이게
+    windowWidth <= '1023' ? $("#userDiv").css('display', 'none') : $("#menu_icon").prop('checked', false); 
+    
+// console.log(windowWidth);
 }).resize(); 
-// 스크롤 시 header fade-in
-$(function(){
+
+$( document ).ready(function(){
+    // 스크롤 시 header fade-in
     $(document).on('scroll', function(){
         if($(window).scrollTop() > 100){
             $("header").removeClass("header_scroll_top");
@@ -384,13 +452,30 @@ $(function(){
             $("header").removeClass("header_scroll_down");
             $("header").addClass("header_scroll_top");
         }
-    })
-});
+    });
 
+    //  GNB 검색 버튼 클릭 시 화면 출력
+    $(".search_button").click(function(){
+        $(".search_modal").fadeIn();
+    });
+
+    $(".search_modal_close").click(function(){
+        $(".search_modal").fadeOut();
+    });
+
+    // 로그인 상태일 때 프로필 누르면 리스트 보여지게
+    $(".user_img").click(function() {
+        let profile_list = $("#userDiv");
+        // profile_list.slideToggle();
+        profile_list.fadeToggle();
+    });
+    
+});
 
     // 마우스 오버시 좌우 이동 보이게
     let show = document.querySelectorAll('.show');
     let move_buttons = document.querySelectorAll('.move_buttons');
+    let move_buttons_remote = document.querySelectorAll('.move_buttons_remote');
     let left_btn = document.querySelectorAll('.left');
     let right_btn = document.querySelectorAll('.right');
 
@@ -421,16 +506,13 @@ $(function(){
         } else if (check == 'drama_popularity_list') {
             var check = 3;
         }
-        var tab = document.querySelectorAll('.movies');
+        var tab = document.querySelectorAll('.main_slide_lists');
         var marginLeft = window.getComputedStyle(tab[check]).getPropertyValue('margin-left');
-
-        // let aaa = document.querySelector('.main_poster_img');
-        // var aaa1 = window.getComputedStyle(aaa[0]).getPropertyValue('width');
 
         let slide_count = 0;
         marginLeft = parseInt(marginLeft);
-        console.log(marginLeft);
-        console.log(tab[check].scrollWidth);
+        // console.log(marginLeft);
+        // console.log(tab[check].scrollWidth);
         // if (type === 'right' && marginLeft != - windowWidth) {
         //     var a = marginLeft - windowWidth;
         //     tab[check].style.marginLeft = a + 'px';  // 마진값 변경하여 좌 우 이동
@@ -442,6 +524,7 @@ $(function(){
         //     tab[check].style.transition = `${0.4}s ease-out`;
         // }
         move_buttons[check].style.pointerEvents = 'none';
+        move_buttons_remote[check].style.pointerEvents = 'none';
         if (type === 'right' && marginLeft > -tab[check].scrollWidth) {
             // marginLeft = marginLeft > 0 ? 0 : marginLeft;
             var a = marginLeft - windowWidth;
@@ -464,6 +547,7 @@ $(function(){
         // 중복 클릭 방지
         setTimeout(() => { 
             move_buttons[check].style.pointerEvents = 'auto';
+            move_buttons_remote[check].style.pointerEvents = 'auto';
         }, 400);
     }
 

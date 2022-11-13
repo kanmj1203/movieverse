@@ -7,7 +7,7 @@ left: 0px;
 z-index:0;
 }
 
-ul.ul_tag {
+/* ul.ul_tag {
 	z-index:10;
 	text-align: center;
     list-style:none;
@@ -22,14 +22,14 @@ ul.ul_tag li {
     padding: 0 0 0 0;
     border : 0;
     float: left;
-}
+} */
 .main_img{
 /* position: absolute; */
 top : 0px;
 width: 100%;
 height: 1024px;
 display : block;
-width : 100%;
+
 /* height : 100%; 원본 비율 유지 */
 object-fit:cover; /*이미지 크기 딱 맞도록*/
 /* z-index: inherit; */
@@ -38,7 +38,7 @@ z-index:2;
 
 .main_img_gradient_top {
   position : absolute;
-  height : 200px;
+  height : 20%;
   width : 100%;
   top : 0;
   background: linear-gradient(rgba(0,0,0,.85) 10%, 
@@ -52,7 +52,7 @@ z-index:2;
 
 .main_img_gradient_bottom {
   position : absolute;
-  height : 1024px;
+  height : 100%;
   width : 100%;
   top : 0;
   background: linear-gradient(0deg,#191717 1%,
@@ -63,8 +63,9 @@ z-index:2;
 }
 
 .main_text {
+  
   position :absolute;
-  top : 630px;
+  top : max(48vh, 600px);
   width : 100%;
   text-align: center;
   z-index: 3;
@@ -73,13 +74,12 @@ z-index:2;
 .main_title {
 color:white;
 /* position: absolute; */
-margin-left : auto;
-margin-right : auto;
+margin : 0 auto;
 width : max-content;
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 500;
-font-size: 40px;
+font-size: 2.5rem;
 line-height: 58px;
 display: flex;
 align-items: center;
@@ -98,15 +98,14 @@ margin : 30px auto;
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 300;
-font-size: 24px;
+font-size: 1.5rem;
 line-height: 32px;
 /* display: flex; */
 align-items: center;
 
 }
 .main_view_detail{
-  margin-left : auto;
-margin-right : auto;
+margin : auto;
   text-align: center;
 /* position: absolute; */
 width : max-content;
@@ -114,15 +113,15 @@ color:white;
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 300;
-font-size: 18px;
+font-size: 1.4rem;
 border : solid 1px white;
 padding : 20px 42px; 
 border-radius: 20px;
 display: flex;
 align-items: center;
 
-
 }
+
 .img_logose{
 margin-top:600px;
 float: left;
@@ -140,9 +139,8 @@ height: 50px;
   margin-top : 136px;
 }
 
-.tv{
-	
-/* 인기 작품 */
+/* 메인 슬라이드 이름 */
+.main_slide_title{
 position: absolute;
 width: max-content;
 height: auto;
@@ -150,68 +148,41 @@ left: 3%;
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 300;
-font-size: 24px;
+font-size: 1.6rem;
 line-height: 35px;
 align-items: center;
 text-align: center;
 
 color: #fff;
-
-/* 더보기 */
-
 }
-.plus{
 
-cursor: pointer;
-position: absolute;
-width: max-content;
-height: auto;
-right: 15%;
-
-font-family: 'Noto Sans KR';
-font-style: normal;
-font-weight: 500;
-font-size: 18px;
-line-height: 26px;
-/* identical to box height */
-
-display: flex;
-align-items: center;
-text-align: center;
-
-color: #fff;
-
-}
 
 
 .show{
-/* top : 100px; */
-width: 100;
+width: 100%;
 overflow: hidden;
 }
 
-.movies{
+.main_slide_lists{
 z-index: 3;
-/* position: relative; */
+
 margin-top : 60px;
 margin-left : 5px;
-/* top : 60px; */
+
 overflow:  hidden;
 white-space: nowrap; 
-/* display: flex;  */
-/* width: 100; */
 
-/* padding-left */
 }
 
 /* 메인페이지 포스터 이미지 감싸는 div 스타일 */
 .main_poster_img_wrap {
   position:relative; 
   width : auto; 
-  height : 407px; /*18.5vw*/
+  height : 22vw; 
+  /*22vw   407px*/
   overflow:hidden;
   text-align:center;
-  margin:0px 8px;
+  margin:0px 6px;
   display : inline-block;
   border-radius: 10px;
   cursor: pointer;
@@ -227,7 +198,7 @@ div안에 꽉채우게 & 윗부분 빈칸 없게 */
 }
 
 .movie{
-z-index:1;
+/* z-index:1; */
 position: relative;
 width: 180px;
 overflow:  hidden;
@@ -278,6 +249,38 @@ filter: blur(3px);
   display:block;
 }
 
+.remote_wrapper{
+  cursor: pointer;
+  position: absolute;
+  width: 30vw;
+  height: auto;
+  right: 5%;
+  
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 26px;
+  align-items: center;
+  text-align: right;
+  display: inline-block;
+  color: #fff;
+}
+
+/* 기본으로 보여지는 이동 버튼 */
+.move_buttons_remote {
+  display: inline-block;
+  cursor:pointer;
+}
+
+/* 더보기, <, > 일렬로 */
+.more_view, .prev_remote, .next_remote {
+  display: inline-block;
+  font-family: 'Nanum Gothic Coding', monospace;
+  margin-left : 2.5vw;
+}
+
+/* 이미지에 마우스 올릴 시 보여지는 이동 버튼 */
 .move_buttons {
   opacity: 0;
   position: relative; 
@@ -292,20 +295,29 @@ filter: blur(3px);
   cursor:pointer;
 }
 
-.left{
+.left, .right {
+  display : flex;
+  font-family: 'Nanum Gothic Coding', monospace;
 	position: absolute; 
   width: 50px;
-  height: 407px;
-  left: 0;
-
+  height: 5vw;
+  text-align:center;
+  align-items : center;
+  justify-content : center;
+  top : 8.5vw;
+  color : white;
+  font-size: 2.4rem;
   background-color: rgba(0,0,0,.3);
 }
+
+.left{
+  border-radius: 0 10px 10px 0;
+  left: 0;
+ 
+}
 .right{
-	position: absolute;
-  width: 50px;
-  height: 407px;
+  border-radius: 10px 0 0 10px;
   right : 0;
-  background-color: rgba(0,0,0,.3);
 
 }
 .main_img1_logos{
@@ -316,6 +328,7 @@ position:absolute;
 ul.ul_tag li{
 color:white;
 }
+
 .logoicon{
 position:relative;
 width:50px;
@@ -324,4 +337,69 @@ border-radius:10px;
 left: 819px;
 top: 413px;
 	cursor:pointer;
+}
+
+
+@media screen and (min-width:1024px) {
+	/* Desktop */
+  .main_poster_img_wrap {
+    min-height: 350px;
+  }
+  .left, .right {
+    height: max(5vw, 80px);
+    top : max(8.5vw, 140px);
+    font-size: 2.4rem;
+  }
+}
+@media screen and (min-width:768px) and (max-width: 1023px) {
+	/* Tablet */
+
+  .main_img {height : 90vh;  min-height: 900px;}
+  .main_text {top : max(48vh, 450px);}
+  .main_scenario {font-size : 1.2rem}
+  .main_view_detail{
+    font-size: 1.4rem;
+    padding : 2.5vh 3.5vw; 
+  }
+  .main_title {
+    margin-top : 4vh;
+    line-height: 5vh;
+    font-size: 2.2rem;
+  }
+
+  .main_slide_title, .remote_wrapper{font-size: 1.4rem;}
+
+  .main_poster_img_wrap {
+    height : 43vw;
+  }
+  .left, .right {
+    height: 8vw;
+    top : 18vw;
+  }
+}
+@media screen and (max-width:767px){ 
+	/* Mobile */
+  .main_img {height : 90vh; min-height: 800px;}
+  .main_text {top : max(35vh, 400px);}
+  .main_scenario {font-size : 1rem}
+  .main_view_detail{
+    font-size: 1.2rem;
+    padding : 2vh 3vw; 
+  }
+  .main_title {
+    margin-top : 4vh;
+    line-height: 3vh;
+    font-size: 1.8rem;
+  }
+
+  .main_slide_title, .remote_wrapper{font-size: 1.4rem;}
+
+  .main_poster_img_wrap {
+    height : 55vw;
+  }
+  .left, .right {
+    height: 12vw;
+    top : 22vw;
+    font-size: 2rem;
+  }
 }
