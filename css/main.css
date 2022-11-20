@@ -167,15 +167,15 @@ overflow: hidden;
 z-index: 3;
 
 margin-top : 60px;
-margin-left : 5px;
-
+/* margin-left : 5px; */
+width : fit-content;
 overflow:  hidden;
 white-space: nowrap; 
 
 }
 
 /* 메인페이지 포스터 이미지 감싸는 div 스타일 */
-.main_poster_img_wrap {
+.main_poster_img_container {
   position:relative; 
   width : auto; 
   height : 22vw; 
@@ -186,6 +186,7 @@ white-space: nowrap;
   display : inline-block;
   border-radius: 10px;
   cursor: pointer;
+  color : white;
 }
 
 /* 메인 포스터 이미지 설정
@@ -342,7 +343,7 @@ top: 413px;
 
 @media screen and (min-width:1024px) {
 	/* Desktop */
-  .main_poster_img_wrap {
+  .main_poster_img_container {
     min-height: 350px;
   }
   .left, .right {
@@ -369,7 +370,7 @@ top: 413px;
 
   .main_slide_title, .remote_wrapper{font-size: 1.4rem;}
 
-  .main_poster_img_wrap {
+  .main_poster_img_container {
     height : 43vw;
   }
   .left, .right {
@@ -394,7 +395,7 @@ top: 413px;
 
   .main_slide_title, .remote_wrapper{font-size: 1.4rem;}
 
-  .main_poster_img_wrap {
+  .main_poster_img_container {
     height : 55vw;
   }
   .left, .right {

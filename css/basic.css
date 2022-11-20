@@ -192,6 +192,25 @@ flex-grow: 0;
 cursor: pointer;
 }
 
+.menu_login_btn button{
+
+border:none;
+
+
+font-family: 'Noto Sans KR';
+font-style: normal;
+font-weight: 300;
+font-size: 1.5rem;
+
+color : #83a1dd;
+background: none;
+
+flex: none;
+order: 0;
+flex-grow: 0;
+cursor: pointer;
+}
+
 
 button:active,
 button:hover{
@@ -206,6 +225,7 @@ button:hover{
     position : fixed;
     width : 100%;
     height : 100%;
+    /* background: rgba(31,29,29,1); */
     background: rgba(0,0,0,0.8);
     top: 0;
     left: 0;
@@ -223,6 +243,7 @@ button:hover{
     display: flex;
     justify-content: center;
     align-items: center;
+    /* transform: translateY(-50%); */
 }
 
 .search_modal_close {
@@ -231,48 +252,56 @@ button:hover{
     height : 32px;
     /* background: white; */
     color : white;
-    font-size : 48px;
+    /* font-size : 48px; */
     position:absolute;
-    top : 8%;
+    top : 7%;
     right : 8.5%;
     z-index: 101;
     cursor: pointer;
 }
 
+.search_modal_close>img {
+    width : 100%;
+    height : 100%;
+    display : flex;
+    object-fit:cover;
+}
+
 
 /*검색 이미지*/
 .search_Img{
-    position: absolute;
+    /* position: absolute; */
     width: 24px;
     height: auto;
     /* left: 350px; */
+    right : 0;
     /* top: 4px; */
     align-items: center;
     margin-top : 3px;
 }
 
 .search{
-/* position: absolute;
-left: 50%;
-top: 50%; */
+    padding-bottom: 10px;
+    border-bottom : solid 3px #707070;
 }
 
 input#searchInput{
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 300;
-font-size: 18px;
+font-size: 1.125rem;
 line-height: 32px;
 /* identical to box height */
-margin-left : 34px;
-display: flex;
 align-items: center;
+text-align: center;
 border: none;
-border-radius: 100px;
+border-radius: 10px;
 color: white;
+/* opacity: .5; */
 background-color: rgba(0,0,0,0);
 outline: none;
-padding : 0px 10px;
+padding : 5px 10px;
+
 }
 
 #searchInput::placeholder {
@@ -440,11 +469,19 @@ margin-left:13px;
     display : none;
 }
 
+.width_768px_search_button {
+    display :none;
+    position : absolute;
+    right : 10%;
+    margin-right : 30px;
+}
+
 /* 햄버거 메뉴 */
 /* input중에 id가 menu_icon인거 */
 input[id=menu_icon] {
     display: none;
     right : 0;
+    width : 30px;
 }
 
 /* label중에 for가 menu_icon인거 */
@@ -452,10 +489,10 @@ label[for=menu_icon] {
     display: none;
     width : 30px;
     height : 20px;
-    /* display : block; */
     position: absolute;
     cursor: pointer;
     right : 5%;
+    margin-top : 3px;
 }
 
 /* label 중에 for가 menu_icon인 항목 안의 span */
@@ -528,8 +565,8 @@ input[id=menu_icon]:checked + label span:nth-child(3) {
 
 
 .menu_userimg {
-    width: max(8vh, 80px);
-    height: max(8vh, 80px);
+    width: max(8vh, 70px);
+    height: max(8vh, 70px);
     border-radius: 100%;
 }
 
@@ -545,11 +582,11 @@ input[id=menu_icon]:checked + label span:nth-child(3) {
 }
 
 .menu_font_size a{
-    font-size : 1.3rem;
+    font-size : 1.2rem;
 }
 
 .menu_sidebar_wrapper li:nth-child(1) {
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
 }
 
 /* input[id=menu_icon]가 체크되었을 때 사이드바가 나오는 형제 인접자 */
@@ -579,10 +616,13 @@ input[id=menu_icon]:checked + label[for=menu_icon] {
 
     .menu_sidebar, label[for=menu_icon] {display : block;}
     .width_768px_logo {display : block;}
+    .width_768px_search_button {display : flex;}
+    input#searchInput[type=text] {width : 90%;}
 
 
     .footer_img {width : 10vw; height : 10vw; margin : 2.5vh 5vw;}
     .footer_text{font-size: 1rem;}
+    
 }
 @media screen and (max-width:767px){ 
 	/* Mobile */
@@ -594,6 +634,8 @@ input[id=menu_icon]:checked + label[for=menu_icon] {
 
     .menu_sidebar, label[for=menu_icon] {display : block;}
     .width_768px_logo {display : block;}
+    .width_768px_search_button {display : flex;}
+    input#searchInput[type=text] {width : 90%;}
 
     .footer_img {width : 15vw; height : 15vw; margin : 2.5vh 3vw;}
     .footer_text{font-size: 1rem;}

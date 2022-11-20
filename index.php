@@ -150,7 +150,7 @@ $overview = str_replace("\n", "<br>", $overview); //줄바꿈
     <!--css 링크-->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/basic.css">
-	<link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href="css/poster_hover.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!--자동완성 기능 autocomplete-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -197,31 +197,31 @@ List = [];  // 배열 생성
     <div class="all"> <!--전체 너비 설정-->
         <header class="header_scroll_top">
             <div class="head">  <!--header GNB-->
-            <div class="header_left">
-                <ul>
-                    <li><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></li>
-                    <li><a class="header_gnb" onclick="location.href='movie.php?bid=';"> 영화</a></li>
-                    <li><a class="header_gnb" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a></li>
+                <div class="header_left">
+                    <ul>
+                        <li><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></li>
+                        <li><a class="header_gnb" onclick="location.href='movie.php?bid=';"> 영화</a></li>
+                        <li><a class="header_gnb" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a></li>
 
-                    <?php 
-                        if($_SESSION["userId"]=="admin") {
-                    ?>
-                        <li><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
-                    <?php  
-                    } 
-                    ?>
-                </ul><!--header_left END-->
-            </div>
+                        <?php 
+                            if($_SESSION["userId"]=="admin") {
+                        ?>
+                            <li><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
+                        <?php  
+                        } 
+                        ?>
+                    </ul><!--header_left END-->
+                </div>
 
-            <div class="header_right">
-                <ul>   <!-- header_right -->
-                <!-- 검색 버튼 -->
-                <li>
-                    <div class="search_button">
-                        <input class="search_img" name="button" type="image" src="img/search_img.png" />
-                    </div>
-                </li>
-                <li>
+                <div class="header_right">
+                    <ul>   <!-- header_right -->
+                    <!-- 검색 버튼 -->
+                    <li>
+                        <div class="search_button">
+                            <input class="search_img" name="button" type="image" src="img/search_img.png" />
+                        </div>
+                    </li>
+                    <li>
 <?php 
 // 사용자 프로필 사진
 if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
@@ -242,9 +242,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                 </ul>  <!-- header_right END -->
             </div>
             
-        </div> <!--header END-->
+        </div> <!--head END-->
         
-            <div  class="hide" id="userDiv"><!--유저 정보 프로필-->
+            <div class="hide" id="userDiv"><!--유저 정보 프로필-->
                 <ul>
                     <li><h3><img class="userimg" src="user_img/<?= $iset?>"><?=$_SESSION["userName"]?></h3></li>
                     <li onclick="location.href='myinfo.php';">내 계정정보</li> 
@@ -262,13 +262,16 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
 
             <!-- min-width:768px부터 header, 햄버거 메뉴 -->
             <div class="width_768px_logo"><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></div>
-            <input type="checkbox" id="menu_icon">
-            <label for="menu_icon">  
-                <!--label은 인라인 스타일-->
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
+                <div class="width_768px_search_button search_button">
+                    <input class="search_img" name="button" type="image" src="img/search_img.png" />
+                </div>
+                <input type="checkbox" id="menu_icon">
+                <label for="menu_icon">  
+                    <!--label은 인라인 스타일-->
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
             <div class="menu_sidebar">
                 <ul class="menu_sidebar_wrapper">
                     <!-- 로그인 상태 여부 -->
@@ -279,7 +282,7 @@ if ($_SESSION["userId"] != "") {
 <?php
 } else {
 ?>
-                    <li class="menu_font_size"><button class="login_btn" onclick="location.href='login.php';">로그인</button></li>          
+                    <li class="menu_font_size menu_login_btn"><button onclick="location.href='login.php';">로그인</button></li>          
 <?php
 }
 ?>
@@ -292,6 +295,15 @@ if($_SESSION["userId"]=="admin") {
                     <li class="menu_font_size"><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
 <?php  
 } 
+if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
+?>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='myinfo.php';">내 계정정보</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='pwre.php';">비밀번호 수정</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='mybook.php';">내 북마크</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='myreview.php';">작성한 평가</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='log_out.php';">로그아웃</a></li>
+<?php
+}
 ?>
                 </ul>
                 <ul class="menu_sidebar_wrapper">
@@ -302,17 +314,20 @@ if($_SESSION["userId"]=="admin") {
         <!-- 검색창 -->
         <div class="search_modal">
             <div class="search_modal_close">
-                X
+                <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
-                        <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="Search" onfocus="this.placeholder=''" onblur="this.placeholder='Search'"
-                        size="50" required="required"/>
+                        placeholder="제목, 배우를 검색해주세요"
+                         onfocus="this.placeholder=''" 
+                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                        size="70" required="required"/>
+                        <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
             </div>
         </div>
+        <!-- search_modal END -->
 
         <div id='wrap'>
             <div class="main_img_div"><!--메인 이미지-->
@@ -358,19 +373,37 @@ foreach($list_arr as $main_lists){
                     <div class="main_slide_lists"><!--리스트 이미지 출력-->
 <?php
                     $pxs=0;
+
+    // 짝수로 가져온 컨텐츠면 드라마 >> 제목 가져올 때 title
+    // 홀수면 영화 >> 제목 가져올 때 name 
+    // $sResponse[$list_count]['results'][$i][$title_change]
     if ($list_count % 2 == 0) {
-        $title_change = 'name';
+        $title_change = 'title';
         echo '<script>console.log("name")</script>';
     } else {
-        $title_change = 'title';
+        $title_change = 'name';
     }
     for ($i = 0; $i < count($sResponse[0]['results']); $i++) {
+
+        // 시나리오 글자수 제한
+        $poster_overview = $sResponse[$list_count]['results'][$i]['overview'];
+        
+        if (strlen($poster_overview) >= 330) {
+            $poster_overview = iconv_substr($poster_overview,0,140,"utf-8").'...';
+        }
     ?>
-                        <div class="main_poster_img_wrap" onclick="location.href='choice.php?choice=<?=$main_lists[2]?>&id=<?=$sResponse[$list_count]['results'][$i]['id']?>';">
+
+                        <div class="main_poster_img_container poster_container" onclick="location.href='choice.php?choice=<?=$main_lists[2]?>&id=<?=$sResponse[$list_count]['results'][$i]['id']?>';">
+                            <div class="poster_hover_wrapper">
+                                <p class="main_poster_title"><?=$sResponse[$list_count]['results'][$i][$title_change]?></p>
+                                <p class="main_poster_overview"><?=$poster_overview?></p>
+                            </div>
+                            <span class="poster_wrap">
                             <img class="main_poster_img" 
-                            src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
-                            alt=""
-                            onerror="this.style.display='none'">
+                                src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
+                                alt=""
+                                onerror="this.parentNode.style.display='none'">
+                            </span>
                         </div>
     <?php
         }
@@ -399,10 +432,14 @@ foreach($list_arr as $main_lists){
         <?php
 
 $provider_logo_path = [];
-for ($res_count=0; $res_count < count($sResponse[4]["results"]); $res_count++) {
+
+// $sResponse에서 마지막 요소 가져오기
+$footer_provider_array = end($sResponse);
+
+for ($res_count=0; $res_count < count($footer_provider_array["results"]); $res_count++) {
     foreach ($providers_id as $prov_id) {
-        if ($prov_id == $sResponse[4]["results"][$res_count]['provider_id']) {
-            array_push($provider_logo_path, $sResponse[4]["results"][$res_count]['logo_path']);
+        if ($prov_id == $footer_provider_array["results"][$res_count]['provider_id']) {
+            array_push($provider_logo_path, $footer_provider_array["results"][$res_count]['logo_path']);
         } else {
         }
     }
@@ -427,50 +464,8 @@ foreach($provider_logo_path as $prov_logo_path){
             <!--footer END-->
 </body>
 </html>
-
+<script type="text/javascript" src="./js/header.js"></script>
 <script>
-
-//브라우저 실시간 크기 가져오기
-let windowWidth = window.innerWidth;
-$(window).resize(function() {
-    windowWidth = window.innerWidth;
-
-    // 화면 사이즈 조절 시 열려있는 메뉴 닫히게
-    // 사이즈 1023 이상 : 햄버거 체크 해제, ~이하 : 프로필 메뉴 안보이게
-    windowWidth <= '1023' ? $("#userDiv").css('display', 'none') : $("#menu_icon").prop('checked', false); 
-    
-// console.log(windowWidth);
-}).resize(); 
-
-$( document ).ready(function(){
-    // 스크롤 시 header fade-in
-    $(document).on('scroll', function(){
-        if($(window).scrollTop() > 100){
-            $("header").removeClass("header_scroll_top");
-            $("header").addClass("header_scroll_down");
-        }else{
-            $("header").removeClass("header_scroll_down");
-            $("header").addClass("header_scroll_top");
-        }
-    });
-
-    //  GNB 검색 버튼 클릭 시 화면 출력
-    $(".search_button").click(function(){
-        $(".search_modal").fadeIn();
-    });
-
-    $(".search_modal_close").click(function(){
-        $(".search_modal").fadeOut();
-    });
-
-    // 로그인 상태일 때 프로필 누르면 리스트 보여지게
-    $(".user_img").click(function() {
-        let profile_list = $("#userDiv");
-        // profile_list.slideToggle();
-        profile_list.fadeToggle();
-    });
-    
-});
 
     // 마우스 오버시 좌우 이동 보이게
     let show = document.querySelectorAll('.show');
@@ -506,38 +501,30 @@ $( document ).ready(function(){
         } else if (check == 'drama_popularity_list') {
             var check = 3;
         }
-        var tab = document.querySelectorAll('.main_slide_lists');
+        let tab = document.querySelectorAll('.main_slide_lists');
         var marginLeft = window.getComputedStyle(tab[check]).getPropertyValue('margin-left');
+        let poster_wrap = document.querySelectorAll('.poster_wrap');
 
         let slide_count = 0;
         marginLeft = parseInt(marginLeft);
-        // console.log(marginLeft);
-        // console.log(tab[check].scrollWidth);
-        // if (type === 'right' && marginLeft != - windowWidth) {
-        //     var a = marginLeft - windowWidth;
-        //     tab[check].style.marginLeft = a + 'px';  // 마진값 변경하여 좌 우 이동
-        //     tab[check].style.transition = `${0.4}s ease-out`;    // 이동 시 딜레이 주어 부드럽게
 
-        // } else if (type === 'left' && marginLeft != 0) {
-        //     var a = marginLeft + windowWidth;
-        //     tab[check].style.marginLeft = a + 'px';
-        //     tab[check].style.transition = `${0.4}s ease-out`;
-        // }
         move_buttons[check].style.pointerEvents = 'none';
         move_buttons_remote[check].style.pointerEvents = 'none';
-        if (type === 'right' && marginLeft > -tab[check].scrollWidth) {
-            // marginLeft = marginLeft > 0 ? 0 : marginLeft;
+        if (type === 'right' && -marginLeft < tab[check].scrollWidth) {
+            
             var a = marginLeft - windowWidth;
-
+            a = a > -tab[check].scrollWidth ? a : marginLeft;
+            console.log('a : ' + a);
             tab[check].style.marginLeft = a + 'px';  // 마진값 변경하여 좌 우 이동
             tab[check].style.transition = `${0.4}s ease-out`;    // 이동 시 딜레이 주어 부드럽게
             
-
         } 
-        if (type === 'left' && marginLeft < 0) {
-            // marginLeft = marginLeft < 0 ? 0 : marginLeft;
+        if (type === 'left' && -marginLeft > 0) {
+            
+            // marginLeft = marginLeft > 0 ? 0 : marginLeft;
             var a = marginLeft + windowWidth;
-
+            a = a > 0 ? 0 : a;
+            console.log('a : ' + a);
             tab[check].style.marginLeft = a + 'px';
             tab[check].style.transition = `${0.4}s ease-out`;
             
@@ -550,5 +537,4 @@ $( document ).ready(function(){
             move_buttons_remote[check].style.pointerEvents = 'auto';
         }, 400);
     }
-
 </script>
