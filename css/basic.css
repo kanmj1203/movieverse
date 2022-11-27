@@ -324,12 +324,18 @@ padding : 5px 10px;
     /* border-bottom : 1px solid #707070; */
   }
 
+  /* header 높이만큼 마진(겹치지 않게) */
+.main_container {
+    /* margin-top : 210px; */
+    margin-top : max(6.5vh, 130px);
+}
+
 .footer{
 justify-content: center;
 display: block;
 
 width: 100%;
-height: 100%;
+/* height: 100%; */
 
 background: #0b0a0a;
 padding-bottom : 5vh;
@@ -392,7 +398,7 @@ height : auto;
 margin-top: 5vh;
 right : 3.5%;
 /* margin-left: 1360px; */
-
+z-index : 2000;
 
 background: #191717;
 /* border-radius: 5px; */
@@ -482,6 +488,7 @@ input[id=menu_icon] {
     display: none;
     right : 0;
     width : 30px;
+    
 }
 
 /* label중에 for가 menu_icon인거 */
@@ -504,7 +511,7 @@ label[for=menu_icon] span {
     width: 100%;
     position: absolute;
     transition: 0.3s;
-    z-index: 99; 
+    z-index: 999; 
 }
 
 /* label[for=trigger] > span의 n번째 요소 */
@@ -548,6 +555,7 @@ input[id=menu_icon]:checked + label span:nth-child(3) {
     right: -250px;
     transition: 0.3s;
     color : white;
+    z-index : 998;
 }
 
 .menu_sidebar_wrapper {

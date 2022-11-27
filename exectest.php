@@ -209,7 +209,7 @@ $data = array(
     // 'with_watch_providers' => 356,
     'watch_region' => 'KR',
     'language' => 'ko',
-    'page' => 1,
+    'page' => 100,
     'sort_by' => 'popularity.desc',
 );
 
@@ -253,7 +253,7 @@ $providers_id = ['8', '337', '97', '356'];
         // $a =  $sResponse['results'];
         // print_r($sResponse['results'][$i]);
         print("<br><br>");
-        print_r($sResponse['results']);
+        print_r($sResponse);
     // }
     // }
     // foreach($providers_id as $a) {

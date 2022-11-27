@@ -1,5 +1,22 @@
 <?php
 
+    require("db_connect.php");
+    session_start();
+    $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
+    
+    $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
+    while ($row = $query3->fetch()) {
+?>
+<script> // 영화 제목 리스트 추가 (자동완성 리스트)
+
+    List = [];  // 배열 생성
+
+    List.push('<?=$row['title'];?>');
+</script>
+<?php
+}
+
+
 /*
 넷플 : 
 {
@@ -54,10 +71,10 @@ $data = array(
     // 인기순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => 8,
-        'with_watch_providers' => 337,
-        'with_watch_providers' => 97,
-        'with_watch_providers' => 356,
+        'with_watch_providers' => [8, 337, 97, 356],
+        // 'with_watch_providers' => 337,
+        // 'with_watch_providers' => 97,
+        // 'with_watch_providers' => 356,
         'sort_by' => 'popularity.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
@@ -103,9 +120,8 @@ for($i = 0; $i < count($url); $i++){
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
     
     $response = curl_exec($ch);
-
     $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
-
+    
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $error = curl_error($ch);
     curl_close($ch);
@@ -157,28 +173,6 @@ $overview = str_replace("\n", "<br>", $overview); //줄바꿈
 
 
 </head>
-
-<script>
-List = [];  // 배열 생성
-</script>
-
-
-<div>   <!--session 생성-->
-    <?php 
-        require("db_connect.php");
-        session_start();
-        $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
-        
-        $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-        while ($row = $query3->fetch()) {
-    ?>
-    <script> // 영화 제목 리스트 추가 (자동완성 리스트)
-        List.push('<?=$row['title'];?>');
-    </script>
-    <?php
-    }
-    ?>
-</div>
 
 <!--검색-->
 <script>
@@ -336,7 +330,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                 <div style="width : 100%;" class="main_text">
                     <span class="main_title"><?=$sResponse[2]['results'][0]['title']?></span>
                     <p class="main_scenario"><?=$overview?></p>
-                    <a href="#"class="main_view_detail">상세 보기</a>
+                    <a href="choice.php?choice=movie&id=<?=$sResponse[0]['results'][0]['id']?>"class="main_view_detail">상세 보기</a>
                 </div>
 
             <div class="main_img_gradient_top"></div>
@@ -407,7 +401,6 @@ foreach($list_arr as $main_lists){
                         </div>
     <?php
         }
-
         ?>
 
 <?php
