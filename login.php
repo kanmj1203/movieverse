@@ -319,7 +319,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
 
                 <input type="image" name="submit"  class="next"src="img/next.png" border="0">
                 <p style="cursor:pointer;"class="find"onclick="location.href='id_pw_find.php';">아이디/ <a style="color: white;"href="pw_find.php">비밀번호 찾기</a></p>
-                <p style="top: 476px;cursor:pointer;" class="find"onclick="location.href='member_join.php?bid=';">계정이 없으신가요?가입</p>
+                <p style="top: 476px;cursor:pointer;" class="find"onclick="location.href='member_join.php';">계정이 없으신가요?가입</p>
 
                     <!--<div class="google_login"><img class="google"src="img/google.png">Google로 로그인</div>-->
 

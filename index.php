@@ -59,10 +59,7 @@ $data = array(
     // 최신순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => 8,
-        'with_watch_providers' => 337,
-        'with_watch_providers' => 97,
-        'with_watch_providers' => 356,
+        'with_watch_providers' => 8, 337, 97, 356,
         'sort_by' => 'release_date.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
@@ -71,10 +68,7 @@ $data = array(
     // 인기순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => [8, 337, 97, 356],
-        // 'with_watch_providers' => 337,
-        // 'with_watch_providers' => 97,
-        // 'with_watch_providers' => 356,
+        'with_watch_providers' => 8, 337, 97, 356,
         'sort_by' => 'popularity.desc',
         'watch_region' => 'KR',
         'language' => 'ko',

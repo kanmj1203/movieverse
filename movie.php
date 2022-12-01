@@ -2,19 +2,25 @@
 $page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
 $sort_by = isset($_REQUEST["sort_by"]) ? $_REQUEST["sort_by"] : 'popularity.desc';
 
-$platform =isset($_REQUEST["platform"]) ? $_REQUEST["platform"] : [8, 337, 97, 356];
+$platform = empty($_REQUEST["platform"]) ? '' : $_REQUEST["platform"];
+$bid = isset($_REQUEST["bid"]) ? $_REQUEST["bid"] : "";
+
 $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
+
+$search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
 
 // 영화 데이터
 $data = array( 
     // 최신순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => $platform,
+        'with_watch_providers' => empty($_REQUEST["platform"]) ? (int)'8,337,97,356' : $_REQUEST["platform"],
+        // aa($platform),
         'sort_by' => $sort_by,
         'watch_region' => 'KR',
         'language' => 'ko',
+        'with_genres' => $bid,
         'page' => $page
     ),
     // 인기순
@@ -29,6 +35,11 @@ $data = array(
     //     'language' => 'ko',
     //     'page' => $page
     // ),
+    // movie or tv 장르 가져오기
+    array(
+        'api_key' => $api_key,
+        'language'=> 'ko'
+    ),
     // 플랫폼 가져오기
     array(
         'api_key' => $api_key
@@ -46,7 +57,6 @@ $data = array(
 
 // URL 지정
 $base_url = 'https://api.themoviedb.org/3';
-
 $url = array(
     // 최신순
     $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
@@ -54,8 +64,10 @@ $url = array(
     // 인기순
     // $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
     // $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
+    // 장르
+    $base_url . "/genre/movie/list?" . http_build_query($data[1], '', ),
     // 플랫폼
-    $base_url . "/watch/providers/tv?" . http_build_query($data[1], '', )
+    $base_url . "/watch/providers/tv?" . http_build_query($data[2], '', )
 );
 
 // TMDB API에서 데이터 불러오기
@@ -85,10 +97,7 @@ $providers_name = ['넷플릭스', '왓챠', '디즈니', '웨이브'];
 $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
 
 // $query3 = $db->query("select * FROM streaming ");
-$styles="font-size: 20px;background-Color: #E5E5E5;	color:#3482EA;";
 
-$bid =isset($_REQUEST["bid"]) ? $_REQUEST["bid"] : "";
-$search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
 
 ?>
 
@@ -103,6 +112,7 @@ $search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
 
     <link rel="stylesheet" type="text/css" href="css/basic.css">
     <link rel="stylesheet" type="text/css" href="css/movie_tv.css">
+    <link rel="stylesheet" type="text/css" href="css/poster_hover.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -116,6 +126,8 @@ List = [];
 
 <div>
 <?php 
+
+    
 	require("db_connect.php");
 	session_start();
 	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
@@ -291,6 +303,8 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
         <div class="category_container">
                 <!-- <div style="margin:10px 0 0 430px;">
 <?php
+$styles='rgba(255,255,255,0.2)';
+// font-size: 20px;background-Color: #E5E5E5;	color:#3482EA;
 
 while ($row = $query3->fetch()) {
 ?>
@@ -318,53 +332,55 @@ while ($row = $query3->fetch()) {
                 </div>
                 <div class="category_right_wrap">
                     <p id="carta">카테고리<p>
-                    <p><a style="opacity: <?= $sort_by=="popularity" ? '1' : '0.5'?>;"href="movie.php?sort_by=popularity&bid=<?=$bid?>&search=<?=$search?>&platform=<?=is_array($platform) ? : $platform?>">인기순</a></p>
+                    <p><a style="opacity: <?= $sort_by=="popularity.desc" ? '1' : '0.5'?>;"href="movie.php?sort_by=popularity.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ? "" : $platform ?>">인기순</a></p>
                     <p id="ll">ㅣ</p>
-                    <p><a style="opacity: <?= $sort_by !="popularity" ? '1' : '0.5'?>;" href="movie.php?sort_by=release_date&bid=<?=$bid?>&search=<?=$search?>&platform=<?=is_array($platform) ? : $platform?>">최신순</a></p>
+                    <p><a style="opacity: <?= $sort_by =="release_date.desc" ? '1' : '0.5'?>;" href="movie.php?sort_by=release_date.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ?  "" : $platform ?>">최신순</a></p>
                 </div>
         </div>
-
-                
-                <div id="myDIV">
+                <div id="myDIV" class="category_list_scroll_top">
                     <ul>
-                        <a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid=="")echo $styles; ?>;">전체</li></a>       
-                        <a href="movie.php?bid=14&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==14) echo $styles; ?>">모험</li></a>       
-                        <a href="movie.php?bid=16&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==16) echo $styles; ?>">애니메이션</li></a> 
-                        <a href="movie.php?bid=18&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==18) echo $styles; ?>">드라마</li></a>     
-                        <a href="movie.php?bid=27&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==27) echo $styles; ?>">공포</li></a>       
+                    <li style="background-color : <?php $bid == "" ? $styles : '';?>;"><a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
+                    
+                <?php
+                    foreach($sResponse[1]['genres'] as $genre) {
+                ?>
+                    <li style="background-color : <?php $bid == $genre['id'] ? $styles : '';?>;"><a href="movie.php?bid=<?=$genre['id']?>&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><?=$genre['name']?></a></li>       
+                    
+                <?php
+                    }
+                ?>
+                    <!-- <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
+                    <li style="<?php if($bid=="14")echo $styles; ?>;"><a href="movie.php?bid=14&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">모험</a></li>       
+                    <li style="<?php if($bid=="16")echo $styles; ?>;"><a href="movie.php?bid=16&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">애니메이션</a></li> 
+                    <li style="<?php if($bid=="18")echo $styles; ?>;"><a href="movie.php?bid=18&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">드라마</a></li>     
+                    <li style="<?php if($bid=="27")echo $styles; ?>;"><a href="movie.php?bid=27&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">공포</a></li>      
                         
-                    </ul>
-                    <ul>
-                       <a href="movie.php?bid=28&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==28) echo $styles; ?>">액션</li></a>
-                       <a href="movie.php?bid=35&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==35) echo $styles; ?>">코미디</li></a> 
-                       <a href="movie.php?bid=36&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==36) echo $styles; ?>">역사</li></a>
-                       <a href="movie.php?bid=37&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==37) echo $styles; ?>">서부</li></a>
-                       <a href="movie.php?bid=53&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==53) echo $styles; ?>">스릴러</li></a>
-                    </ul>
-                    <ul>
-                      <a href="movie.php?bid=80&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">   <li style="<?php if($bid==80) echo $styles; ?>">범죄      </li></a> 
-                      <a href="movie.php?bid=99&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">   <li style="<?php if($bid==99) echo $styles; ?>">다큐멘터리</li></a> 
-                      <a href="movie.php?bid=878&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">  <li style="<?php if($bid==878) echo $styles; ?>">SF        </li></a>
-                      <a href="movie.php?bid=9648&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"> <li style="<?php if($bid==9648) echo $styles; ?>">미스터리  </li></a>
-                      <a href="movie.php?bid=10402&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10402) echo $styles; ?>">음악      </li></a>
-                    </ul>
-                    <ul>
-                    <a href="movie.php?bid=10749&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10749) echo $styles; ?>">로맨스    </li></a>
-                    <a href="movie.php?bid=10751&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10751) echo $styles; ?>">가족      </li></a> 
-                    <a href="movie.php?bid=10752&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10752) echo $styles; ?>">전쟁      </li></a>
-                    <a href="movie.php?bid=10759&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10759) echo $styles; ?>">액션&어드벤쳐</li></a>
-                    <a href="movie.php?bid=10762&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10762) echo $styles; ?>">키즈      </li></a>
-                    </ul>
-                    <ul>
-                    <a href="movie.php?bid=10763&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10763) echo $styles; ?>">뉴스</li></a> 
-                    <a href="movie.php?bid=10764&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10764) echo $styles; ?>">리얼리티</li></a> 
-                    <a href="movie.php?bid=10765&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10765) echo $styles; ?>">공상과학&판타지</li></a>
-                    <a href="movie.php?bid=10766&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10766) echo $styles; ?>">연속극</li></a>
-                    <a href="movie.php?bid=10767&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10767) echo $styles; ?>">토크</li></a>
-                    </ul>
-                    <ul>
-                        <a href="movie.php?bid=10768&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10768) echo $styles; ?>">시사 </li></a>
-                        <a href="movie.php?bid=10770&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><li style="<?php if($bid==10770) echo $styles; ?>">TV 영화 </li></a>
+                    <li style="<?php if($bid=="28")echo $styles; ?>;"><a href="movie.php?bid=28&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">액션</a></li>
+                    <li style="<?php if($bid=="35")echo $styles; ?>;"><a href="movie.php?bid=35&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">코미디</a></li> 
+                    <li style="<?php if($bid=="36")echo $styles; ?>;"><a href="movie.php?bid=36&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">역사</a></li>
+                    <li style="<?php if($bid=="37")echo $styles; ?>;"><a href="movie.php?bid=37&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">서부</a></li>
+                    <li style="<?php if($bid=="53")echo $styles; ?>;"><a href="movie.php?bid=53&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">스릴러</a></li>
+
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=80&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"> 범죄      </a></li> 
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=99&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">다큐멘터리</a></li> 
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=878&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">SF        </a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=9648&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">미스터리  </a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"> <a href="movie.php?bid=10402&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">음악      </a></li>
+
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10749&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">로맨스    </a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10751&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">가족      </a></li> 
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10752&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전쟁      </a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10759&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">액션&어드벤쳐</a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10762&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">키즈      </a></li>
+
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10763&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">뉴스</a></li> 
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10764&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">리얼리티</a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10765&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">공상과학&판타지</a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"> <a href="movie.php?bid=10766&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">연속극</a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10767&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">토크</a></li>
+
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10768&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">시사 </a></li>
+                    <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=10770&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">TV 영화 </a></li> -->
 
                     </ul>
 
@@ -373,7 +389,54 @@ while ($row = $query3->fetch()) {
         <div id='wrap' class="main_container">
             <div class="movie_all">
                 <p class="movietext"> 영화ㅣ 전체 </p>
-                
+                <div class="show"><!--리스트 보여지는 틀-->
+                    <div class="main_slide_lists"><!--리스트 이미지 출력-->
+<?php
+    $pxs=0;
+    $list_count = 0;   
+    $title_change = 'title';
+    $choice = "movie";
+
+    for ($i = 0; $i < count($sResponse[0]['results']); $i++) {
+
+        // 시나리오 글자수 제한
+        $poster_overview = $sResponse[$list_count]['results'][$i]['overview'];
+        
+        if (strlen($poster_overview) >= 330) {
+            $poster_overview = iconv_substr($poster_overview,0,140,"utf-8").'...';
+        }
+    ?>
+
+                        <div class="main_poster_img_container poster_container" onclick="location.href='choice.php?choice=<?=$choice?>&id=<?=$sResponse[$list_count]['results'][$i]['id']?>';">
+                            <div class="poster_hover_wrapper">
+                                <p class="main_poster_title"><?=$sResponse[$list_count]['results'][$i][$title_change]?></p>
+                                <p class="main_poster_overview"><?=$poster_overview?></p>
+                            </div>
+                            <span class="poster_wrap">
+                            <img class="main_poster_img" 
+                                src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
+                                alt=""
+                                onerror="this.parentNode.style.display='none'">
+                            </span>
+                        </div>
+    <?php
+        }
+        ?>
+
+<?php
+                    $pxs=24;
+                    $list_count++;
+?>
+                    </div>
+                    <!-- main_slide_lists END -->
+                </div> 
+                <!--show END-->
+            </div>
+            <!-- movie_all END -->
+
+            <!-- pagination -->
+            <div>
+                < 1 2 3 4 >
             </div>
         </div>
         <!-- wrap END -->
@@ -420,5 +483,4 @@ foreach($provider_logo_path as $prov_logo_path){
 <script type="text/javascript" src="./js/header.js"></script>
 
 <script>
-
 </script>

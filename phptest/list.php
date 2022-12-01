@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-
+	<link rel="stylesheet" type="text/css"href="admin_page.css">
     <style>
 		html, body {
 			width:100%;
@@ -20,7 +20,7 @@
                 
         a:link    { text-decoration:none; color:black; }
         a:visited { text-decoration:none; color:black; }
-        a:hover   { text-decoration:none; color:red;  }
+        a:hover   { text-decoration:none; color:#6469c4;  }
         
         .logo {
 		    cursor: pointer;
@@ -45,22 +45,21 @@
 		    left: 0px;
 		    top: 0px;
 		    background: #FFFFFF;
-		    border: 1px solid #3482EA;
+		    border-bottom: 1px solid #6469c4;
 		    box-sizing: border-box;
 		}
 		
 		.sidenav {
 		    height: 100vh;
 		    width: 300px;
+			background-color: #6469c4;
 		    position: fixed;
 		    margin-left: -10px;
-		    background-color: white;
 		    overflow-x: hidden;
 		    padding-top: 20px;
 			padding-left: 20px;
 			font-size:20px;
 			color:#ffffff;
-			background-color:#3482EA;
 		    float: left;
 		    border: 1px solid #bcbcbc;
 		}
@@ -71,6 +70,13 @@
 	  position: relative;
 	}
 		
+
+	/* 업데이트 버튼 */
+	#update_btn {
+		padding : 15px;
+		border-radius : 15px;
+		background-color : #cecece;
+	}
     </style>
 </head>
 
@@ -79,7 +85,7 @@
 <div class="all">
  <div class="head">
 
-	<a href="/html/index.php"><img class="logo"src="../img/logo.png"></a>			<!-- 링크걸기 -->
+	<a href="/movieverse/index.php"><img class="logo"src="../img/logo/logo_txt.png"></a>			<!-- 링크걸기 -->
 </div>
 
 
@@ -95,7 +101,7 @@
 
 
 <h1 style="text-align: center;"> 관리자 페이지 </h1>
-<h2 style="text-align: center;"> 관리자 페이지 </h2><br><br><br>
+<h2 style="text-align: center;"><a id="update_btn" href="./contents_update.php">영화, 드라마 정보 업데이트</a></h2><br><br><br>
 
 <h2 style="text-align: center;"> 작품 검색<br><a href="https://www.themoviedb.org/?language=ko" target='_blank'>https://www.themoviedb.org/?language=ko</a></h2><br><br>
 
@@ -110,12 +116,6 @@
 
 
 
-<!-- <?php
-	// DB 접속
-	$db = new PDO("mysql:host=localhost;port=3307;dbname=phpdb", "php", "1234");
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-?>
-       -->
 </table>
 
 </div>

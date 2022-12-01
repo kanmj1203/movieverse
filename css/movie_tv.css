@@ -114,12 +114,64 @@ color: #FFFFFF;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
-  font-size: 1.25rem;
   margin-right : 15px;
   align-items: center;
+  cursor: pointer;
 
-color: #FFFFFF;
+  color: #FFFFFF;
 }
+
+/* 포스터 이미지 */
+
+.show{
+  width: 100%;
+  height : 100%;
+  margin-bottom: 10%;
+  /* text-align: left; */
+  }
+  
+  .main_slide_lists{
+
+
+  display : flex;
+  flex-wrap: wrap;
+  /* margin-left : 5px; */
+  width : 100%;
+  /* overflow:  hidden; */
+  white-space: nowrap; 
+  justify-content : center;
+  }
+  
+/* 메인페이지 포스터 이미지 감싸는 div 스타일 */
+.main_poster_img_container {
+  /* position:relative;  */
+  width : auto; 
+  height : 22vw; 
+  /*22vw   407px*/
+  display : flex;
+  overflow:hidden;
+  text-align:center;
+  margin : 6px;
+  margin-bottom : 8%;
+  /* display : inline-block; */
+  border-radius: 10px;
+  cursor: pointer;
+  color : white;
+}
+
+/* 메인 포스터 이미지 설정
+div안에 꽉채우게 & 윗부분 빈칸 없게 */
+.main_poster_img {
+  width : 100%;
+  height : 100%;
+  display : flex;
+  object-fit:cover;
+}
+
+
+
+
+
 
 .movies{
 position: relative;
@@ -182,52 +234,69 @@ filter: brightness(50%);
 #myDIV {
   position:fixed;
   /* display: block; */
-  top : 200px;
-  right : 0;
+
+  right : 15%;
+  z-index: 49;
   display : none;
-  width : 700px;
-    margin-top: 5px;
-    padding-top: 30px;
-    margin-left: 355px;
-    background: rgba(40, 40, 40, 1);
+  width : 60%;
+    /* margin-top: 3%; */
+    padding-top: 1.5vh;
+    background: rgba(0,0,0,.5);
     /* width: 1250px; */
-    height: auto;
-    opacity: 85%;
+    /* height: auto; */
+    /* opacity: 85%; */
 }
 
 #myDIV ul{
-  opacity: 1;
   list-style:none;
-  float:left;
-  height: 250px;
+  /* float:left; */
+  /* height: 250px; */
   text-align:center;
+  display : flex;
+  flex-wrap : wrap;
 }
 #myDIV li{
-	padding-top:17px;
-width: 160px;
-height: 45px;
+	/* padding-top:17px; */
+  height: 7vh;
+  width: 20%;
+/* line-height: 3; */
+/* identical to box height */
+/* margin-top:-10px; */
+color: #FFFFFF;	
+/* vertical-align: top; */
+/* border-radius:10px; */
+cursor:pointer;
+
+}
+
+#myDIV li a{
+	/* padding-top:17px; */
+/* width: 150px; */
+
+line-height: 7vh;
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 500;
-font-size: 18px;
-line-height: 26px;
+font-size: 1.25rem;
+
+/* line-height: 3; */
 /* identical to box height */
-margin-top:-10px;
-color: #FFFFFF;	border-radius:10px;
+/* margin-top:-10px; */
+color: #FFFFFF;	
+/* vertical-align: top; */
+border-radius:10px;
+cursor:pointer;
 }
 
-#myDIV li:hover{
-    font-size: 20px;
-background-Color: #E5E5E5;
-	cursor:pointer;
-	color:#3482EA;
-font-weight: 700;
+#myDIV li a:hover{
+  /* background-Color: #E5E5E5; */
+	color:#83a1dd;
 }
 
 
-/* 스크롤에 따른 카테고리 리스트 idv 변경 */
+/* 스크롤에 따른 카테고리 리스트 div 변경 */
 .category_list_scroll_top {
-
+  top : max(5vh, 200px);
   transition-duration : 0.5s;
   transition-timing-function: ease;
 
@@ -236,13 +305,14 @@ font-weight: 700;
 }
 
 .category_list_scroll_down {
-  top : max(5vh, 130px);
+  top : max(5vh, 170px);
   transition-duration : 0.5s;
   transition-timing-function: ease;
 
   -webkit-transition-duration:0.4s;
   -webkit-transition-timing-function:ease;
 }
+
 .where_logo{
 width:50px;
 height:50px;
@@ -268,17 +338,91 @@ width: 28px;
 }
 
 
+
+
 @media screen and (min-width:1024px) {
 	/* Desktop */
-
+  .main_poster_img_container {
+    min-height: 350px;
+  }
 }
 @media screen and (min-width:768px) and (max-width: 1023px) {
 	/* Tablet */
-   
-    
+
+  .main_poster_img_container {
+    height : 43vw;
+  }
+  .show{
+    margin-bottom: 15%;
+    }
+
+    /* 카테고리 */
+    .category_li a {font-size : 1rem;}
+    .category_right_wrap p, .category_right_wrap p a{font-size : 1rem;}
+    #carta {margin-right : 5px;}
+    /* 카테고리 메뉴*/
+  .category_container {
+    top : 120px;
+  }
+
+  .category_scroll_top {
+    top : max(4.5vh, 120px);
+  }
+  .category_scroll_down {
+    top : max(3.5vh, 100px);
+  }
+
+  .category_list_scroll_top {
+    top : max(4.5vh, 180px);
+  }
+  
+  .category_list_scroll_down {
+    top : max(3.5vh, 160px);
+  }
+
+  #myDIV {width : 80%; right : 10%;}
+  #myDIV li a {font-size : 1rem;}
+
+  /* 무슨 페이지인지 알려주는 텍스트 */
+  .movietext {font-size : 1.75rem}
+
 }
 @media screen and (max-width:767px){ 
 	/* Mobile */
+  .main_poster_img_container {
+    height : 55vw;
+  }
+  .show{
+    margin-bottom: 15%;
+    }
 
+    /* 카테고리 */
+    .category_li a {font-size : 0.9rem;}
+    .category_right_wrap p, .category_right_wrap p a{font-size : 0.9rem;}
+    #carta {margin-right : 5px;}
+
+    /* 카테고리 메뉴*/
+  .category_container {
+    top : 120px;
+  }
+  .category_scroll_top {
+    top : max(4.5vh, 120px);
+  }
+  .category_scroll_down {
+    top : max(3.5vh, 100px);
+  }
+
+  .category_list_scroll_top {
+    top : max(4.5vh, 180px);
+  }
   
+  .category_list_scroll_down {
+    top : max(3.5vh, 160px);
+  }
+
+  #myDIV {width : 100%; right : 0;}
+  #myDIV li a {font-size : 0.8rem;}
+
+    /* 무슨 페이지인지 알려주는 텍스트 */
+    .movietext {font-size : 1.5rem}
 }

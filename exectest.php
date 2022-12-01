@@ -206,10 +206,10 @@ $data = array(
     // 'with_watch_providers' => 8,
     // 'with_watch_providers' => 337,
     // 'with_watch_providers' => 97,
-    // 'with_watch_providers' => 356,
+    'with_watch_providers' => 8, 337, 97, 356,
     'watch_region' => 'KR',
     'language' => 'ko',
-    'page' => 100,
+    'page' => 1,
     'sort_by' => 'popularity.desc',
 );
 
@@ -220,16 +220,28 @@ $provide = array(
     // 'provider_id' => 97,
     // 'provider_id' => 356,
 );
+
+$genre = array(
+    'api_key' => $api_key,
+    'language'=> 'ko',
+);
+
 $base_url = 'https://api.themoviedb.org/3/discover/tv';
 $provide_base_url = 'https://api.themoviedb.org/3/watch/providers/tv';
 $provide_link_url = 'https://api.themoviedb.org/3/watch/providers/movie?api_key='.$api_key.'&language=Ko';
+$movie_details = 'https://api.themoviedb.org/3/movie/436270?api_key='.$api_key.'&language=Ko';
+$movie_details_provider = 'https://api.themoviedb.org/3/movie/962299/watch/providers?api_key='.$api_key.'&language=Ko';
+$genre_url = "https://api.themoviedb.org/3/genre/movie/list?" . http_build_query($genre, '', );
 
 $url = $base_url . "?" . http_build_query($data, '', );
 $url2 = $provide_base_url . "?" . http_build_query($provide, '', );
 $url3 = $provide_link_url;
+$url4 = $movie_details;
+$url5 = $movie_details_provider;
+$url6 = $genre_url;
 
 $ch = curl_init();                                 //curl 초기화
-curl_setopt($ch, CURLOPT_URL, $url);               //URL 지정하기
+curl_setopt($ch, CURLOPT_URL, $url6);               //URL 지정하기
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    //요청 결과를 문자열로 반환 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);      //connection timeout 10초 
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   //원격 서버의 인증서가 유효한지 검사 안함 
@@ -253,7 +265,8 @@ $providers_id = ['8', '337', '97', '356'];
         // $a =  $sResponse['results'];
         // print_r($sResponse['results'][$i]);
         print("<br><br>");
-        print_r($sResponse);
+        // print_r($sResponse['results']);
+        print_r($sResponse['genres']);
     // }
     // }
     // foreach($providers_id as $a) {
@@ -282,7 +295,18 @@ $providers_id = ['8', '337', '97', '356'];
 
         ?>
         <main>
+        <div style="width : auto; height : 330px;
+	overflow:hidden;
+	text-align:center;
+	margin: 0 auto;">
+            <!-- https://www.themoviedb.org/t/p/w220_and_h330_face/sLTAEFtjentQ5satiGdmv7o2f1C.jpg -->
+                    <img 
+                    style="width : auto; height :300px; display : flex; object-fit:cover;"
+                    src=" https://image.tmdb.org/t/p/original/mEdMHGy1FfCUc7PskFO0tibm8jp.jpg" 
+                    alt="">
+            </div>
         <?php
+        
                 for ($i = 0; $i < count($sResponse['results']); $i++) {
                 ?>
             <!-- <div><?= print_r($a) ?></div> -->
