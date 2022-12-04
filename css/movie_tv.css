@@ -203,6 +203,7 @@ position: relative;width: 180px;height: 270px;float:left;
   top : max(13vh, 120px);
 	/* position:relative; */
 }
+
 .hover_text {
   position: absolute;
   top: 30px;
@@ -259,6 +260,7 @@ filter: brightness(50%);
 	/* padding-top:17px; */
   height: 7vh;
   width: 20%;
+  display : flex;
 /* line-height: 3; */
 /* identical to box height */
 /* margin-top:-10px; */
@@ -266,19 +268,21 @@ color: #FFFFFF;
 /* vertical-align: top; */
 /* border-radius:10px; */
 cursor:pointer;
-
+/* line-height: 7vh; */
+justify-content : center;
+align-items : center;
 }
 
 #myDIV li a{
 	/* padding-top:17px; */
 /* width: 150px; */
 
-line-height: 7vh;
+/* white-space:nowrap; */
 font-family: 'Noto Sans KR';
 font-style: normal;
 font-weight: 500;
 font-size: 1.25rem;
-
+/* line-height: 7vh; */
 /* line-height: 3; */
 /* identical to box height */
 /* margin-top:-10px; */
@@ -291,6 +295,10 @@ cursor:pointer;
 #myDIV li a:hover{
   /* background-Color: #E5E5E5; */
 	color:#83a1dd;
+}
+
+.now_category {
+  background-color : rgba(255,255,255,0.2);
 }
 
 
@@ -313,14 +321,6 @@ cursor:pointer;
   -webkit-transition-timing-function:ease;
 }
 
-.where_logo{
-width:50px;
-height:50px;
-border-radius:10px;
-}
-.where_logo:hover{
-cursor:pointer;
-}
 
 .bookmark_yes{
 	position: absolute;
@@ -338,7 +338,42 @@ width: 28px;
 }
 
 
+/* 페이지네이션 */
+.pagination {
+  display : flex;
+    text-align: center;
+    vertical-align: middle;
+    height : 5vh;
+    padding-top : 3vh;
+    justify-content: center;
+    
+}
 
+.pagination ul{
+  display : flex;
+  width : 20%;
+  justify-content: space-evenly; 
+}
+
+.pagination ul li{
+  font-size : 1.25rem;
+}
+
+
+.pagination_button {
+  cursor: pointer;
+  background:none;
+  font-size : 1.25rem;
+  line-height: 5vh;
+  font-family: 'Nanum Gothic Coding', monospace;
+  color : white;
+  border : none;
+}
+
+.now_page {
+  color : #83a1dd;
+  font-weight: 600;
+}
 
 @media screen and (min-width:1024px) {
 	/* Desktop */
@@ -366,10 +401,10 @@ width: 28px;
   }
 
   .category_scroll_top {
-    top : max(4.5vh, 120px);
+    top : max(4vh, 130px);
   }
   .category_scroll_down {
-    top : max(3.5vh, 100px);
+    top : max(3vh, 105px);
   }
 
   .category_list_scroll_top {
@@ -380,11 +415,26 @@ width: 28px;
     top : max(3.5vh, 160px);
   }
 
-  #myDIV {width : 80%; right : 10%;}
+  #myDIV {width : 80%; right : 10%; padding-top: 1.2vh;}
   #myDIV li a {font-size : 1rem;}
 
   /* 무슨 페이지인지 알려주는 텍스트 */
   .movietext {font-size : 1.75rem}
+
+  .movie_all{
+    width: 100%;
+    position : relative;
+    top : max(12vh, 110px);
+  }
+
+  /* 페이지네이션 */
+.pagination {
+    padding-top : 5vh;
+}
+
+.pagination ul{
+  width : 30%;
+}
 
 }
 @media screen and (max-width:767px){ 
@@ -406,23 +456,38 @@ width: 28px;
     top : 120px;
   }
   .category_scroll_top {
-    top : max(4.5vh, 120px);
+    top : max(5vh, 125px);
   }
   .category_scroll_down {
-    top : max(3.5vh, 100px);
+    top : max(4vh, 105px);
   }
 
   .category_list_scroll_top {
-    top : max(4.5vh, 180px);
+    top : max(5vh, 175px);
   }
   
   .category_list_scroll_down {
-    top : max(3.5vh, 160px);
+    top : max(4vh, 155px);
   }
 
   #myDIV {width : 100%; right : 0;}
   #myDIV li a {font-size : 0.8rem;}
 
-    /* 무슨 페이지인지 알려주는 텍스트 */
-    .movietext {font-size : 1.5rem}
+/* 무슨 페이지인지 알려주는 텍스트 */
+.movietext {font-size : 1.5rem}
+.movie_all{
+  width: 100%;
+  position : relative;
+  top : max(11vh, 100px);
+}
+
+      /* 페이지네이션 */
+.pagination {
+  padding-top : 8vh;
+}
+
+.pagination ul{
+width : 50%;
+}
+
 }

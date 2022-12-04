@@ -1,3 +1,270 @@
+.choice_img_div{
+	/* choice_img */
+	position: relative;
+	width: 100%;
+	top : 0px;
+	left: 0px;
+
+	}
+	
+	.choice_img{
+	/* position: absolute; */
+	top : 0px;
+	width: 100%;
+	height: max(85vh, 500px);
+	display : block;
+	
+	/* height : 100%; 원본 비율 유지 */
+	object-fit:cover; /*이미지 크기 딱 맞도록*/
+	/* z-index: inherit; */
+
+	}
+	
+	/* .choice_img_gradient_top {
+	  position : absolute;
+	  height : 20%;
+	  width : 100%;
+	  top : 0;
+	  background: linear-gradient(rgba(0,0,0,.85) 10%, 
+	
+	  rgba(0,0,0,.5) 40%,
+	
+	  rgba(0,0,0,0) 80%);
+	  z-index:2;
+	  
+	} */
+	
+	.choice_img_gradient_bottom {
+	  position : absolute;
+	  height : 100%;
+	  width : 100%;
+	  top : 0;
+	  background: linear-gradient(0deg,#191717 1%,
+	   rgba(10,9,9,.8) 3%,
+	  rgba(10,9,9,.5) 6%,
+	  rgba(10,9,9, .1) 10%);
+
+	}
+
+
+/* 설명, 리뷰 등 나오는 컨테이너 */
+.choice_container {
+	position:relative;
+	display : flex;
+	flex-direction: column;
+	
+	/* align-items: center; */
+	/* text-align: center; */
+	vertical-align: middle;
+	margin:0 auto;
+	margin-top : -30vh;
+	/* background-color : rgba(255,255,255,.5); */
+	color : white;
+	/* mix-blend-mode: difference; */
+	width : 85vw;
+	height : max(65vh, 300px);
+	z-index: 5;
+}
+
+/* 맨 윗부분 제목, 평점, 북마크 표시 */
+.choice_wrap_header {
+	display : flex;
+	flex-direction: row;
+	align-items: flex-end;
+	border-bottom : 1px solid white;
+	padding-bottom : 2.5vh;
+	white-space:nowrap;
+}
+
+/* 제목 */
+.main_title {
+	flex:2 1 0;
+	font-size : 2rem;
+	/* color : white; */
+}
+
+/* 평점, 북마크 */
+.choice_wrap_header_right {
+	display : flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	/* width : 20%; */
+	flex:1 1 0;
+	font-size : 1rem;
+}
+
+.choice_wrap_header_right div{
+	padding : 5px 15px;
+	border-radius: 10px;
+	border : solid 1px white;
+
+}
+
+.choice_wrap_header_right div:last-child{
+	margin-left : 15px;
+}
+
+/* 포스터, 제목, 시놉시스, 배우 등 메인부분 */
+.choice_wrap {
+	display : flex;
+	flex-direction: row;
+	margin-top : 3vh;
+}
+
+/* 왼쪽 (포스터부분)*/
+.choice_wrap_left {
+	flex : 1 0 20%;
+	/* align-items: center; */
+	/* justify-content: center; */
+	text-align: center;
+}
+
+.poster_wrap {
+	width : 100%;
+	height : auto;
+	/* border:solid 1px white; */
+}
+
+.poster_wrap img {
+	width : max(100%, 180px);
+	height : 100%;
+	display : flex;
+	object-fit:cover;
+}
+
+/* 북마크 */
+.bookmark {
+	margin : 15px auto;
+	width : 80%;
+	padding:8px 0;
+}
+
+.bookmark_header {
+
+}
+
+.bookmark a, .bookmark_header a{
+	display: block;
+	color : white;
+}
+
+.bookmark a img, .bookmark_header a img {
+	margin-right : 5px;
+	width : auto;
+	height : 13px;
+}
+
+.unchecked_bm {
+	background-color: rgba(255,255,255,0.16);
+}
+
+.checked_bm {
+	background:  linear-gradient( to left,#83a1dd, #6469c4);
+}
+
+/* 플랫폼 */
+.providers_link {
+	width : 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content:space-around;
+}
+
+.providers_link * img {
+	border-radius: 5px;
+}
+
+/* 중앙 (설명부분) */
+.choice_wrap_center {
+	flex : 1 0 60%;
+	margin : 0 3%;
+}
+
+.center_main_ul>li{
+	font-size : 1.5rem;
+	margin-top : 3vh;
+	
+}
+
+.center_main_ul>li:first-child{
+	margin-top : 0;
+}
+
+.center_main_ul>ul li {
+	font-size : 1rem;
+	margin : 5px auto;
+}
+
+/* 감독 */
+.crew_cast {
+	display : flex;
+	flex-direction: column;
+	justify-content:space-around;
+	margin-left : 20px;
+}
+
+.crew_cast span:not(:last-child) {
+	margin-bottom : 10px;
+}
+
+.genres span {
+	/* padding : 0px 15px; */
+}
+/* 장르 */
+.genres span:not(:last-child)::after{
+	content : '|';
+	margin : 0px 5px;
+}
+
+/* 오른쪽 (배우들) */
+.choice_wrap_right {
+	/* width : 100%; */
+	flex : 1 0 20%;
+}
+
+.choice_wrap_right>div:first-child {
+	font-size : 1.5rem;
+	margin-bottom : 3%
+}
+
+.choice_wrap_right>div:first-child span{
+	font-size : 1rem;
+}
+
+
+/* 리뷰 */
+.review_container {
+	display : flex;
+	flex-direction: column;
+	margin-top : 3%;
+}
+
+.review_title {
+	font-size : 1.5rem;
+	margin : 10px 0px;
+}
+
+.review_wrap {
+	display : flex;
+	flex-direction: column;
+	justify-content:space-around;
+	border : solid 1px white;
+}
+
+.review_buttons {
+	display : flex;
+	justify-content:flex-end;
+}
+
+
+
+
+
+
+
+
+
 .marin_img_gradation{
 background: linear-gradient(360deg, #FFFFFF 0%, rgba(239, 239, 239, 0.815886) 33.33%, rgba(217, 217, 217, 0.558125) 39.58%, rgba(217, 217, 217, 0.377358) 48.44%, rgba(217, 217, 217, 0) 54.17%);
 width: 1928px;
@@ -160,19 +427,21 @@ background: #FFFFFF;
 }
 
 .star {
-	margin-top:50px;
-	  left:360px;
-	  position: relative;
+	/* margin-top:50px; */
+	  /* left:360px; */
+	  /* position: relative; */
 	  font-size: 2rem;
 	  color: #ddd;
+	  display : flex;
+	  justify-content:flex-start;
 	}
 	
 	.star input {
-	  width: 100%;
-   	 height: 100%;
+	  width: auto;
+   	 /* height: 100%; */
    	 position: absolute;
   	  left: 0;
- 	   opacity: 0;
+ 	   /* opacity: 0; */
   	  cursor: pointer;
 	}
 	
@@ -231,20 +500,26 @@ line-height: 20px;
 color: #707070;
 }
 .text_review{
-width:1180px;
-    height: 107px;
-    margin-left: 360px;
-    margin-bottom: 40px;
-	    border-radius: 10px;
-		padding:10px;
-		resize: none;
-		
- border: 1px solid #3482EA;
+width:100%;
+    height: 15vh;
+	/* width : 90%; */
+    /* margin-left: 360px; */
+    /* margin-bottom: 40px; */
+	background: none;
+	/* padding:10px; */
+	resize: none;
+	color:white;
+	text-align:left;
+	font-family: 'Noto Sans KR',sans-serif,'NanumGothic', 'serif';
+	font-size : 1rem;
+	border: none;
+	outline: none;
+	margin : 0 auto;
 }
 .text_review b{
-	color:black ;
+	color:white;
 	text-align:left;
-	  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .review_user_img{
@@ -265,9 +540,9 @@ width: 51px;
 height: 30px;
 
 background: #FFFFFF;
-border: 1px solid #3482EA;
-border-radius: 5px;margin-left:-120px;
-  cursor: pointer;
+/* border: 1px solid #3482EA; */
+border-radius: 5px;  
+cursor: pointer;
 }
 .yesi{
 padding: 4px 11px 3px 10px;
@@ -379,25 +654,25 @@ border: none;
 padding: 4px 11px 3px 10px;
 
 border:none;
-position:absolute;
+/* position:absolute; */
 background: #9F9F9F;
 border-radius: 5px;
 color:white;
-    margin-top: -30px;
+    /* margin-top: -30px; */
 width: 55px;
 height: 30px;
-margin-left: 764px;
+/* margin-left: 764px; */
 }
 .delbutton{
 color:white;border:none;
-    margin-top: -30px;
+    /* margin-top: -30px; */
 padding: 4px 11px 3px 10px;
-position:absolute;
+/* position:absolute; */
 background: #3482EA;
 border-radius: 5px;
 width: 55px;
 height: 30px;
-margin-left: 822px;
+/* margin-left: 822px; */
 
 }
 .other_reviewss{
@@ -430,4 +705,58 @@ b {
   height : 660px;
     margin-left: 960px;
 margin-top: -15px;
+}
+
+
+
+
+
+
+
+
+@media screen and (min-width:1024px) {
+	/* Desktop */
+
+}
+@media screen and (min-width:768px) and (max-width: 1023px) {
+	/* Tablet */
+
+	.choice_wrap {flex-wrap: wrap;}
+	
+	.main_title {font-size : 1.625rem;}
+	
+	.crew_cast {
+		/* display : flex;  */
+		flex : 1 0 30%; 
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content:space-around;
+	}
+	.crew_cast span{
+		width : 30%;
+	}
+}
+@media screen and (max-width:767px){ 
+	/* Mobile */
+
+	.choice_wrap {flex-wrap: wrap;}
+
+	.main_title {font-size : 1.375rem;}
+
+	.choice_wrap_left {
+		flex : 1 0 30%;
+	}
+	.poster_wrap img {
+		width : 100%;
+	}
+	.crew_cast {
+		/* display : flex;  */
+		flex : 1 0 100%; 
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content:space-around;
+	}
+	.crew_cast span{
+		width : 30%;
+	}
 }

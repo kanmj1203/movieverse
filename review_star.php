@@ -10,7 +10,7 @@ session_start();
 	if(!$_SESSION["userId"]){
 		?>
 	<script>
-		alert('로그인 후 이용 가능');
+		alert('로그인 후 작성할 수 있습니다.');
 		history.back();
 	</script>
 <?php
@@ -19,6 +19,7 @@ session_start();
 	$tr =isset($_REQUEST["textreview"]) ? $_REQUEST["textreview"] : "";
 	$sv =isset($_REQUEST["starvalue"]) ? $_REQUEST["starvalue"] : "";
 	$id =isset($_REQUEST["id"]) ? $_REQUEST["id"] : "";
+	$choice =isset($_REQUEST["choice"]) ? $_REQUEST["choice"] : "";
 	require("db_connect.php");
 
 	if(!($tr && $sv )) {
@@ -26,22 +27,17 @@ session_start();
 ?>
 	<script>
 		alert('별점과 리뷰가 빈 곳 없이 입력해야 합니다.');
-		history.back();
+		location.href = 'choice.php?choice=<?=$choice?>&id=<?=$id?>&re=re';
 	</script>
 
 <?php
 	}else{
 
 		$count=$db->query("select count(*) from review ")->fetchColumn()+1;
-		$tv_movie=$_GET['choice'];
-		if($tv_movie=='tv'){
-		$tv_movie='tv_id';
-		}else{
-		$tv_movie='movie_id';
-		}
+
 			$date =   date("Y-m-d H:i:s");
 
-	$re=$db->query("select count(*) from review where $tv_movie=$id and member_num=$_SESSION[userNum]")->fetchColumn();
+	$re=$db->query("select count(*) from review where choice_content='$choice' and content_id=$id and member_num=$_SESSION[userNum]")->fetchColumn();
 		
 if($re>0){
 $sv=$sv/16;
@@ -49,21 +45,21 @@ $sv=$sv/16;
  $db->exec("update  review set  
 								review_date = '".$date."'	,
 								member_num = '".$_SESSION['userNum']."'	,
-								review = '".$tr."'	,
+								review_content = '".$tr."'	,
 								star_rating = '".$sv."'	,
-								$tv_movie = '".$id."'	
-						where $tv_movie='".$id."' and member_num='".$_SESSION['userNum']."'");
+								choice_content = '".$choice."'	
+						where choice_content = '".$choice."' and content_id='$id' and member_num='".$_SESSION['userNum']."'");
 }else{
 
 $db->exec("insert into review (
-		  review_date,member_num,review,star_rating,$tv_movie)
-	values('$date','$_SESSION[userNum]','$tr',$sv/16,'$id')");
+		  review_date,member_num,review_content,star_rating,choice_content, content_id)
+	values('$date','$_SESSION[userNum]','$tr',$sv/16,'$choice', $id)");
 	
 }
  echo "
       <script>
           alert('리뷰가 작성되었습니다');
-          location.href = 'choice.php?choice=$_GET[choice]&id=$id';
+          location.href = 'choice.php?choice=$choice&id=$id';
       </script>
   ";
 }

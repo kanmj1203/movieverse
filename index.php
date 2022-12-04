@@ -59,7 +59,7 @@ $data = array(
     // 최신순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => 8, 337, 97, 356,
+        'with_watch_providers' => '8|337|97|356',
         'sort_by' => 'release_date.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
@@ -68,7 +68,7 @@ $data = array(
     // 인기순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => 8, 337, 97, 356,
+        'with_watch_providers' => '8|337|97|356',
         'sort_by' => 'popularity.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
@@ -333,9 +333,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
            
 <?php
 $list_arr = [["영화 최신 순", "movie_release_list", "movie"],
-            ["드라마 최신 순", "drama_release_list", "drama"],
+            ["드라마 최신 순", "drama_release_list", "tv"],
             ["영화 인기 순", "movie_popularity_list", "movie"],
-            ["드라마 인기 순","drama_popularity_list", "drama"]];
+            ["드라마 인기 순","drama_popularity_list", "tv"]];
 
 $list_count = 0;   
 $title_change = '';

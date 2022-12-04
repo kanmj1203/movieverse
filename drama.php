@@ -1,13 +1,137 @@
+<?php
+$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+$page = 0 < $page ? $page : 1;
+
+$sort_by = isset($_REQUEST["sort_by"]) ? $_REQUEST["sort_by"] : 'popularity.desc';
+
+$platform = empty($_REQUEST["platform"]) ? '' : $_REQUEST["platform"];
+$bid = isset($_REQUEST["bid"]) ? $_REQUEST["bid"] : "";
+
+$method = "GET";
+$api_key = '13e4eba426cd07a638195e968ac8cf19';
+
+$search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
+
+// 영화 데이터
+$data = array( 
+    // 최신순
+    array(
+        'api_key' => $api_key,
+        'with_watch_providers' => empty($_REQUEST["platform"]) ? '8|337|97|356' : $_REQUEST["platform"],
+        // aa($platform),
+        'sort_by' => $sort_by,
+        'watch_region' => 'KR',
+        'language' => 'ko',
+        'with_genres' => $bid,
+        'page' => $page
+    ),
+    // 인기순
+    // array(
+    //     'api_key' => $api_key,
+    //     'with_watch_providers' => 8,
+    //     'with_watch_providers' => 337,
+    //     'with_watch_providers' => 97,
+    //     'with_watch_providers' => 356,
+    //     'sort_by' => 'popularity.desc',
+    //     'watch_region' => 'KR',
+    //     'language' => 'ko',
+    //     'page' => $page
+    // ),
+    // movie or tv 장르 가져오기
+    array(
+        'api_key' => $api_key,
+        'language'=> 'ko'
+    ),
+    // 플랫폼 가져오기
+    array(
+        'api_key' => $api_key
+    )
+);
+
+// 드라마/시리즈 데이터
+// $tv_data = array(
+//     'api_key' => '13e4eba426cd07a638195e968ac8cf19',
+//     'with_watch_providers' => 8,
+//     'watch_region' => 'KR',
+//     'language' => 'ko',
+//     'page' => $page
+// );
+
+// URL 지정
+$base_url = 'https://api.themoviedb.org/3';
+$url = array(
+    // 최신순
+    $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
+    // $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
+    // 인기순
+    // $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
+    // $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
+    // 장르
+    $base_url . "/genre/tv/list?" . http_build_query($data[1], '', ),
+    // 플랫폼
+    $base_url . "/watch/providers/tv?" . http_build_query($data[2], '', )
+);
+
+// TMDB API에서 데이터 불러오기
+for($i = 0; $i < count($url); $i++){
+    $ch = curl_init();                                 //curl 초기화
+    curl_setopt($ch, CURLOPT_URL, $url[$i]);               //URL 지정하기
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    //요청 결과를 문자열로 반환 
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);      //connection timeout 10초 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   //원격 서버의 인증서가 유효한지 검사 안함 
+    //curl_setopt($ch, CURLOPT_SSLVERSION, 3); // SSL 버젼 (https 접속시에 필요)
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    
+    $response = curl_exec($ch);
+
+    $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
+
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+}
+
+// 플랫폼 id 리스트
+$providers_list = [
+    8 => '넷플릭스', 
+    337 => '왓챠',
+    97 => '디즈니',
+    356 => '웨이브'];
+$providers_id = [8, 337, 97, 356];
+$providers_name = ['넷플릭스', '왓챠', '디즈니', '웨이브'];
+
+// TMDB에서 이미지 가져오기
+$tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
+
+// $query3 = $db->query("select * FROM streaming ");
+
+
+// 페이지네이션
+
+$page_count = 5;
+$page_total = $sResponse[0]['total_pages'];
+
+$page_list = ceil($page / $page_count);
+$page_last = $page_list <= $page_total ? $page_list * $page_count : $page_total;
+$page_start = $page_last - ($page_count - 1) <= 0 ? 1 : $page_last - ($page_count - 1);
+
+$page_prev = $page_start - 1;
+$page_next = $page_last + 1;
+
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MovieVerse</title>
     <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
 
     <link rel="stylesheet" type="text/css" href="css/basic.css">
-    <link rel="stylesheet" type="text/css" href="css/movie.css">
+    <link rel="stylesheet" type="text/css" href="css/movie_tv.css">
+    <link rel="stylesheet" type="text/css" href="css/poster_hover.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -21,9 +145,12 @@ List = [];
 
 <div>
 <?php 
+
+    
 	require("db_connect.php");
 	session_start();
 	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
+    // $_SESSION["userNum"] = empty($_REQUEST["userNum"]) ? "" : $_REQUEST["userNum"];
 	
 $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
 	while ($row = $query3->fetch()) {
@@ -58,223 +185,303 @@ List.push('<?=$row['title'];?>');
 
 <body>
     <div class="all">
-        <header>
-            <div class="head">
+    <header class="header_scroll_top">
+            <div class="head">  <!--header GNB-->
+                <div class="header_left">
+                    <ul>
+                        <li><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></li>
+                        <li><a class="header_gnb" onclick="location.href='movie.php?bid=';"> 영화</a></li>
+                        <li id="now_gnb"><a class="header_gnb" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a></li>
+                        <?php 
+                            if($_SESSION["userId"]=="admin") {
+                        ?>
+                            <li><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
+                        <?php  
+                        } 
+                        ?>
+                    </ul><!--header_left END-->
+                </div>
 
-                <img class="logo" src="img/logo.png" onclick="location.href='index.php?bid='">
-                <a class="home" onclick="location.href='index.php?bid='"> 홈 </a>
-                <a style="color: #3482EA;" class="dramatap" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a>
-                <a class="movietap" onclick="location.href='movie.php?bid=';"> 영화</a>
-
-                <form class="serch" action="search_result.php" method="get">
-                    <input id="searchInput" type="text" placeholder="드라마/시리즈, 영화 제목 검색해주세요" name="search" size="35" required="required" />
-
-                   <input class="serch_Img" name="button" type="image" src="img/serch.png" />
-                </form>
-
-                <?php 
-	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
-	
-
-if(	$_SESSION["userId"]!=""){
-
-	$query3 = $db->query("select *  from user where email='$_SESSION[userId]' "); 
-	while ($row = $query3->fetch()) {
-	$iset=$row['img_link'];
-	}
-	
-	
+                <div class="header_right">
+                    <ul>   <!-- header_right -->
+                    <!-- 검색 버튼 -->
+                    <li>
+                        <div class="search_button">
+                            <input class="search_img" name="button" type="image" src="img/search_img.png" />
+                        </div>
+                    </li>
+                    <li>
+<?php 
+// 사용자 프로필 사진
+if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
+    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    while ($row = $query3->fetch()) {
+        $iset=$row['img_link'];
+    }
 ?>
-                <script>
-                    function Display() {
-                        var asd = document.getElementById("userDiv");
-                        if (asd.style.display == 'none') {
-                            asd.style.display = 'block';
-                        } else {
-                            asd.style.display = 'none';
-                        }
-
-                    }
-                </script>
-                <img class="user_img" onclick="javascript:Display();" src="user_img/<?= $iset?>">
-                <?php
-	   }else{
+                        <img class="user_img" src="user_img/<?= $iset?>">
+<?php
+}else{ // 로그아웃일 경우
 ?>
-                <button class="login_btn" onclick="location.href='login.php';">로그인</button>
-                <?php	   
-	   }
-?>
+                        <button class="login_btn" onclick="location.href='login.php';">로그인</button>
+<?php	   
+}
+?>              
+                    </li>
+                </ul>  <!-- header_right END -->
             </div>
-<img style="position: fixed;margin-left: 250px;     width: 70px;     cursor: pointer;margin-top: 700px;"  onClick="javascript:window.scrollTo(0,0)"src="img/up.png">
-          <?php 
-if(	$_SESSION["userId"]!=""){
-	
-	?>
-            <div style="display: none;" id="userDiv">
-                <h3><img style="height: 40px;width:40px;" class="userimg" src="user_img/<?= $iset?>"><?=$_SESSION["userName"]?></h3>
+            
+        </div> <!--head END-->
+        
+            <div class="hide" id="userDiv"><!--유저 정보 프로필-->
                 <ul>
-                    <li onclick="location.href='myinfo.php';"><img class="userimg" src="img/user.png">내 계정정보</li>
-                    <li onclick="location.href='pwre.php';"><img class="userimg" src="img/lock.png">비밀번호 수정</li>
-                    <li onclick="location.href='mybook.php';"><img class="userimg" src="img/bookmark.png">내 북마크</li>
-                    <li onclick="location.href='myreview.php';"><img class="userimg" src="img/review.png">작성한 평가</li>
-                    <li onclick="location.href='log_out.php';"><img class="userimg" src="img/logout.png">로그아웃 </li>
-            </div>
+                    <li><h3><img class="userimg" src="user_img/<?= $iset?>"><?=$_SESSION["userName"]?></h3></li>
+                    <li onclick="location.href='myinfo.php';">내 계정정보</li> 
+                    <!-- <img class="userimg" src="img/user.png"> -->
+                    <li onclick="location.href='pwre.php';">비밀번호 수정</li>
+                    <!-- <img class="userimg" src="img/lock.png"> -->
+                    <li onclick="location.href='mybook.php';">내 북마크</li>
+                    <!-- <img class="userimg" src="img/bookmark.png"> -->
+                    <li onclick="location.href='myreview.php';">작성한 평가</li>
+                    <!-- <img class="userimg" src="img/review.png"> -->
+                    <li onclick="location.href='log_out.php';">로그아웃 </li>
+                    <!-- <img class="userimg" src="img/logout.png"> -->
+                </ul>
+            </div>  <!--userDiv END-->
+
+            <!-- min-width:768px부터 header, 햄버거 메뉴 -->
+            <div class="width_768px_logo"><img class="logo" onclick="location.href='index.php'" src="img/logo/logo_txt.png"></div>
+                <div class="width_768px_search_button search_button">
+                    <input class="search_img" name="button" type="image" src="img/search_img.png" />
+                </div>
+                <input type="checkbox" id="menu_icon">
+                <label for="menu_icon">  
+                    <!--label은 인라인 스타일-->
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            <div class="menu_sidebar">
+                <ul class="menu_sidebar_wrapper">
+                    <!-- 로그인 상태 여부 -->
+<?php
+if ($_SESSION["userId"] != "") {
+?>
+                <li class="menu_font_size"><img class="menu_userimg" src="user_img/<?= $iset?>"><h3><?=$_SESSION["userName"]?></h3></li>          
+<?php
+} else {
+?>
+                    <li class="menu_font_size menu_login_btn"><button onclick="location.href='login.php';">로그인</button></li>          
 <?php
 }
 ?>
-            <div class="movie_all">
-                <p class="movietext"> 드라마/시리즈ㅣ 전체 </p>
-                <script>
-                    function doDisplay() {
-                        var con = document.getElementById("myDIV");
-                        if (con.style.display == 'none') {
-                            con.style.display = 'block';
-                        } else {
-                            con.style.display = 'none';
+
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='movie.php?bid=';"> 영화</a></li>
+                    <li id = "now_gnb" class="menu_font_size"><a class="header_gnb" onclick="location.href='drama.php?bid=';"> 드라마/시리즈</a></li>
+<?php 
+if($_SESSION["userId"]=="admin") {
+?>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='./phptest/list.php';"> 관리자 페이지</a></li>
+<?php  
+} 
+if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
+?>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='myinfo.php';">내 계정정보</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='pwre.php';">비밀번호 수정</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='mybook.php';">내 북마크</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='myreview.php';">작성한 평가</a></li>
+                    <li class="menu_font_size"><a class="header_gnb" onclick="location.href='log_out.php';">로그아웃</a></li>
+<?php
+}
+?>
+                </ul>
+                <ul class="menu_sidebar_wrapper">
+                </ul>
+            </div>
+        </header>
+
+        <!-- 검색창 -->
+        <div class="search_modal">
+            <div class="search_modal_close">
+                <img src="./img/close_icon_white.png">
+            </div>
+            <div class="search_wrapper">
+                    <form class="search" action="search_result.php" method="get">
+                        <input id="searchInput" type="text" name="search" 
+                        placeholder="제목, 배우를 검색해주세요"
+                         onfocus="this.placeholder=''" 
+                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                        size="70" required="required"/>
+                        <input class="search_Img" name="button" type="image" src="img/search_img.png" />
+                    </form>
+            </div>
+        </div>
+        <!-- search_modal END -->
+        
+        <!-- category -->
+        <div class="category_container">
+
+                <div class="category_wrap">
+                    <ul>
+                        <?php
+                        for($i = 0; $i < 4; $i++){
+                            // 클릭된 플랫폼 표시
+                            $clicked_provider = $providers_id[$i] == $platform ? "1" : "0.5";
+                            // 클릭된 플랫폼 다시 클릭 시 해제되도록
+                            $already_click = $providers_id[$i] == $platform ? "": $providers_id[$i]; 
+                        ?>
+                        <li class="category_li"><a style="opacity: <?=$clicked_provider?>"
+                            onclick="location.href='drama.php?platform=<?=$already_click?>&search=<?=$search?>&bid=<?=$bid?>&sort_by=<?=$sort_by?>';"><?=$providers_name[$i]?></a></li>
+                        <?php
                         }
-
-                    }
-                </script>
-                       <div class="bar">
-                <p id="dok">독점작</p>
-				<div style="margin:10px 0 0 430px;">
-	<?php
-	$Popularity_Newest =isset($_REQUEST["Popularity_Newest"]) ? $_REQUEST["Popularity_Newest"] : "popularity";
-		$query3 = $db->query("select * FROM streaming ");
-	$styles="font-size: 20px;background-Color: #E5E5E5;	color:#3482EA;";
-	$platform =isset($_REQUEST["platform"]) ? $_REQUEST["platform"] : "";
-		$bid =isset($_REQUEST["bid"]) ? $_REQUEST["bid"] : "";
-		$search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
-
-
-while ($row = $query3->fetch()) {
-
-?>
-<img onclick="location.href='drama.php?platform=<?=$row['provider_id']?>&search=<?=$search?>&bid=<?=$bid?>&Popularity_Newest=<?=$Popularity_Newest?>';" class="where_logo"src="img/<?=$row['logo_path']?>">
-<?php
-}
-?>
-<img onclick="location.href='drama.php?bid='" class="where_logo"src="img/all.png">
-
-</div>
-
-                <a id="carta" href="javascript:doDisplay();">⇧ 카테고리</a>
-
-                <div style="display: none;" id="myDIV">
-                    <ul>
-                        <a href="drama.php?bid=&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid=="")echo $styles; ?>;">전체</li></a>       
-                        <a href="drama.php?bid=14&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==14) echo $styles; ?>">모험</li></a>       
-                        <a href="drama.php?bid=16&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==16) echo $styles; ?>">애니메이션</li></a> 
-                        <a href="drama.php?bid=18&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==18) echo $styles; ?>">드라마</li></a>     
-                        <a href="drama.php?bid=27&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==27) echo $styles; ?>">공포</li></a>       
-                        
+                        ?>
                     </ul>
-                    <ul>
-                       <a href="drama.php?bid=28&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==28) echo $styles; ?>">액션</li></a>
-                       <a href="drama.php?bid=35&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==35) echo $styles; ?>">코미디</li></a> 
-                       <a href="drama.php?bid=36&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==36) echo $styles; ?>">역사</li></a>
-                       <a href="drama.php?bid=37&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==37) echo $styles; ?>">서부</li></a>
-                       <a href="drama.php?bid=53&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==53) echo $styles; ?>">스릴러</li></a>
-                    </ul>
-                    <ul>
-                      <a href="drama.php?bid=80&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>">   <li style="<?php if($bid==80) echo $styles; ?>">범죄      </li></a> 
-                      <a href="drama.php?bid=99&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>">   <li style="<?php if($bid==99) echo $styles; ?>">다큐멘터리</li></a> 
-                      <a href="drama.php?bid=878&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>">  <li style="<?php if($bid==878) echo $styles; ?>">SF        </li></a>
-                      <a href="drama.php?bid=9648&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"> <li style="<?php if($bid==9648) echo $styles; ?>">미스터리  </li></a>
-                      <a href="drama.php?bid=10402&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10402) echo $styles; ?>">음악      </li></a>
-                    </ul>
-                    <ul>
-                    <a href="drama.php?bid=10749&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10749) echo $styles; ?>">로맨스    </li></a>
-                    <a href="drama.php?bid=10751&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10751) echo $styles; ?>">가족      </li></a> 
-                    <a href="drama.php?bid=10752&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10752) echo $styles; ?>">전쟁      </li></a>
-                    <a href="drama.php?bid=10759&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10759) echo $styles; ?>">액션&어드벤쳐</li></a>
-                    <a href="drama.php?bid=10762&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10762) echo $styles; ?>">키즈      </li></a>
-                    </ul>
-                    <ul>
-                    <a href="drama.php?bid=10763&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10763) echo $styles; ?>">뉴스</li></a> 
-                    <a href="drama.php?bid=10764&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10764) echo $styles; ?>">리얼리티</li></a> 
-                    <a href="drama.php?bid=10765&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10765) echo $styles; ?>">공상과학&판타지</li></a>
-                    <a href="drama.php?bid=10766&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10766) echo $styles; ?>">연속극</li></a>
-                    <a href="drama.php?bid=10767&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10767) echo $styles; ?>">토크</li></a>
-                    </ul>
-                    <ul>
-                        <a href="drama.php?bid=10768&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10768) echo $styles; ?>">시사 </li></a>
-                        <a href="drama.php?bid=10770&search=<?=$search?>&platform=<?=$platform?>&Popularity_Newest=<?=$Popularity_Newest?>"><li style="<?php if($bid==10770) echo $styles; ?>">TV 영화 </li></a>
-
-                    </ul>
-
                 </div>
-                    <p id="pop"><a style="color: <?php 	if($Popularity_Newest=="popularity"){echo'white';}else{echo'#BDBDBD';}?>;"href="drama.php?Popularity_Newest=popularity&bid=<?=$bid?>&search=<?=$search?>&platform=<?=$platform?>">인기순</a></p>
+                <div class="category_right_wrap">
+                    <p id="carta">카테고리<p>
+                    <p><a style="opacity: <?= $sort_by=="popularity.desc" ? '1' : '0.5'?>;"href="drama.php?sort_by=popularity.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ? "" : $platform ?>">인기순</a></p>
                     <p id="ll">ㅣ</p>
-                    <p id="now"><a style="color:  <?php if($Popularity_Newest!="popularity"){echo 'white';}else{echo'#BDBDBD';}?>;" href="drama.php?Popularity_Newest=release_date&bid=<?=$bid?>&search=<?=$search?>&platform=<?=$platform?>">최신순</a></p>
+                    <p><a style="opacity: <?= $sort_by =="release_date.desc" ? '1' : '0.5'?>;" href="drama.php?sort_by=release_date.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ?  "" : $platform ?>">최신순</a></p>
+                </div>
+        </div>
+                <div id="myDIV" class="category_list_scroll_top">
+                    <ul>
+                    <li class="<?= $bid == "" ? 'now_category' : ''?>"><a href="drama.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
+                    
+                <?php
+                    foreach($sResponse[1]['genres'] as $genre) {
+                ?>
+                    <li class="<?= $bid == $genre['id'] ? 'now_category' : ''?>"><a href="drama.php?bid=<?=$genre['id']?>&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><?=$genre['name']?></a></li>       
+                    
+                <?php
+                    }
+                ?>
+                    <!-- <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
+                    <li style="<?php if($bid=="14")echo $styles; ?>;"><a href="movie.php?bid=14&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">모험</a></li>    -->  
+                </ul>
 
                 </div>
 
+        <div id='wrap' class="main_container">
+            <div class="movie_all">
+                <p class="movietext"> 드라마/시리즈ㅣ <?= isset($providers_list[$platform]) ? $providers_list[$platform] : '전체'?> </p>
+                <div class="show"><!--리스트 보여지는 틀-->
+                    <div class="main_slide_lists"><!--리스트 이미지 출력-->
 <?php
+    $pxs=0;
+    $list_count = 0;   
+    $title_change = 'name';
+    $choice = "tv";
 
-		$name_array = array();
-	$hap=0;
-		$count=0;
+    for ($i = 0; $i < count($sResponse[0]['results']); $i++) {
 
-	$query3 =$db->query("SELECT *  , GROUP_CONCAT(genres.genres_name) AS genrs_names  from tv left join genres ON tv.genre_id LIKE  CONCAT('%',genres.genre_id,'%') 
-	where title like '%$search%'and tv.provider_id like '%$platform%' and tv.genre_id LIKE   '%$bid%'  group by tv.id  order by $Popularity_Newest desc
-"); 
+        // 시나리오 글자수 제한
+        $poster_overview = $sResponse[$list_count]['results'][$i]['overview'];
+        
+        if (strlen($poster_overview) >= 330) {
+            $poster_overview = iconv_substr($poster_overview,0,140,"utf-8").'...';
+        }
+    ?>
 
-	while ($row = $query3->fetch()) {
+                        <div class="main_poster_img_container poster_container" onclick="location.href='choice.php?choice=<?=$choice?>&id=<?=$sResponse[$list_count]['results'][$i]['id']?>';">
+                            <div class="poster_hover_wrapper">
+                                <p class="main_poster_title"><?=$sResponse[$list_count]['results'][$i][$title_change]?></p>
+                                <p class="main_poster_overview"><?=$poster_overview?></p>
+                            </div>
+                            <span class="poster_wrap">
+                            <img class="main_poster_img" 
+                                src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
+                                alt=""
+                                onerror="this.parentNode.style.display='none'">
+                            </span>
+                        </div>
+    <?php
+        }
+        ?>
 
-          
-	?>
-            <div  class="movies">
-			<div style="margin: 90px 0px 0px 24px;" class="div_dda">
 <?php
-
-if(	$_SESSION["userId"]!=""){
-    $bookmark=$db->query("select count(*) from  bookmark  where member_num='$_SESSION[userNum]' and review_num='$row[id]'  ")->fetchColumn();
-
-	if($bookmark>0){
-	?>
-	<img class="bookmark_yes" src="img/bookmark_yes.png"onclick="location.href='join_bookmark.php?id=<?= $row['id'];?>&choice=tv';">
- 
-   <?php
-	}else{
-		?>
-		 	<img class="bookmark_yes" src="img/bookmark_no.png"onclick="location.href='join_bookmark.php?id=<?= $row['id'];?>&choice=tv';">
-  
-<?php
-	}
-}
+                    $pxs=24;
+                    $list_count++;
 ?>
-                <a href="choice.php?choice=tv&id=<?=$row['id'];?>">
-                    <img  class="movie" src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-                    <p style="top:0px;"  class="hover_text"><?=$row['title']?></p>
-                    <p style="top:80px;" class="hover_text"><?=$row['release_date']?></p>
-                    <p style="top:130px;" class="hover_text"><?=$row['age']?></p>
-                    <p style="top:180px;" class="hover_text"><?=$row['genrs_names']?></p>
-
-
-			  </a>
-			  </div>
+                    </div>
+                    <!-- main_slide_lists END -->
+                </div> 
+                <!--show END-->
             </div>
-            <?php
+            <!-- movie_all END -->
 
-$count=$count+1;
-if($count==6){
-	$count=0;
-	$hap=360+$hap;
-	}
-}
+            <!-- pagination -->
+            <div class="pagination">
+                <ul>
+                    <li>
+                    <button 
+                    class="pagination_button"
+                    type="button"
+                    onclick="location.href='drama.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_prev?>'">
+                    <
+                    </button></li>
+<?php
+                for($i = $page_start; $i <= $page_last; $i++){
 ?>
+                    <li><button
+                    class="pagination_button <?=$i == $page ? 'now_page' : ''?>"
+                    type="button"
+                    onclick="location.href='drama.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$i?>'"
+                    >
+                    <?=$i?></button></li>
+<?php
+                }
+?>
+                    <li><button 
+                    class="pagination_button"
+                    type="button"
+                    onclick="location.href='drama.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_next?>'" >
+                    >
+                    </button></li>
             </div>
-        <div style=" position: absolute;margin: <?=$hap+720?>px 0px 0px;">
-        <footer>
-            <p class="footer_text">© 2020 TVNNG.COM | 요금제 및 소개 : NETFLIX(넷플릭스) | wavve(웨이브) | 티빙 | 왓챠플레이
-                Data & Content Image Based On Netflix.inc , 콘텐츠웨이브(주), Amazon.inc, Watcha.inc, CJ ENM, TiVo Platform Technologies, JestWatch(c)
-                Icons made by fonticons.inc | Hosting by Gabia.inc
-                <br><br>
-                제안 또는 광고문의 : dbswl5@kakao.com</p>
-        </footer>
+        </div>
+        <!-- wrap END -->
+        
+       <!--footer-->
+        <footer class="footer">
+            <div class="footer_logos">
+        <?php
+
+$provider_logo_path = [];
+
+// $sResponse에서 마지막 요소 가져오기
+$footer_provider_array = end($sResponse);
+
+for ($res_count=0; $res_count < count($footer_provider_array["results"]); $res_count++) {
+    foreach ($providers_id as $prov_id) {
+        if ($prov_id == $footer_provider_array["results"][$res_count]['provider_id']) {
+            array_push($provider_logo_path, $footer_provider_array["results"][$res_count]['logo_path']);
+        } else {
+        }
+    }
+}
+
+$prov_count = 0;
+foreach($provider_logo_path as $prov_logo_path){
+        ?>
+                <div class="footer_img" onclick="location.href='movie.php?platform=<?=$providers_id[$prov_count]?>';"><img src="<?=$tmdb_img_base_url.$prov_logo_path?>"></div>
+    <?php
+    $prov_count++;
+}
+    ?>
     </div>
-
+                <div class="footer_text">신구대학교 팀프로젝트 6조
+                    <br>
+                    권은진 강민지 천서정 시지원 김나영
+                    <br><br>
+                    성남시 중원구 광명로377(금광2동 2685) 신구대학교 산학관 110호 
+                </div>
+            </footer>
+            <!--footer END-->
 </body>
-
 </html>
+<script type="text/javascript" src="./js/movie_tv.js"></script>
+<script type="text/javascript" src="./js/header.js"></script>
+
+<script>
+</script>

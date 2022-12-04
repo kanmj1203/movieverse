@@ -151,6 +151,12 @@ align-items: center;
 
 }
 
+/* 현재 GNB */
+#now_gnb a{
+    font-weight : bold;
+    
+}
+
 /* 검색 GNB */
 .search_button {
     display: inline-block;
@@ -473,6 +479,7 @@ margin-left:13px;
     left : 5%;
     margin : 0;
     display : none;
+    cursor: pointer;
 }
 
 .width_768px_search_button {

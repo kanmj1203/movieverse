@@ -1,0 +1,494 @@
+ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,10
+ColsVisible_connform.ListSessions<|||>1<|||>0,1,4,6
+ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
+ColSort_connform.ListSessions<|||>1<|||>0,1
+MainWinOnMonitor<|||>3<|||>0
+ColWidths_MainForm.ListDatabases<|||>1<|||>150,80,50,50,50,50,50,50,50,50,120
+ColsVisible_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColPositions_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColSort_MainForm.ListDatabases<|||>1<|||>0,0
+ColWidths_MainForm.ListVariables<|||>1<|||>160,200,428
+ColsVisible_MainForm.ListVariables<|||>1<|||>0,1,2
+ColPositions_MainForm.ListVariables<|||>1<|||>0,1,2
+ColSort_MainForm.ListVariables<|||>1<|||>0,0
+ColWidths_MainForm.ListStatus<|||>1<|||>160,428,100,100
+ColsVisible_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColPositions_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColSort_MainForm.ListStatus<|||>1<|||>0,0
+ColWidths_MainForm.ListProcesses<|||>1<|||>70,80,80,80,80,50,50,593
+ColsVisible_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColPositions_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColSort_MainForm.ListProcesses<|||>1<|||>0,1
+ColWidths_MainForm.ListCommandStats<|||>1<|||>120,100,100,100,368
+ColsVisible_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColPositions_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColSort_MainForm.ListCommandStats<|||>1<|||>1,1
+ColWidths_MainForm.ListTables<|||>1<|||>120,70,70,120,120,70,100,50,70,70,70,70,70,90,120,70,70,70,50
+ColsVisible_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,18
+ColPositions_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+ColSort_MainForm.ListTables<|||>1<|||>0,0
+LastSessions<|||>1<|||>movieverse
+LastActiveSession<|||>1<|||>movieverse
+SessionManager_WindowLeft<|||>3<|||>913
+SessionManager_WindowTop<|||>3<|||>503
+ColWidths_frmTableEditor.listColumns<|||>1<|||>39,109,154,90,60,65,50,130,130,140,100,100
+ColsVisible_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColPositions_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColSort_frmTableEditor.listColumns<|||>1<|||>-1,0
+ColWidths_frmTableEditor.treeIndexes<|||>1<|||>440,100,80
+ColsVisible_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColPositions_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColSort_frmTableEditor.treeIndexes<|||>1<|||>-1,0
+ColWidths_frmTableEditor.listForeignKeys<|||>1<|||>217,80,100,80,80,80
+ColsVisible_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColPositions_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColSort_frmTableEditor.listForeignKeys<|||>1<|||>-1,0
+MainWinLeft<|||>3<|||>222
+MainWinTop<|||>3<|||>339
+MainWinWidth<|||>3<|||>1349
+SessionManager_WindowHeight<|||>3<|||>499
+querymemoheight<|||>3<|||>206
+dbtreewidth<|||>3<|||>230
+MainWinHeight<|||>3<|||>810
+sqloutheight<|||>3<|||>106
+MemoEditorWidth<|||>3<|||>136
+StopOnErrorsInBatchMode<|||>3<|||>0
+DateTimeEditor_CursorPos_Type4<|||>3<|||>10
+ExportSQL_CreateDatabases<|||>3<|||>1
+ExportSQL_CreateTables<|||>3<|||>1
+ExportSQL_DataHow<|||>3<|||>1
+ExportSQL_Filenames<|||>1<|||>D:\IT소프트웨어학과\2학년 2학기\프로젝트분석설계\POS.sql<{{{><}}}>
+FileDialogEncoding_MainForm<|||>3<|||>0
+ColWidths_UserManagerForm.listUsers<|||>1<|||>96,80
+ColsVisible_UserManagerForm.listUsers<|||>1<|||>0,1
+ColPositions_UserManagerForm.listUsers<|||>1<|||>0,1
+ColSort_UserManagerForm.listUsers<|||>1<|||>0,0
+SQLFile0<|||>1<|||>C:\Users\에슨데 ipTIME\AppData\Roaming\HeidiSQL\Backups\query-tab-2022-11-28_23-09-09-179.sql
+SQLFile1<|||>1<|||>C:\Users\에슨데 ipTIME\AppData\Roaming\HeidiSQL\Backups\query-tab-2022-11-28_23-07-40-801.sql
+SQLFile2<|||>1<|||>C:\Users\에슨데 ipTIME\AppData\Roaming\HeidiSQL\Backups\query-tab-2022-10-29_02-59-18-355.sql
+SQLFile3<|||>1<|||>C:\Users\에슨데 ipTIME\AppData\Roaming\HeidiSQL\Backups\query-tab-2021-11-23_09-50-45-033.sql
+SQLFile4<|||>1<|||>C:\xampp\htdocs\movieverse\sql\movieverse_db.sql
+SQLFile5<|||>1<|||>C:\Users\에슨데 ipTIME\AppData\Roaming\HeidiSQL\Backups\query-tab-2021-06-03_11-02-29-885.sql
+SQLFile6<|||>1<|||>D:\IT소프트웨어학과\2학년 2학기\프로젝트분석설계\홍길동.sql
+SQLFile7<|||>1<|||>C:\Users\에슨데 ipTIME\AppData\Roaming\HeidiSQL\Backups\query-tab-2021-04-29_12-21-09-928.sql
+Servers\aasda\SessionCreated<|||>1<|||>2021-10-18 02:01:37
+Servers\aasda\Host<|||>1<|||>127.0.0.1
+Servers\aasda\WindowsAuth<|||>3<|||>0
+Servers\aasda\CleartextPluginEnabled<|||>3<|||>0
+Servers\aasda\User<|||>1<|||>root
+Servers\aasda\Password<|||>1<|||>9
+Servers\aasda\LoginPrompt<|||>3<|||>0
+Servers\aasda\Port<|||>1<|||>3306
+Servers\aasda\NetType<|||>3<|||>0
+Servers\aasda\Compressed<|||>3<|||>0
+Servers\aasda\LocalTimeZone<|||>3<|||>0
+Servers\aasda\QueryTimeout<|||>3<|||>30
+Servers\aasda\KeepAlive<|||>3<|||>20
+Servers\aasda\FullTableStatus<|||>3<|||>1
+Servers\aasda\Databases<|||>1<|||>
+Servers\aasda\Library<|||>1<|||>libmariadb.dll
+Servers\aasda\Comment<|||>1<|||>
+Servers\aasda\StartupScriptFilename<|||>1<|||>
+Servers\aasda\TreeBackground<|||>3<|||>536870911
+Servers\aasda\SSHtunnelHost<|||>1<|||>
+Servers\aasda\SSHtunnelHostPort<|||>3<|||>22
+Servers\aasda\SSHtunnelUser<|||>1<|||>
+Servers\aasda\SSHtunnelPassword<|||>1<|||>7
+Servers\aasda\SSHtunnelTimeout<|||>3<|||>4
+Servers\aasda\SSHtunnelPrivateKey<|||>1<|||>
+Servers\aasda\SSHtunnelPort<|||>3<|||>3307
+Servers\aasda\SSL_Active<|||>3<|||>0
+Servers\aasda\SSL_Key<|||>1<|||>
+Servers\aasda\SSL_Cert<|||>1<|||>
+Servers\aasda\SSL_CA<|||>1<|||>
+Servers\aasda\SSL_Cipher<|||>1<|||>
+Servers\aasda\RefusedCount<|||>3<|||>1
+Servers\campusMarketdb\SessionCreated<|||>1<|||>2022-04-13 22:20:30
+Servers\campusMarketdb\Host<|||>1<|||>127.0.0.1
+Servers\campusMarketdb\WindowsAuth<|||>3<|||>0
+Servers\campusMarketdb\CleartextPluginEnabled<|||>3<|||>0
+Servers\campusMarketdb\User<|||>1<|||>cMarket
+Servers\campusMarketdb\Password<|||>1<|||>363738395
+Servers\campusMarketdb\LoginPrompt<|||>3<|||>0
+Servers\campusMarketdb\Port<|||>1<|||>3307
+Servers\campusMarketdb\NetType<|||>3<|||>0
+Servers\campusMarketdb\Compressed<|||>3<|||>0
+Servers\campusMarketdb\LocalTimeZone<|||>3<|||>0
+Servers\campusMarketdb\QueryTimeout<|||>3<|||>30
+Servers\campusMarketdb\KeepAlive<|||>3<|||>20
+Servers\campusMarketdb\FullTableStatus<|||>3<|||>1
+Servers\campusMarketdb\Databases<|||>1<|||>
+Servers\campusMarketdb\Library<|||>1<|||>libmariadb.dll
+Servers\campusMarketdb\Comment<|||>1<|||>
+Servers\campusMarketdb\StartupScriptFilename<|||>1<|||>
+Servers\campusMarketdb\TreeBackground<|||>3<|||>536870911
+Servers\campusMarketdb\SSHtunnelHost<|||>1<|||>
+Servers\campusMarketdb\SSHtunnelHostPort<|||>3<|||>22
+Servers\campusMarketdb\SSHtunnelUser<|||>1<|||>
+Servers\campusMarketdb\SSHtunnelPassword<|||>1<|||>9
+Servers\campusMarketdb\SSHtunnelTimeout<|||>3<|||>4
+Servers\campusMarketdb\SSHtunnelPrivateKey<|||>1<|||>
+Servers\campusMarketdb\SSHtunnelPort<|||>3<|||>3307
+Servers\campusMarketdb\SSL_Active<|||>3<|||>0
+Servers\campusMarketdb\SSL_Key<|||>1<|||>
+Servers\campusMarketdb\SSL_Cert<|||>1<|||>
+Servers\campusMarketdb\SSL_CA<|||>1<|||>
+Servers\campusMarketdb\SSL_Cipher<|||>1<|||>
+Servers\campusMarketdb\RefusedCount<|||>3<|||>1
+Servers\kmjdb\SessionCreated<|||>1<|||>2022-11-28 21:06:02
+Servers\kmjdb\Host<|||>1<|||>127.0.0.1
+Servers\kmjdb\WindowsAuth<|||>3<|||>0
+Servers\kmjdb\CleartextPluginEnabled<|||>3<|||>0
+Servers\kmjdb\User<|||>1<|||>kmj
+Servers\kmjdb\Password<|||>1<|||>323334351
+Servers\kmjdb\LoginPrompt<|||>3<|||>0
+Servers\kmjdb\Port<|||>1<|||>3307
+Servers\kmjdb\NetType<|||>3<|||>0
+Servers\kmjdb\Compressed<|||>3<|||>0
+Servers\kmjdb\LocalTimeZone<|||>3<|||>0
+Servers\kmjdb\QueryTimeout<|||>3<|||>30
+Servers\kmjdb\KeepAlive<|||>3<|||>20
+Servers\kmjdb\FullTableStatus<|||>3<|||>1
+Servers\kmjdb\Databases<|||>1<|||>
+Servers\kmjdb\Library<|||>1<|||>libmariadb.dll
+Servers\kmjdb\Comment<|||>1<|||>
+Servers\kmjdb\StartupScriptFilename<|||>1<|||>
+Servers\kmjdb\TreeBackground<|||>3<|||>536870911
+Servers\kmjdb\SSHtunnelHost<|||>1<|||>
+Servers\kmjdb\SSHtunnelHostPort<|||>3<|||>22
+Servers\kmjdb\SSHtunnelUser<|||>1<|||>
+Servers\kmjdb\SSHtunnelPassword<|||>1<|||>8
+Servers\kmjdb\SSHtunnelTimeout<|||>3<|||>4
+Servers\kmjdb\SSHtunnelPrivateKey<|||>1<|||>
+Servers\kmjdb\SSHtunnelPort<|||>3<|||>3307
+Servers\kmjdb\SSL_Active<|||>3<|||>0
+Servers\kmjdb\SSL_Key<|||>1<|||>
+Servers\kmjdb\SSL_Cert<|||>1<|||>
+Servers\kmjdb\SSL_CA<|||>1<|||>
+Servers\kmjdb\SSL_Cipher<|||>1<|||>
+Servers\kmjdb\RefusedCount<|||>3<|||>4
+Servers\kmjdb\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\kmjdb\ConnectCount<|||>3<|||>4
+Servers\kmjdb\ServerVersion<|||>3<|||>100417
+Servers\kmjdb\LastConnect<|||>1<|||>2022-12-03 23:00:56
+Servers\kmjdb\lastUsedDB<|||>1<|||>test
+Servers\kmjdb\QueryHistory\1<|||>1<|||>2022-11-28 21:07:23||47|create table board (<{{{><}}}><{{{><}}}>    num     int          auto_increment primary key,<{{{><}}}><{{{><}}}>   writer  varchar(20),<{{{><}}}><{{{><}}}>    title   varchar(60),<{{{><}}}><{{{><}}}>   content text,<{{{><}}}><{{{><}}}>     regtime varchar(20),<{{{><}}}><{{{><}}}>   hits    int<{{{><}}}><{{{><}}}>);<{{{><}}}><{{{><}}}><{{{><}}}><{{{><}}}> insert into board values<{{{><}}}><{{{><}}}>    (1, '홍길동', '글 1', '글의 내용 1', '2017-07-30 10:10:11', 0),<{{{><}}}><{{{><}}}>    (2, '이순신', '글 2', '글의 내용 2', '2017-07-30 10:10:12', 0),<{{{><}}}><{{{><}}}>    (3, '강감찬', '글 3', '글의 내용 3', '2017-07-30 10:10:13', 0),<{{{><}}}><{{{><}}}>     (4, '김수로', '글 4', '글의 내용 4', '2017-07-30 10:10:14', 0),<{{{><}}}><{{{><}}}>     (5, '장길산', '글 5', '글의 내용 5', '2017-07-30 10:10:15', 0),<{{{><}}}><{{{><}}}>    (6, '김수로', '글 6', '글의 내용 6', '2017-07-30 10:10:16', 0),<{{{><}}}><{{{><}}}>     (7, '홍길동', '글 7', '글의 내용 7', '2017-07-30 10:10:17', 0),<{{{><}}}><{{{><}}}>     (8, '이순신', '글 8', '글의 내용 8', '2017-07-30 10:10:18', 0);​
+Servers\kmjdb\QueryHistory\2<|||>1<|||>2022-11-28 23:07:40|test|16|create table addrbook (<{{{><}}}>    num     int          auto_increment primary key,<{{{><}}}>    name    VARCHAR(80),<{{{><}}}>    addr    VARCHAR(80),<{{{><}}}>    phone   VARCHAR(80)<{{{><}}}>);<{{{><}}}><{{{><}}}>INSERT INTO addrbook VALUES <{{{><}}}>    (1, '홍길동', '서울', '123-4567'),<{{{><}}}>    (2, '이순신', '통영', '223-5567'),<{{{><}}}>    (3, '강감찬', '대전', '332-5543');<{{{><}}}><{{{><}}}>
+Servers\kmjdb\QueryHistory\5<|||>1<|||>2022-11-28 23:09:09|test|0|SHOW WARNINGS
+Servers\kmjdb\QueryHistory\4<|||>1<|||>2022-11-28 23:14:51|test|0|<{{{><}}}><{{{><}}}>INSERT INTO addrbook VALUES <{{{><}}}>    (1, '홍길동', '서울', '123-4567'),<{{{><}}}>    (2, '이순신', '통영', '223-5567'),<{{{><}}}>    (3, '강감찬', '대전', '332-5543');<{{{><}}}><{{{><}}}>
+Servers\movieverse\SessionCreated<|||>1<|||>2022-10-29 02:57:04
+Servers\movieverse\Host<|||>1<|||>127.0.0.1
+Servers\movieverse\WindowsAuth<|||>3<|||>0
+Servers\movieverse\CleartextPluginEnabled<|||>3<|||>0
+Servers\movieverse\User<|||>1<|||>movieverse
+Servers\movieverse\Password<|||>1<|||>3738393A6
+Servers\movieverse\LoginPrompt<|||>3<|||>0
+Servers\movieverse\Port<|||>1<|||>3307
+Servers\movieverse\NetType<|||>3<|||>0
+Servers\movieverse\Compressed<|||>3<|||>0
+Servers\movieverse\LocalTimeZone<|||>3<|||>0
+Servers\movieverse\QueryTimeout<|||>3<|||>30
+Servers\movieverse\KeepAlive<|||>3<|||>20
+Servers\movieverse\FullTableStatus<|||>3<|||>1
+Servers\movieverse\Databases<|||>1<|||>
+Servers\movieverse\Library<|||>1<|||>libmariadb.dll
+Servers\movieverse\Comment<|||>1<|||>
+Servers\movieverse\StartupScriptFilename<|||>1<|||>
+Servers\movieverse\TreeBackground<|||>3<|||>536870911
+Servers\movieverse\SSHtunnelHost<|||>1<|||>
+Servers\movieverse\SSHtunnelHostPort<|||>3<|||>22
+Servers\movieverse\SSHtunnelUser<|||>1<|||>
+Servers\movieverse\SSHtunnelPassword<|||>1<|||>2
+Servers\movieverse\SSHtunnelTimeout<|||>3<|||>4
+Servers\movieverse\SSHtunnelPrivateKey<|||>1<|||>
+Servers\movieverse\SSHtunnelPort<|||>3<|||>3307
+Servers\movieverse\SSL_Active<|||>3<|||>0
+Servers\movieverse\SSL_Key<|||>1<|||>
+Servers\movieverse\SSL_Cert<|||>1<|||>
+Servers\movieverse\SSL_CA<|||>1<|||>
+Servers\movieverse\SSL_Cipher<|||>1<|||>
+Servers\movieverse\RefusedCount<|||>3<|||>2
+Servers\movieverse\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\movieverse\ConnectCount<|||>3<|||>9
+Servers\movieverse\ServerVersion<|||>3<|||>100417
+Servers\movieverse\LastConnect<|||>1<|||>2022-12-04 19:09:19
+Servers\movieverse\lastUsedDB<|||>1<|||>movieverse
+Servers\movieverse\movieverse|bookmark\Sort<|||>1<|||>0_choice_num|
+Servers\phpdb\SessionCreated<|||>1<|||>2021-05-05 21:53:35
+Servers\phpdb\Host<|||>1<|||>127.0.0.1
+Servers\phpdb\WindowsAuth<|||>3<|||>0
+Servers\phpdb\CleartextPluginEnabled<|||>3<|||>0
+Servers\phpdb\User<|||>1<|||>php
+Servers\phpdb\Password<|||>1<|||>353637384
+Servers\phpdb\LoginPrompt<|||>3<|||>0
+Servers\phpdb\Port<|||>1<|||>3307
+Servers\phpdb\NetType<|||>3<|||>0
+Servers\phpdb\Compressed<|||>3<|||>0
+Servers\phpdb\LocalTimeZone<|||>3<|||>0
+Servers\phpdb\QueryTimeout<|||>3<|||>30
+Servers\phpdb\KeepAlive<|||>3<|||>20
+Servers\phpdb\FullTableStatus<|||>3<|||>1
+Servers\phpdb\Databases<|||>1<|||>
+Servers\phpdb\Library<|||>1<|||>libmariadb.dll
+Servers\phpdb\Comment<|||>1<|||>
+Servers\phpdb\StartupScriptFilename<|||>1<|||>
+Servers\phpdb\TreeBackground<|||>3<|||>536870911
+Servers\phpdb\SSHtunnelHost<|||>1<|||>
+Servers\phpdb\SSHtunnelHostPort<|||>3<|||>22
+Servers\phpdb\SSHtunnelUser<|||>1<|||>
+Servers\phpdb\SSHtunnelPassword<|||>1<|||>4
+Servers\phpdb\SSHtunnelTimeout<|||>3<|||>4
+Servers\phpdb\SSHtunnelPrivateKey<|||>1<|||>
+Servers\phpdb\SSHtunnelPort<|||>3<|||>3307
+Servers\phpdb\SSL_Active<|||>3<|||>0
+Servers\phpdb\SSL_Key<|||>1<|||>
+Servers\phpdb\SSL_Cert<|||>1<|||>
+Servers\phpdb\SSL_CA<|||>1<|||>
+Servers\phpdb\SSL_Cipher<|||>1<|||>
+Servers\phpdb\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\phpdb\ConnectCount<|||>3<|||>22
+Servers\phpdb\ServerVersion<|||>3<|||>100417
+Servers\phpdb\LastConnect<|||>1<|||>2021-11-23 14:19:25
+Servers\phpdb\lastUsedDB<|||>1<|||>phpdb
+Servers\phpdb\FavoriteObjects<|||>1<|||>
+Servers\phpdb\phpdb|board\Sort<|||>1<|||>1_content|
+Servers\phpdb\phpdb|member\Sort<|||>1<|||>0_pw|
+Servers\phpdb\QueryHistory\4<|||>1<|||>2021-09-28 13:50:42|phpdb|16|select * from board where num = 8
+Servers\phpdb\QueryHistory\1<|||>1<|||>2021-09-28 16:00:51|phpdb|47|create table login (<{{{><}}}>    num     int          auto_increment primary key,<{{{><}}}>    name  varchar(20),<{{{><}}}>    id   varchar(60),<{{{><}}}>    pw 	VARCHAR(20),<{{{><}}}>    eamil varchar(20),<{{{><}}}>    tel    int<{{{><}}}>);<{{{><}}}>
+Servers\phpdb\QueryHistory\2<|||>1<|||>2021-09-28 16:05:19|phpdb|0|insert into board VALUES<{{{><}}}>(0, '강민지', 'aaaa', '1111', 'rkdalswl1203@shingu.ac.kr', '010-4258-3558')
+Servers\phpdb\QueryHistory\3<|||>1<|||>2021-09-28 16:05:33|phpdb|0|insert into login VALUES<{{{><}}}>(1, '강민지', 'aaaa', '1111', 'rkdalswl1203@shingu.ac.kr', '010-4258-3558')
+Servers\phpdb\QueryHistory\5<|||>1<|||>2021-09-28 16:06:52|phpdb|15|insert into login VALUES<{{{><}}}>(2, '홍길동', 'bbbb', '2222', 'ghdrlfehd@naver.com', '010-1111-2222')
+Servers\phpdb\QueryHistory\6<|||>1<|||>2021-10-05 14:16:31|phpdb|31|<{{{><}}}>create table board_notice (<{{{><}}}>    num     int          auto_increment primary key,<{{{><}}}>    writer  varchar(20),<{{{><}}}>    title   varchar(60),<{{{><}}}>    content text,<{{{><}}}>    regtime varchar(20),<{{{><}}}>    hits    int<{{{><}}}>);<{{{><}}}><{{{><}}}>insert into board_notice values<{{{><}}}>    (1, '홍길동', '글 1', '글의 내용 1', '2017-07-30 10:10:11', 0),<{{{><}}}>    (2, '이순신', '글 2', '글의 내용 2', '2017-07-30 10:10:12', 0),<{{{><}}}>    (3, '강감찬', '글 3', '글의 내용 3', '2017-07-30 10:10:13', 0),<{{{><}}}>    (4, '김수로', '글 4', '글의 내용 4', '2017-07-30 10:10:14', 0),<{{{><}}}>    (5, '장길산', '글 5', '글의 내용 5', '2017-07-30 10:10:15', 0),<{{{><}}}>    (6, '김수로', '글 6', '글의 내용 6', '2017-07-30 10:10:16', 0),<{{{><}}}>    (7, '홍길동', '글 7', '글의 내용 7', '2017-07-30 10:10:17', 0),<{{{><}}}>    (8, '이순신', '글 8', '글의 내용 8', '2017-07-30 10:10:18', 0);<{{{><}}}>
+Servers\pos\SessionCreated<|||>1<|||>2021-10-18 10:16:37
+Servers\pos\Host<|||>1<|||>127.0.0.1
+Servers\pos\WindowsAuth<|||>3<|||>0
+Servers\pos\CleartextPluginEnabled<|||>3<|||>0
+Servers\pos\User<|||>1<|||>pos
+Servers\pos\Password<|||>1<|||>333435362
+Servers\pos\LoginPrompt<|||>3<|||>0
+Servers\pos\Port<|||>1<|||>3307
+Servers\pos\NetType<|||>3<|||>0
+Servers\pos\Compressed<|||>3<|||>0
+Servers\pos\LocalTimeZone<|||>3<|||>0
+Servers\pos\QueryTimeout<|||>3<|||>30
+Servers\pos\KeepAlive<|||>3<|||>20
+Servers\pos\FullTableStatus<|||>3<|||>1
+Servers\pos\Databases<|||>1<|||>
+Servers\pos\Library<|||>1<|||>libmariadb.dll
+Servers\pos\Comment<|||>1<|||>
+Servers\pos\StartupScriptFilename<|||>1<|||>
+Servers\pos\TreeBackground<|||>3<|||>536870911
+Servers\pos\SSHtunnelHost<|||>1<|||>
+Servers\pos\SSHtunnelHostPort<|||>3<|||>22
+Servers\pos\SSHtunnelUser<|||>1<|||>
+Servers\pos\SSHtunnelPassword<|||>1<|||>2
+Servers\pos\SSHtunnelTimeout<|||>3<|||>4
+Servers\pos\SSHtunnelPrivateKey<|||>1<|||>
+Servers\pos\SSHtunnelPort<|||>3<|||>3307
+Servers\pos\SSL_Active<|||>3<|||>0
+Servers\pos\SSL_Key<|||>1<|||>
+Servers\pos\SSL_Cert<|||>1<|||>
+Servers\pos\SSL_CA<|||>1<|||>
+Servers\pos\SSL_Cipher<|||>1<|||>
+Servers\pos\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\pos\ConnectCount<|||>3<|||>31
+Servers\pos\ServerVersion<|||>3<|||>100417
+Servers\pos\LastConnect<|||>1<|||>2022-11-27 04:01:25
+Servers\pos\lastUsedDB<|||>1<|||>posdb
+Servers\pos\posdb|payment\Sort<|||>1<|||>1_payment_price|1_payment_num|0_payment_method|1_user_num|
+Servers\pos\posdb|products\Sort<|||>1<|||>1_product_num|
+Servers\pos\posdb|sale\Sort<|||>1<|||>1_sell_date|1_payment_packing​|
+Servers\pos\QueryHistory\3<|||>1<|||>2021-11-23 13:50:33|posdb|47|create table products( <{{{><}}}>	product_num INT primary KEY,<{{{><}}}>	product_name varchar(20), <{{{><}}}>	product_price INT,<{{{><}}}>	procudt_type VARCHAR(20),<{{{><}}}>	product_hits INT,<{{{><}}}>	user_num INT<{{{><}}}><{{{><}}}>); <{{{><}}}>
+Servers\pos\QueryHistory\2<|||>1<|||>2021-11-23 13:58:00|posdb|0|INSERT INTO products VALUES(1,"아메리카노", 3000, 커피, 0, 1);
+Servers\pos\QueryHistory\1<|||>1<|||>2021-11-23 13:58:17|posdb|0|INSERT INTO products VALUES(1,"아메리카노", 3000, "커피", 0, 1);
+Servers\pos\QueryHistory\4<|||>1<|||>2021-11-23 13:59:24|posdb|16|INSERT INTO products VALUES(2,"에스프레소", 3000, "커피", 0, 1);
+Servers\pos\QueryHistory\5<|||>1<|||>2021-11-23 13:59:42|posdb|15|INSERT INTO products VALUES(3,"더치", 4000, "커피", 0, 1);
+Servers\pos\QueryHistory\6<|||>1<|||>2021-11-23 13:59:50|posdb|0|INSERT INTO products VALUES(3,"카페라떼", 4300, "커피", 0, 1);
+Servers\pos\QueryHistory\7<|||>1<|||>2021-11-23 13:59:57|posdb|0|INSERT INTO products VALUES(3,"카페모카", 4300, "커피", 0, 1);
+Servers\pos\QueryHistory\8<|||>1<|||>2021-11-23 14:00:10|posdb|0|INSERT INTO products VALUES(3,"카페콘파냐", 4500, "커피", 0, 1);
+Servers\pos\QueryHistory\9<|||>1<|||>2021-11-23 14:00:20|posdb|0|INSERT INTO products VALUES(3,"헤이즐넛라떼", 5000, "커피", 0, 1);
+Servers\pos\QueryHistory\11<|||>1<|||>2021-11-23 14:00:42|posdb|0|INSERT INTO products VALUES(3,"연유라떼", 3800, "커피", 0, 1);
+Servers\pos\QueryHistory\10<|||>1<|||>2021-11-23 14:00:55|posdb|0|INSERT INTO products VALUES(4,"연유라떼", 3800, "커피", 0, 1);
+Servers\pos\QueryHistory\12<|||>1<|||>2021-11-23 14:01:09|posdb|0|INSERT INTO products VALUES(5,"헤이즐넛라떼", 5000, "커피", 0, 1);
+Servers\pos\QueryHistory\13<|||>1<|||>2021-11-23 14:01:19|posdb|0|INSERT INTO products VALUES(6,"카페콘파냐", 4300, "커피", 0, 1);
+Servers\pos\QueryHistory\14<|||>1<|||>2021-11-23 14:01:34|posdb|0|INSERT INTO products VALUES(7,"카페모카", 4000, "커피", 0, 1);
+Servers\pos\QueryHistory\15<|||>1<|||>2021-11-30 01:36:46|posdb|31|INSERT INTO products VALUES(8,"녹차라떼", 4500, "라떼", 0, 1);
+Servers\pos\QueryHistory\16<|||>1<|||>2021-11-30 01:36:59|posdb|0|INSERT INTO products VALUES(9,"고구마라떼", 4500, "라떼", 0, 1);
+Servers\pos\QueryHistory\17<|||>1<|||>2021-11-30 01:37:08|posdb|0|INSERT INTO products VALUES(10,"초코라떼", 4500, "라떼", 0, 1);
+Servers\pos\QueryHistory\18<|||>1<|||>2021-11-30 01:37:44|posdb|15|INSERT INTO products VALUES(11,"히비스커스", 3500, "티", 0, 1);
+Servers\pos\QueryHistory\19<|||>1<|||>2021-11-30 01:38:03|posdb|0|INSERT INTO products VALUES(12,"캐모마일", 3500, "티", 0, 1);
+Servers\pos\QueryHistory\20<|||>1<|||>2021-11-30 01:38:12|posdb|0|INSERT INTO products VALUES(13,"얼그레이", 3500, "티", 0, 1);
+Servers\pos\QueryHistory\21<|||>1<|||>2021-11-30 01:38:29|posdb|16|INSERT INTO products VALUES(14,"쿠키앤크림", 3500, "스무디", 0, 1);
+Servers\pos\QueryHistory\22<|||>1<|||>2021-11-30 01:38:49|posdb|0|INSERT INTO products VALUES(15,"플레인요거트", 3800, "스무디", 0, 1);
+Servers\pos\QueryHistory\23<|||>1<|||>2021-11-30 01:38:55|posdb|0|INSERT INTO products VALUES(16,"딸기요거트", 3800, "스무디", 0, 1);
+Servers\pos\QueryHistory\24<|||>1<|||>2021-11-30 01:39:01|posdb|0|INSERT INTO products VALUES(16,"망고요거트", 3800, "스무디", 0, 1);
+Servers\pos\QueryHistory\25<|||>1<|||>2021-11-30 01:39:29|posdb|16|INSERT INTO products VALUES(17,"망고요거트", 3800, "스무디", 0, 1);
+Servers\pos\QueryHistory\26<|||>1<|||>2021-11-30 01:39:35|posdb|0|INSERT INTO products VALUES(18,"블루베리요거트", 3800, "스무디", 0, 1);
+Servers\pos\QueryHistory\27<|||>1<|||>2021-11-30 01:40:04|posdb|0|INSERT INTO products VALUES(19,"민트모카", 3800, "커피", 0, 1);
+Servers\pos\QueryHistory\28<|||>1<|||>2021-11-30 01:40:14|posdb|0|INSERT INTO products VALUES(20,"화이트모카", 3700, "커피", 0, 1);
+Servers\pos\QueryHistory\29<|||>1<|||>2021-11-30 01:41:30|posdb|0|INSERT INTO products VALUES(21,"레몬에이드", 4500, "에이드", 0, 1);
+Servers\pos\QueryHistory\30<|||>1<|||>2021-11-30 01:41:39|posdb|16|INSERT INTO products VALUES(22,"자몽에이드", 4500, "에이드", 0, 1);
+Servers\pos\QueryHistory\31<|||>1<|||>2021-11-30 01:41:48|posdb|0|INSERT INTO products VALUES(23,"체리에이드", 4500, "에이드", 0, 1);
+Servers\pos\QueryHistory\32<|||>1<|||>2021-11-30 01:41:54|posdb|0|INSERT INTO products VALUES(24,"블루베리에이드", 4500, "에이드", 0, 1);
+Servers\pos\QueryHistory\33<|||>1<|||>2021-11-30 11:04:22|posdb|16|INSERT INTO products VALUES(25,"카라멜프라페", 3900, "프라페", 0, 1);
+Servers\pos\QueryHistory\34<|||>1<|||>2021-11-30 11:04:28|posdb|0|INSERT INTO products VALUES(26,"딸기프라페", 3900, "프라페", 0, 1);
+Servers\pos\QueryHistory\35<|||>1<|||>2021-11-30 11:04:35|posdb|0|INSERT INTO products VALUES(27,"초콜릿프라페", 3900, "프라페", 0, 1);
+Servers\pos\QueryHistory\36<|||>1<|||>2021-11-30 11:04:43|posdb|0|INSERT INTO products VALUES(28,"망고프라페", 3900, "프라페", 0, 1);
+Servers\pos\QueryHistory\37<|||>1<|||>2021-11-30 11:04:48|posdb|0|INSERT INTO products VALUES(29,"오레오프라페", 3900, "프라페", 0, 1);
+Servers\pos\QueryHistory\39<|||>1<|||>2021-11-30 11:37:01|posdb|0|/*INSERT INTO products VALUES(29,"오레오프라페", 3900, "프라페", 0, 1);*/<{{{><}}}>CREATE TABLE categorys into (<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num<{{{><}}}>);
+Servers\pos\QueryHistory\40<|||>1<|||>2021-11-30 11:38:34|posdb|0|/*INSERT INTO products VALUES(29,"오레오프라페", 3900, "프라페", 0, 1);*/<{{{><}}}>CREATE TABLE categorys (<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num<{{{><}}}>);
+Servers\pos\QueryHistory\38<|||>1<|||>2021-11-30 11:39:00|posdb|0|/*INSERT INTO products VALUES(29,"오레오프라페", 3900, "프라페", 0, 1);*/<{{{><}}}>CREATE TABLE categorys {<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num<{{{><}}}>};
+Servers\pos\QueryHistory\41<|||>1<|||>2021-11-30 11:39:26|posdb|32|/*INSERT INTO products VALUES(29,"오레오프라페", 3900, "프라페", 0, 1);*/<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);
+Servers\pos\QueryHistory\42<|||>1<|||>2021-11-30 11:45:50|posdb|0|INSERT INTO categorys VALUES(1,"커피", 0, 1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\43<|||>1<|||>2021-11-30 11:46:00|posdb|16|INSERT INTO categorys VALUES(2,"라떼", 0, 1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\44<|||>1<|||>2021-11-30 11:46:07|posdb|0|INSERT INTO categorys VALUES(3,"스무디", 0, 1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\45<|||>1<|||>2021-11-30 11:46:19|posdb|0|INSERT INTO categorys VALUES(4,"에이드", 0, 1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\46<|||>1<|||>2021-11-30 11:46:27|posdb|0|INSERT INTO categorys VALUES(5,"티", 0, 1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\47<|||>1<|||>2021-11-30 11:46:55|posdb|0|INSERT INTO categorys VALUES(6,"프라페", 0, 1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\48<|||>1<|||>2021-11-30 11:52:26|posdb|16|INSERT INTO products VALUES( 30 ,"HOT", 500, "옵션", 0 ,1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\49<|||>1<|||>2021-11-30 11:52:44|posdb|0|INSERT INTO products VALUES( 31 ,"샷 추가", 500, "옵션", 0 ,1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\50<|||>1<|||>2021-11-30 11:52:56|posdb|16|INSERT INTO products VALUES( 32 ,"펄 추가", 500, "옵션", 0 ,1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\51<|||>1<|||>2021-11-30 11:53:10|posdb|0|INSERT INTO products VALUES( 33 ,"휘핑크림", 500, "옵션", 0 ,1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\52<|||>1<|||>2021-11-30 11:53:20|posdb|32|INSERT INTO products VALUES( 34 ,"자바칩", 500, "옵션", 0 ,1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\53<|||>1<|||>2021-11-30 11:53:36|posdb|0|INSERT INTO products VALUES( 35 ,"작은얼음", 500, "옵션", 0 ,1);<{{{><}}}>/*<{{{><}}}>CREATE TABLE categorys(<{{{><}}}>	category_num INT AUTO_INCREMENT KEY,<{{{><}}}>	category_name VARCHAR(20),<{{{><}}}>	category_count INT,<{{{><}}}>	user_num int<{{{><}}}>	);<{{{><}}}>	*/
+Servers\pos\QueryHistory\54<|||>1<|||>2021-11-30 14:57:46|posdb|31|/*INSERT INTO products VALUES( 35 ,"작은얼음", 500, "옵션", 0 ,1);*/<{{{><}}}><{{{><}}}><{{{><}}}>CREATE TABLE sale(<{{{><}}}>	sale_num INT AUTO_INCREMENT KEY,<{{{><}}}>	sell_date DATETIME, <{{{><}}}>	customer_num int,<{{{><}}}>	payment_method VARCHAR(20),<{{{><}}}>	payment_packing​ VARCHAR(20),<{{{><}}}>	sale_count INT, <{{{><}}}>	sale​_price INT, <{{{><}}}>	total_price​ INT);<{{{><}}}>	
+Servers\pos\QueryHistory\55<|||>1<|||>2021-11-30 15:25:04|posdb|0|INSERT INTO sale(product_name) VALUES("아메리카노");<{{{><}}}><{{{><}}}><{{{><}}}>/*<{{{><}}}>CREATE TABLE sale(<{{{><}}}>	sale_num INT AUTO_INCREMENT KEY,<{{{><}}}>	sell_date DATETIME, <{{{><}}}>	customer_num int,<{{{><}}}>	payment_method VARCHAR(20),<{{{><}}}>	payment_packing​ VARCHAR(20),<{{{><}}}>	sale_count INT, <{{{><}}}>	sale​_price INT, <{{{><}}}>	total_price​ INT);<{{{><}}}>	*/
+Servers\pos\QueryHistory\56<|||>1<|||>2021-11-30 15:29:13|posdb|15|/*INSERT INTO sale(product_name) VALUES("아메리카노");*/<{{{><}}}><{{{><}}}><{{{><}}}><{{{><}}}>CREATE TABLE payment(<{{{><}}}>	payment_num INT AUTO_INCREMENT KEY, <{{{><}}}>	payment_method VARCHAR(20),<{{{><}}}>	payment_packing​ VARCHAR(20),<{{{><}}}>	payment_price INT, <{{{><}}}>	total_price​ INT);<{{{><}}}>	
+Servers\pos\QueryHistory\58<|||>1<|||>2021-12-12 00:55:58|posdb|15|INSERT INTO payment VALUES(1,'a','a',1,'a',1);<{{{><}}}><{{{><}}}>/*<{{{><}}}><{{{><}}}>CREATE TABLE payment(<{{{><}}}>	payment_num INT AUTO_INCREMENT KEY, <{{{><}}}>	payment_method VARCHAR(20),<{{{><}}}>	payment_packing​ VARCHAR(20),<{{{><}}}>	payment_price INT, <{{{><}}}>	total_price​ INT);<{{{><}}}>	<{{{><}}}>	*/
+Servers\pos\QueryHistory\57<|||>1<|||>2021-12-12 03:43:28|posdb|0|INSERT INTO sale VALUES();<{{{><}}}><{{{><}}}>/*<{{{><}}}><{{{><}}}>CREATE TABLE payment(<{{{><}}}>	payment_num INT AUTO_INCREMENT KEY, <{{{><}}}>	payment_method VARCHAR(20),<{{{><}}}>	payment_packing​ VARCHAR(20),<{{{><}}}>	payment_price INT, <{{{><}}}>	total_price​ INT);<{{{><}}}>	<{{{><}}}>	*/
+Servers\pos\QueryHistory\60<|||>1<|||>2021-12-12 03:43:54|posdb|0|INSERT INTO payment VALUES();<{{{><}}}><{{{><}}}>/*<{{{><}}}><{{{><}}}>CREATE TABLE payment(<{{{><}}}>	payment_num INT AUTO_INCREMENT KEY, <{{{><}}}>	payment_method VARCHAR(20),<{{{><}}}>	payment_packing​ VARCHAR(20),<{{{><}}}>	payment_price INT, <{{{><}}}>	total_price​ INT);<{{{><}}}>	<{{{><}}}>	*/
+Servers\root_php\SessionCreated<|||>1<|||>2021-04-29 12:23:36
+Servers\root_php\Host<|||>1<|||>127.0.0.1
+Servers\root_php\WindowsAuth<|||>3<|||>0
+Servers\root_php\CleartextPluginEnabled<|||>3<|||>0
+Servers\root_php\User<|||>1<|||>root
+Servers\root_php\Password<|||>1<|||>4
+Servers\root_php\LoginPrompt<|||>3<|||>0
+Servers\root_php\Port<|||>1<|||>3307
+Servers\root_php\NetType<|||>3<|||>0
+Servers\root_php\Compressed<|||>3<|||>0
+Servers\root_php\LocalTimeZone<|||>3<|||>0
+Servers\root_php\QueryTimeout<|||>3<|||>30
+Servers\root_php\KeepAlive<|||>3<|||>20
+Servers\root_php\FullTableStatus<|||>3<|||>1
+Servers\root_php\Databases<|||>1<|||>
+Servers\root_php\Library<|||>1<|||>libmariadb.dll
+Servers\root_php\Comment<|||>1<|||>
+Servers\root_php\StartupScriptFilename<|||>1<|||>
+Servers\root_php\TreeBackground<|||>3<|||>536870911
+Servers\root_php\SSHtunnelHost<|||>1<|||>
+Servers\root_php\SSHtunnelHostPort<|||>3<|||>22
+Servers\root_php\SSHtunnelUser<|||>1<|||>
+Servers\root_php\SSHtunnelPassword<|||>1<|||>3
+Servers\root_php\SSHtunnelTimeout<|||>3<|||>4
+Servers\root_php\SSHtunnelPrivateKey<|||>1<|||>
+Servers\root_php\SSHtunnelPort<|||>3<|||>3307
+Servers\root_php\SSL_Active<|||>3<|||>0
+Servers\root_php\SSL_Key<|||>1<|||>
+Servers\root_php\SSL_Cert<|||>1<|||>
+Servers\root_php\SSL_CA<|||>1<|||>
+Servers\root_php\SSL_Cipher<|||>1<|||>
+Servers\root_php\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\root_php\ConnectCount<|||>3<|||>12
+Servers\root_php\ServerVersion<|||>3<|||>100417
+Servers\root_php\LastConnect<|||>1<|||>2022-11-28 21:04:43
+Servers\root_php\lastUsedDB<|||>1<|||>
+Servers\root_php\QueryHistory\4<|||>1<|||>2022-11-28 21:04:13||16|​<{{{><}}}>create DATABASE kmjdb;   <{{{><}}}>grant all privileges on kmjdb.* to kmj@localhost identified BY '1234' with grant option;<{{{><}}}>flush privileges;
+Servers\tlwldnjs67\SessionCreated<|||>1<|||>2022-04-18 21:39:40
+Servers\tlwldnjs67\Host<|||>1<|||>127.0.0.1
+Servers\tlwldnjs67\WindowsAuth<|||>3<|||>0
+Servers\tlwldnjs67\CleartextPluginEnabled<|||>3<|||>0
+Servers\tlwldnjs67\User<|||>1<|||>tlwldnjs
+Servers\tlwldnjs67\Password<|||>1<|||>38393A3B7
+Servers\tlwldnjs67\LoginPrompt<|||>3<|||>0
+Servers\tlwldnjs67\Port<|||>1<|||>3307
+Servers\tlwldnjs67\NetType<|||>3<|||>0
+Servers\tlwldnjs67\Compressed<|||>3<|||>0
+Servers\tlwldnjs67\LocalTimeZone<|||>3<|||>0
+Servers\tlwldnjs67\QueryTimeout<|||>3<|||>30
+Servers\tlwldnjs67\KeepAlive<|||>3<|||>20
+Servers\tlwldnjs67\FullTableStatus<|||>3<|||>1
+Servers\tlwldnjs67\Databases<|||>1<|||>
+Servers\tlwldnjs67\Library<|||>1<|||>libmariadb.dll
+Servers\tlwldnjs67\Comment<|||>1<|||>
+Servers\tlwldnjs67\StartupScriptFilename<|||>1<|||>
+Servers\tlwldnjs67\TreeBackground<|||>3<|||>536870911
+Servers\tlwldnjs67\SSHtunnelHost<|||>1<|||>
+Servers\tlwldnjs67\SSHtunnelHostPort<|||>3<|||>22
+Servers\tlwldnjs67\SSHtunnelUser<|||>1<|||>
+Servers\tlwldnjs67\SSHtunnelPassword<|||>1<|||>6
+Servers\tlwldnjs67\SSHtunnelTimeout<|||>3<|||>4
+Servers\tlwldnjs67\SSHtunnelPrivateKey<|||>1<|||>
+Servers\tlwldnjs67\SSHtunnelPort<|||>3<|||>3307
+Servers\tlwldnjs67\SSL_Active<|||>3<|||>0
+Servers\tlwldnjs67\SSL_Key<|||>1<|||>
+Servers\tlwldnjs67\SSL_Cert<|||>1<|||>
+Servers\tlwldnjs67\SSL_CA<|||>1<|||>
+Servers\tlwldnjs67\SSL_Cipher<|||>1<|||>
+Servers\tlwldnjs67\RefusedCount<|||>3<|||>3
+Servers\tlwldnjs67\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\tlwldnjs67\ConnectCount<|||>3<|||>10
+Servers\tlwldnjs67\ServerVersion<|||>3<|||>100417
+Servers\tlwldnjs67\LastConnect<|||>1<|||>2022-06-17 22:13:00
+Servers\tlwldnjs67\lastUsedDB<|||>1<|||>tlwldnjs67
+Servers\tlwldnjs67\QueryHistory\1<|||>1<|||>2022-06-05 00:17:55|tlwldnjs67|0|INSERT INTO member ('111','111','111','111')<{{{><}}}>,('222','222','222','222')<{{{><}}}>,('222','222','222','222');
+Servers\tlwldnjs67\QueryHistory\2<|||>1<|||>2022-06-05 00:18:04|tlwldnjs67|0|INSERT INTO member ('111','111','111','111');
+Servers\tlwldnjs67\QueryHistory\3<|||>1<|||>2022-06-05 00:18:32|tlwldnjs67|0|INSERT INTO member VALUES ('111','111','111','111')<{{{><}}}>,('222','222','222','222')<{{{><}}}>,('222','222','222','222');
+Servers\tlwldnjs67\QueryHistory\4<|||>1<|||>2022-06-05 00:18:49|tlwldnjs67|0|INSERT INTO member VALUES ('111','111','111','111')<{{{><}}}>,('222','222','222','222')<{{{><}}}>,('333','333','333','333');
+Servers\tlwldnjs67\QueryHistory\5<|||>1<|||>2022-06-05 00:19:14|tlwldnjs67|0|SELECT COUNT(*) FROM member WHERE id='111';
+Servers\tlwldnjs67\QueryHistory\6<|||>1<|||>2022-06-16 16:56:20|tlwldnjs67|0|INSERT INTO board_free VALUES(1)
+Servers\tlwldnjs67\QueryHistory\7<|||>1<|||>2022-06-16 16:56:35|tlwldnjs67|0|INSERT INTO board_free VALUE(1)
+Servers\tlwldnjs67\QueryHistory\8<|||>1<|||>2022-06-16 16:58:11|tlwldnjs67|0|INSERT INTO board_free VALUES(1,'asd','asd','dsa','dsa','dsa','dsa',DATE(),dsf)
+Servers\tlwldnjs67\QueryHistory\9<|||>1<|||>2022-06-16 16:58:23|tlwldnjs67|0|INSERT INTO board_free VALUES(1,'asd','asd','dsa','dsa','dsa','dsa',sd,ds)
+Servers\tlwldnjs67\QueryHistory\10<|||>1<|||>2022-06-16 16:59:38|tlwldnjs67|0|INSERT INTO board_free VALUES(1,'asd','asd','dsa','dsa','dsa','dsa',DAY(4),ds)
+Servers\tlwldnjs67\QueryHistory\11<|||>1<|||>2022-06-16 16:59:44|tlwldnjs67|0|INSERT INTO board_free VALUES(1,'asd','asd','dsa','dsa','dsa','dsa',DAY(4),DAY(4))
+Servers\tlwldnjs67\QueryHistory\12<|||>1<|||>2022-06-16 16:59:52|tlwldnjs67|0|INSERT INTO board_free VALUES(1,'asd','asd','dsa','dsa','dsa','dsa',DAY(4),DAY(4));
+Servers\tlwldnjs67\QueryHistory\14<|||>1<|||>2022-06-16 17:00:54|tlwldnjs67|0|INSERT INTO board_free VALUES(1,'asd','asd','dsa','dsa','dsa','dsa',curtime(),now());
+Servers\tlwldnjs67\QueryHistory\13<|||>1<|||>2022-06-16 17:01:02|tlwldnjs67|0|INSERT INTO board_free VALUES(5,'asd','asd','dsa','dsa','dsa','dsa',curtime(),now());
+Servers\tlwldnjs67\QueryHistory\16<|||>1<|||>2022-06-17 21:47:41|tlwldnjs67|0|INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());
+Servers\tlwldnjs67\QueryHistory\15<|||>1<|||>2022-06-17 21:51:38|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT, store_index INT, a VARCHAR, b VARCHAR );
+Servers\tlwldnjs67\QueryHistory\17<|||>1<|||>2022-06-17 21:51:44|tlwldnjs67|0|<{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT, store_index INT, a VARCHAR, b VARCHAR );
+Servers\tlwldnjs67\QueryHistory\18<|||>1<|||>2022-06-17 21:52:07|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT, store_index INT, a_user VARCHAR, b_user VARCHAR );
+Servers\tlwldnjs67\QueryHistory\19<|||>1<|||>2022-06-17 21:52:29|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT, store_index INT, a_user VARCHAR, b_user VARCHAR);
+Servers\tlwldnjs67\QueryHistory\21<|||>1<|||>2022-06-17 21:52:53|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat {rep_index INT AUTO_INCREMENT, store_index INT, a_user VARCHAR, b_user VARCHAR};
+Servers\tlwldnjs67\QueryHistory\22<|||>1<|||>2022-06-17 21:53:07|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT, store_index INT, a_user VARCHAR);
+Servers\tlwldnjs67\QueryHistory\23<|||>1<|||>2022-06-17 21:54:07|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT);
+Servers\tlwldnjs67\QueryHistory\20<|||>1<|||>2022-06-17 21:54:12|tlwldnjs67|16|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat (rep_index INT AUTO_INCREMENT key);
+Servers\tlwldnjs67\QueryHistory\24<|||>1<|||>2022-06-17 21:57:31|tlwldnjs67|0|#INSERT INTO board_free VALUES('asd','asd','dsa','dsa','dsa','dsa',curtime(),now());<{{{><}}}><{{{><}}}>CREATE TABLE chat2 (rep_index INT AUTO_INCREMENT, rep_index2 INT AUTO_INCREMENT, rep_index3 INT AUTO_INCREMENT);
+Servers\Unnamed\SessionCreated<|||>1<|||>2021-09-07 14:43:07
+Servers\Unnamed\Host<|||>1<|||>127.0.0.1
+Servers\Unnamed\WindowsAuth<|||>3<|||>0
+Servers\Unnamed\CleartextPluginEnabled<|||>3<|||>0
+Servers\Unnamed\User<|||>1<|||>php
+Servers\Unnamed\Password<|||>1<|||>3738393A6
+Servers\Unnamed\LoginPrompt<|||>3<|||>0
+Servers\Unnamed\Port<|||>1<|||>3307
+Servers\Unnamed\NetType<|||>3<|||>0
+Servers\Unnamed\Compressed<|||>3<|||>0
+Servers\Unnamed\LocalTimeZone<|||>3<|||>0
+Servers\Unnamed\QueryTimeout<|||>3<|||>30
+Servers\Unnamed\KeepAlive<|||>3<|||>20
+Servers\Unnamed\FullTableStatus<|||>3<|||>1
+Servers\Unnamed\Databases<|||>1<|||>
+Servers\Unnamed\Library<|||>1<|||>libmariadb.dll
+Servers\Unnamed\Comment<|||>1<|||>
+Servers\Unnamed\StartupScriptFilename<|||>1<|||>
+Servers\Unnamed\TreeBackground<|||>3<|||>536870911
+Servers\Unnamed\SSHtunnelHost<|||>1<|||>
+Servers\Unnamed\SSHtunnelHostPort<|||>3<|||>22
+Servers\Unnamed\SSHtunnelUser<|||>1<|||>
+Servers\Unnamed\SSHtunnelPassword<|||>1<|||>3
+Servers\Unnamed\SSHtunnelTimeout<|||>3<|||>4
+Servers\Unnamed\SSHtunnelPrivateKey<|||>1<|||>
+Servers\Unnamed\SSHtunnelPort<|||>3<|||>3307
+Servers\Unnamed\SSL_Active<|||>3<|||>0
+Servers\Unnamed\SSL_Key<|||>1<|||>
+Servers\Unnamed\SSL_Cert<|||>1<|||>
+Servers\Unnamed\SSL_CA<|||>1<|||>
+Servers\Unnamed\SSL_Cipher<|||>1<|||>
+Servers\Unnamed\RefusedCount<|||>3<|||>3
+Servers\Unnamed\ServerVersionFull<|||>1<|||>10.4.17-MariaDB - mariadb.org binary distribution
+Servers\Unnamed\ConnectCount<|||>3<|||>2
+Servers\Unnamed\ServerVersion<|||>3<|||>100417
+Servers\Unnamed\LastConnect<|||>1<|||>2022-04-13 22:20:48
+Servers\Unnamed\lastUsedDB<|||>1<|||>phpdb

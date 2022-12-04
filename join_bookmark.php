@@ -12,11 +12,11 @@ session_start();
     $choice =isset($_REQUEST["choice"]) ? $_REQUEST["choice"] : "";
 	$date =   date("Y-m-d H:i:s");
 
-  $query3 = $db->query("select *  from bookmark where member_num=$_SESSION[userNum]");
+  $query3 = $db->query("select *  from bookmark where member_num=$_SESSION[userNum] and choice_num = $id");
 
   while ($row = $query3->fetch()) {
-      if($row['review_num']==$id){
-        $db->query("delete from bookmark where member_num=$_SESSION[userNum] and review_num=$id");
+      if($row['choice_num']==$id){
+        $db->query("delete from bookmark where member_num=$_SESSION[userNum] and choice_num = $id");
         echo "
             <script>
                 alert(\"북마크 삭제가 되었습니다.\");
@@ -30,7 +30,7 @@ session_start();
   
   
 
-$db->exec("insert into bookmark(member_num,review_num,join_date,choice) values('$_SESSION[userNum]',$id,'$date','$choice')");
+$db->exec("insert into bookmark(member_num,choice_num,join_date,choice) values('$_SESSION[userNum]',$id,'$date','$choice')");
 	echo "
             <script>
                 alert(\"북마크 추가가 되었습니다.\");
