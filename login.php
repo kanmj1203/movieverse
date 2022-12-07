@@ -1,58 +1,37 @@
 <?php
+
+    require("db_connect.php");
+    session_start();
+    $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
+    
+    // $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
+    // while ($row = $query3->fetch()) {
+        // <?=$row['title'];
+?>
+<script> // 영화 제목 리스트 추가 (자동완성 리스트)
+
+    List = [];  // 배열 생성
+
+    // List.push('');
+    
+</script>
+<?php
+
 $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
 
 // 영화 데이터
 $data = array( 
-    // 최신순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => 8,
-    //     'with_watch_providers' => 337,
-    //     'with_watch_providers' => 97,
-    //     'with_watch_providers' => 356,
-    //     'sort_by' => 'release_date.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
-    // 인기순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => [8, 337, 97, 356],
-    //     // 'with_watch_providers' => 337,
-    //     // 'with_watch_providers' => 97,
-    //     // 'with_watch_providers' => 356,
-    //     'sort_by' => 'popularity.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
     // 플랫폼 가져오기
     array(
         'api_key' => $api_key
     )
 );
 
-// 드라마/시리즈 데이터
-// $tv_data = array(
-//     'api_key' => '13e4eba426cd07a638195e968ac8cf19',
-//     'with_watch_providers' => 8,
-//     'watch_region' => 'KR',
-//     'language' => 'ko',
-//     'page' => 1
-// );
-
 // URL 지정
 $base_url = 'https://api.themoviedb.org/3';
 
 $url = array(
-    // 최신순
-    // $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
-    // 인기순
-    // $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
     // 플랫폼
     $base_url . "/watch/providers/tv?" . http_build_query($data[0], '', )
 );
@@ -68,9 +47,8 @@ for($i = 0; $i < count($url); $i++){
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
     
     $response = curl_exec($ch);
-
     $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
-
+    
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $error = curl_error($ch);
     curl_close($ch);
@@ -81,88 +59,43 @@ $providers_id = [8, 337, 97, 356];
 
 // TMDB에서 이미지 가져오기
 $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
-
-// // 시나리오
-// $overview = $sResponse[2]['results'][0]['overview'];
-// // 공백문자, 줄바꿈 치환
-// $overview = str_replace(" ", "&nbsp;", $overview); //공백
-// $overview = str_replace("\n", "<br>", $overview); //줄바꿈
-
-// return $response;
-// function getTitle($count) {
-    // $a = $sResponse['results'];
-    // for ($i=0; $i<count($sResponse['results']); $i++) {
-    //     // print($sResponse['results'][$i]['title']);
-    //     // $a =  $sResponse['results'];
-    //     print_r($sResponse['results'][$i]);
-    //     print("<br><br>");
-        
-    // }
-// }
-// print("<br><br><br>" . $url);
-
-             
-        ?>
-
-
+   
+?>
 
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MovieVerse</title>
     <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
-	
-	<link rel="stylesheet" type="text/css"href="css/login.css">
-	<link rel="stylesheet" type="text/css"href="css/basic.css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  </head>
-  
+
+    <!--css 링크-->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/basic.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!--자동완성 기능 autocomplete-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+
+<!--검색-->
 <script>
-List = [];
-</script>
-
-<div>
-<?php 
-	require("db_connect.php");
-	session_start();
-$query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-	while ($row = $query3->fetch()) {
-	
-	
-	
-
-?>
-<script>
-List.push('<?=$row['title'];?>');
-</script>
-<?php
-}
-?>
-
-</div>
-<script>
-
     $(function() {
         $("#searchInput").autocomplete({
-            source: List,
-            focus: function(event, ui) {
+            source: List,   // 자동완성 대상
+            focus: function(event, ui) { //포커스 시 이벤트
                 return false;
             },
-            minLength: 1,
-            delay: 100,
-
-
+            minLength: 1,   // 최소 글자 수
+            delay: 100,     //글자 입력 후 이벤트 발생까지 지연 시간
         });
     });
 </script>
-
-
 <body>
-    <div class="all">
-    <header class="header_scroll_top">
+    <div class="all"> <!--전체 너비 설정-->
+        <header class="header_scroll_top">
             <div class="head">  <!--header GNB-->
                 <div class="header_left">
                     <ul>
@@ -286,47 +219,56 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="제목, 배우를 검색해주세요"
+                        placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
-                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                         onblur="this.placeholder='찾으시려는 드라마 또는 영화 제목을 입력해 주세요.'"
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
             </div>
         </div>
         <!-- search_modal END -->
-        
+
         <div id='wrap' class="main_container">
             <!-- wrap -->
-            <div><img class="logo_text"src="img/logo.png"><div>
-
-            <form class="login" action="log_in.php" method="post">
-
-                <p id="login_text1">로그인</p>
-                    <p id="login_text2">MovieVerse 계정 로그인</p>
-            <?php
-            $nonid = empty($_REQUEST["nonid"]) ? "" : $_REQUEST["nonid"];
-
-                if($nonid=='no'){
-            ?>
-                <div class="non_id">존재하지 않는 아이디입니다</div>
-            <?php
-                }
-            ?>
-                    <input id="id"type="text" name="id" placeholder="아이디">
-
-                    <input style="margin-top: 260px;" id="id" type="password" name="pw" placeholder="비밀번호">
-
-                <input type="image" name="submit"  class="next"src="img/next.png" border="0">
-                <p style="cursor:pointer;"class="find"onclick="location.href='id_pw_find.php';">아이디/ <a style="color: white;"href="pw_find.php">비밀번호 찾기</a></p>
-                <p style="top: 476px;cursor:pointer;" class="find"onclick="location.href='member_join.php';">계정이 없으신가요?가입</p>
-
-                    <!--<div class="google_login"><img class="google"src="img/google.png">Google로 로그인</div>-->
-
-            </form>
-
-        </div>
+            <div><img class="logo_text"src="./img/logo/logo_txt.png"><div>
+            <div class="login_form_container">  
+                <div class="login_form_wrap">
+                    <!-- user 아이콘 -->
+                    <div class="login_user_icon_wrap">
+                        <div class="login_user_icon">
+                            <img src="./img/login/userWhite.png" alt="user_icon_white">
+                        </div>
+                    </div>
+                    <!-- 입력칸 -->
+                    
+                    <form class="login_container" action="log_in.php" method="post">
+                        <div class="login">
+                            <div class="login_input_wrap">
+                                <div class="input_title"><div><img src="./img/login/idicon.png"></div></div>        
+                                <div><input id="id" class="login_input" type="text" name="id" placeholder="아이디"/></div>
+                            </div>
+                            <div class="login_input_wrap">
+                                <div class="input_title"><div><img src="./img/login/pwicon.png"></div></div> 
+                                <div><input id="pw" class="login_input" type="password" name="pw" placeholder="비밀번호"/></div>
+                            </div>
+                            <div class="find_join">
+                                <p style="cursor:pointer;"class="find"onclick="location.href='id_pw_find.php';">아이디 / <a style="color: white;"href="pw_find.php">비밀번호 찾기</a></p>
+                                <p style="cursor:pointer;" class="find join"onclick="location.href='member_join.php';">계정이 없으신가요?가입</p>
+                            </div>
+                                <!--<div class="google_login"><img class="google"src="img/google.png">Google로 로그인</div>-->
+                         </div>  
+                         <div class="submit_button">
+                            <input type="image" name="submit"  class="next"src="./img/login/arrow.png">
+                        </div>
+                       
+                    </form>
+                   
+                </div>
+            </div>
+        </div><!-- wrap END -->
     </div>
+</div><!-- all END -->
 
             <!--footer-->
             <footer class="footer">

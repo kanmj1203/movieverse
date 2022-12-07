@@ -11,19 +11,21 @@ $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
 
 $search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
-
+$today = date("Y-m-d");
+// 8|337|97|356
 // 영화 데이터
 $data = array( 
     // 최신순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => empty($_REQUEST["platform"]) ? '8|337|97|356' : $_REQUEST["platform"],
+        'with_watch_providers' => empty($_REQUEST["platform"]) ? '' : $_REQUEST["platform"],
         // aa($platform),
         'sort_by' => $sort_by,
         'watch_region' => 'KR',
         'language' => 'ko',
         'with_genres' => $bid,
-        'page' => $page
+        'page' => $page,
+        'release_date.lte' => $today
     ),
     // 인기순
     // array(
@@ -112,7 +114,8 @@ $page_count = 5;
 $page_total = $sResponse[0]['total_pages'];
 
 $page_list = ceil($page / $page_count);
-$page_last = $page_list <= $page_total ? $page_list * $page_count : $page_total;
+$page_last = $page_list < $page_total ? $page_list * $page_count : $page_total;
+$page_last = $page_count > $page_total ? $page_total : $page_last;
 $page_start = $page_last - ($page_count - 1) <= 0 ? 1 : $page_last - ($page_count - 1);
 
 $page_prev = $page_start - 1;
@@ -149,21 +152,7 @@ List = [];
     
 	require("db_connect.php");
 	session_start();
-	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
-    // $_SESSION["userNum"] = empty($_REQUEST["userNum"]) ? "" : $_REQUEST["userNum"];
-	
-$query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-	while ($row = $query3->fetch()) {
-	
-	
-	
 
-?>
-<script>
-List.push('<?=$row['title'];?>');
-</script>
-<?php
-}
 ?>
 
 </div>
@@ -308,9 +297,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="제목, 배우를 검색해주세요"
+                        placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
-                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                         onblur="this.placeholder='찾으시려는 드라마 또는 영화 제목을 입력해 주세요.'"
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
@@ -331,7 +320,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                             $already_click = $providers_id[$i] == $platform ? "": $providers_id[$i]; 
                         ?>
                         <li class="category_li"><a style="opacity: <?=$clicked_provider?>"
-                            onclick="location.href='movie.php?platform=<?=$already_click?>&search=<?=$search?>&bid=<?=$bid?>&sort_by=<?=$sort_by?>';"><?=$providers_name[$i]?></a></li>
+                            onclick="location.href='movie.php?platform=<?=$already_click?>&bid=<?=$bid?>&sort_by=<?=$sort_by?>';"><?=$providers_name[$i]?></a></li>
                         <?php
                         }
                         ?>
@@ -339,25 +328,25 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                 </div>
                 <div class="category_right_wrap">
                     <p id="carta">카테고리<p>
-                    <p><a style="opacity: <?= $sort_by=="popularity.desc" ? '1' : '0.5'?>;"href="movie.php?sort_by=popularity.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ? "" : $platform ?>">인기순</a></p>
+                    <p><a style="opacity: <?= $sort_by=="popularity.desc" ? '1' : '0.5'?>;"href="movie.php?sort_by=popularity.desc&bid=<?=$bid?>&platform=<?=empty($platform) ? "" : $platform ?>">인기순</a></p>
                     <p id="ll">ㅣ</p>
-                    <p><a style="opacity: <?= $sort_by =="release_date.desc" ? '1' : '0.5'?>;" href="movie.php?sort_by=release_date.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ?  "" : $platform ?>">최신순</a></p>
+                    <p><a style="opacity: <?= $sort_by =="release_date.desc" ? '1' : '0.5'?>;" href="movie.php?sort_by=release_date.desc&bid=<?=$bid?>&platform=<?=empty($platform) ?  "" : $platform ?>">최신순</a></p>
                 </div>
         </div>
                 <div id="myDIV" class="category_list_scroll_top">
                     <ul>
-                    <li class="<?= $bid == "" ? 'now_category' : ''?>"><a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
+                    <li class="<?= $bid == "" ? 'now_category' : ''?>"><a href="movie.php?bid=&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
                     
                 <?php
                     foreach($sResponse[1]['genres'] as $genre) {
                 ?>
-                    <li class="<?= $bid == $genre['id'] ? 'now_category' : ''?>"><a href="movie.php?bid=<?=$genre['id']?>&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><?=$genre['name']?></a></li>       
+                    <li class="<?= $bid == $genre['id'] ? 'now_category' : ''?>"><a href="movie.php?bid=<?=$genre['id']?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>"><?=$genre['name']?></a></li>       
                     
                 <?php
                     }
                 ?>
-                    <!-- <li style="<?php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
-                    <li style="<?php if($bid=="14")echo $styles; ?>;"><a href="movie.php?bid=14&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">모험</a></li>    -->  
+                    <!-- <li style="php if($bid=="")echo $styles; ?>;"><a href="movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">전체</a></li>       
+                    <li style="<php if($bid=="14")echo $styles; ?>;"><a href="movie.php?bid=14&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>">모험</a></li>    -->  
                 </ul>
 
                 </div>
@@ -392,7 +381,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                             <img class="main_poster_img" 
                                 src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
                                 alt=""
-                                onerror="this.parentNode.style.display='none'">
+                                onerror="this.parentNode.parentNode.style.display='none';">
                             </span>
                         </div>
     <?php
@@ -417,7 +406,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     <button 
                     class="pagination_button"
                     type="button"
-                    onclick="location.href='movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_prev?>'">
+                    onclick="location.href='movie.php?bid=&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_prev?>'">
                     <
                     </button></li>
 <?php
@@ -426,7 +415,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     <li><button
                     class="pagination_button <?=$i == $page ? 'now_page' : ''?>"
                     type="button"
-                    onclick="location.href='movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$i?>'"
+                    onclick="location.href='movie.php?bid=&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$i?>'"
                     >
                     <?=$i?></button></li>
 <?php
@@ -435,9 +424,10 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     <li><button 
                     class="pagination_button"
                     type="button"
-                    onclick="location.href='movie.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_next?>'" >
+                    onclick="location.href='movie.php?bid=&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_next?>'" >
                     >
                     </button></li>
+            </ul>
             </div>
         </div>
         <!-- wrap END -->

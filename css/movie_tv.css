@@ -14,6 +14,10 @@ align-items: center;
 color: white;
 }
 
+.movietext span {
+  font-size : 1.25rem;
+}
+
 /* 카테고리 */
 .category_container{
 
@@ -380,6 +384,7 @@ width: 28px;
   .main_poster_img_container {
     min-height: 350px;
   }
+  
 }
 @media screen and (min-width:768px) and (max-width: 1023px) {
 	/* Tablet */
@@ -420,7 +425,10 @@ width: 28px;
 
   /* 무슨 페이지인지 알려주는 텍스트 */
   .movietext {font-size : 1.75rem}
-
+  .movietext span {
+    font-size : 1rem;
+  }
+  
   .movie_all{
     width: 100%;
     position : relative;
@@ -475,6 +483,10 @@ width: 28px;
 
 /* 무슨 페이지인지 알려주는 텍스트 */
 .movietext {font-size : 1.5rem}
+.movietext span {
+  font-size : 1rem;
+}
+
 .movie_all{
   width: 100%;
   position : relative;

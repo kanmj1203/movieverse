@@ -20,18 +20,7 @@ List = [];
 <div>
 <?php 
 	require("db_connect.php");
-	$query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-	while ($row = $query3->fetch()) {
-	
-	
-	
 
-?>
-<script>
-List.push('<?=$row['title'];?>');
-</script>
-<?php
-}
 ?>
 
 </div>

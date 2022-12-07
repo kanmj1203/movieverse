@@ -15,8 +15,11 @@
 		header("Location:index.php");
 		exit();
 	}else{
-	header("Location:login.php?nonid=no");
-	exit();
+
+		echo '<script>
+		alert("존재하지 않는 계정 입니다.");
+		location.href = "login.php";
+		</script>';
 		}
 ?>
 

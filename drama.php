@@ -11,19 +11,23 @@ $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
 
 $search =isset($_REQUEST["search"]) ? $_REQUEST["search"] : "";
-
+// 8|337|97|356
+$today = date("Y-m-d");
 // 영화 데이터
 $data = array( 
     // 최신순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => empty($_REQUEST["platform"]) ? '8|337|97|356' : $_REQUEST["platform"],
+        'with_watch_providers' => empty($_REQUEST["platform"]) ? '' : $_REQUEST["platform"],
         // aa($platform),
         'sort_by' => $sort_by,
         'watch_region' => 'KR',
         'language' => 'ko',
         'with_genres' => $bid,
-        'page' => $page
+        'page' => $page,
+        'air_date.lte' => $today,
+        'first_air_date.lte' => $today,
+        'include_null_first_air_dates' => False
     ),
     // 인기순
     // array(
@@ -109,10 +113,12 @@ $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
 // 페이지네이션
 
 $page_count = 5;
+// $page_total_resultes = $sResponse[0]['total_results'];
 $page_total = $sResponse[0]['total_pages'];
 
 $page_list = ceil($page / $page_count);
-$page_last = $page_list <= $page_total ? $page_list * $page_count : $page_total;
+$page_last = $page_list < $page_total ? $page_list * $page_count : $page_total;
+$page_last = $page_count > $page_total ? $page_total : $page_last;
 $page_start = $page_last - ($page_count - 1) <= 0 ? 1 : $page_last - ($page_count - 1);
 
 $page_prev = $page_start - 1;
@@ -152,18 +158,6 @@ List = [];
 	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
     // $_SESSION["userNum"] = empty($_REQUEST["userNum"]) ? "" : $_REQUEST["userNum"];
 	
-$query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-	while ($row = $query3->fetch()) {
-	
-	
-	
-
-?>
-<script>
-List.push('<?=$row['title'];?>');
-</script>
-<?php
-}
 ?>
 
 </div>
@@ -308,9 +302,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="제목, 배우를 검색해주세요"
+                        placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
-                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                         onblur="this.placeholder='찾으시려는 드라마 또는 영화 제목을 입력해 주세요.'"
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
@@ -341,7 +335,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     <p id="carta">카테고리<p>
                     <p><a style="opacity: <?= $sort_by=="popularity.desc" ? '1' : '0.5'?>;"href="drama.php?sort_by=popularity.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ? "" : $platform ?>">인기순</a></p>
                     <p id="ll">ㅣ</p>
-                    <p><a style="opacity: <?= $sort_by =="release_date.desc" ? '1' : '0.5'?>;" href="drama.php?sort_by=release_date.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ?  "" : $platform ?>">최신순</a></p>
+                    <p><a style="opacity: <?= $sort_by =="first_air_date.desc" ? '1' : '0.5'?>;" href="drama.php?sort_by=first_air_date.desc&bid=<?=$bid?>&search=<?=$search?>&platform=<?=empty($platform) ?  "" : $platform ?>">최신순</a></p>
                 </div>
         </div>
                 <div id="myDIV" class="category_list_scroll_top">
@@ -392,7 +386,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                             <img class="main_poster_img" 
                                 src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
                                 alt=""
-                                onerror="this.parentNode.style.display='none'">
+                                onerror="this.parentNode.parentNode.style.display='none';">
                             </span>
                         </div>
     <?php
@@ -437,7 +431,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     type="button"
                     onclick="location.href='drama.php?bid=&search=<?=$search?>&platform=<?=$platform?>&sort_by=<?=$sort_by?>&page=<?=$page_next?>'" >
                     >
-                    </button></li>
+                    </button>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- wrap END -->

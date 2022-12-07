@@ -165,18 +165,6 @@ List = [];
 	session_start();
 	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
 	
-$query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-	while ($row = $query3->fetch()) {
-	
-	
-	
-
-?>
-<script>
-List.push('<?=$row['title'];?>');
-</script>
-<?php
-}
 ?>
 
 </div>
@@ -325,9 +313,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="제목, 배우를 검색해주세요"
+                        placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
-                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                         onblur="this.placeholder='찾으시려는 드라마 또는 영화 제목을 입력해 주세요.'"
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>

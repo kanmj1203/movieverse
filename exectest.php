@@ -230,17 +230,36 @@ $choice_provider = array(
   'api_key' => $api_key,
 );
 
+$similar_random_page = rand(1,500);
+$similar_array = array(
+  'api_key' => $api_key,
+  'language'=> 'ko',
+  'page' => 1,
+  'watch_region' => 'KR',
+  'with_watch_providers' => '8|337|97|356',
+);
+
+$prov_array = array(
+  'api_key' => $api_key,
+  'language'=> 'ko',
+  'page' => 1,
+  'watch_region' => 'KR',
+  // 'with_watch_providers' => '8|337|97|356',
+);
+
 $choice_id = 119051;
 
 $base_url_aaa = 'https://api.themoviedb.org/3';
 $base_url = 'https://api.themoviedb.org/3/discover/tv';
 $provide_base_url = 'https://api.themoviedb.org/3/watch/providers/tv';
 $provide_link_url = 'https://api.themoviedb.org/3/watch/providers/movie?api_key='.$api_key.'&language=Ko';
-$movie_details = 'https://api.themoviedb.org/3/tv/120089/credits?api_key='.$api_key.'&language=Ko';
+$movie_details = 'https://api.themoviedb.org/3/tv/94997?api_key='.$api_key.'&language=Ko';
 $movie_details_provider = 'https://api.themoviedb.org/3/tv/1402/watch/providers?api_key='.$api_key.'&language=Ko';
 $genre_url = "https://api.themoviedb.org/3/genre/movie/list?" . http_build_query($genre, '', );
 $choice_provider_url = "$base_url_aaa/tv/$choice_id/watch/providers?" . http_build_query($choice_provider, '', );
+$similar = 'https://api.themoviedb.org/3/tv/1402/similar?' . http_build_query($similar_array, '', );;
 
+$prov_check = "https://api.themoviedb.org/3/watch/providers/movie?". http_build_query($prov_array, '', );
 
 $url = $base_url . "?" . http_build_query($data, '', );
 $url2 = $provide_base_url . "?" . http_build_query($provide, '', );
@@ -249,6 +268,8 @@ $url4 = $movie_details;
 $url5 = $movie_details_provider;
 $url6 = $genre_url;
 $url7 = $choice_provider_url;
+$url8 = $similar;
+$url9 = $prov_check;
 
 $ch = curl_init();                                 //curl 초기화
 curl_setopt($ch, CURLOPT_URL, $url4);               //URL 지정하기
@@ -275,9 +296,9 @@ $providers_id = ['8', '337', '97', '356'];
         // $a =  $sResponse['results'];
         // print_r($sResponse['results'][$i]);
         print("<br><br>");
-        // print_r($sResponse["results"]["KR"]);
-
-        print_r($sResponse['cast']);
+        print_r($sResponse);
+        // print_r($sResponse);
+        // print_r($sResponse['cast']);
       //   foreach($sResponse['crew'] as $c){
       //   print_r(strstr($c['job'], 'Director') ? $c['name'].' : '.$c['job'] : '');
       // }

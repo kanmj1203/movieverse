@@ -1,154 +1,20 @@
 <?php
-$method = "GET";
-$api_key = '13e4eba426cd07a638195e968ac8cf19';
 
-// 영화 데이터
-$data = array( 
-    // 최신순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => 8,
-    //     'with_watch_providers' => 337,
-    //     'with_watch_providers' => 97,
-    //     'with_watch_providers' => 356,
-    //     'sort_by' => 'release_date.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
-    // 인기순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => [8, 337, 97, 356],
-    //     // 'with_watch_providers' => 337,
-    //     // 'with_watch_providers' => 97,
-    //     // 'with_watch_providers' => 356,
-    //     'sort_by' => 'popularity.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
-    // 플랫폼 가져오기
-    array(
-        'api_key' => $api_key
-    )
-);
-
-// 드라마/시리즈 데이터
-// $tv_data = array(
-//     'api_key' => '13e4eba426cd07a638195e968ac8cf19',
-//     'with_watch_providers' => 8,
-//     'watch_region' => 'KR',
-//     'language' => 'ko',
-//     'page' => 1
-// );
-
-// URL 지정
-$base_url = 'https://api.themoviedb.org/3';
-
-$url = array(
-    // 최신순
-    // $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
-    // 인기순
-    // $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
-    // 플랫폼
-    $base_url . "/watch/providers/tv?" . http_build_query($data[0], '', )
-);
-
-// TMDB API에서 데이터 불러오기
-for($i = 0; $i < count($url); $i++){
-    $ch = curl_init();                                 //curl 초기화
-    curl_setopt($ch, CURLOPT_URL, $url[$i]);               //URL 지정하기
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    //요청 결과를 문자열로 반환 
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);      //connection timeout 10초 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   //원격 서버의 인증서가 유효한지 검사 안함 
-    //curl_setopt($ch, CURLOPT_SSLVERSION, 3); // SSL 버젼 (https 접속시에 필요)
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    require("db_connect.php");
+    session_start();
+    $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
     
-    $response = curl_exec($ch);
-
-    $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
-
-    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-}
-
-// 플랫폼 id 리스트
-$providers_id = [8, 337, 97, 356];
-
-// TMDB에서 이미지 가져오기
-$tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
-
-// // 시나리오
-// $overview = $sResponse[2]['results'][0]['overview'];
-// // 공백문자, 줄바꿈 치환
-// $overview = str_replace(" ", "&nbsp;", $overview); //공백
-// $overview = str_replace("\n", "<br>", $overview); //줄바꿈
-
-// return $response;
-// function getTitle($count) {
-    // $a = $sResponse['results'];
-    // for ($i=0; $i<count($sResponse['results']); $i++) {
-    //     // print($sResponse['results'][$i]['title']);
-    //     // $a =  $sResponse['results'];
-    //     print_r($sResponse['results'][$i]);
-    //     print("<br><br>");
-        
-    // }
-// }
-// print("<br><br><br>" . $url);
-
-             
-        ?>
-
-
-
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>MovieVerse</title>
-    <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
-
-    <link rel="stylesheet" type="text/css" href="css/login.css">
-    <link rel="stylesheet" type="text/css" href="css/basic.css">
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-</head>
-
-<script>
-List = [];
-</script>
-
-<div>
-<?php 
-	require("db_connect.php");
-	session_start();
-	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
-	
-$query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-	while ($row = $query3->fetch()) {
-	
-	
-	
-
+    // $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
+    // while ($row = $query3->fetch()) {
+        // <?=$row['title'];
 ?>
-<script>
-List.push('<?=$row['title'];?>');
-</script>
-<?php
-}
-?>
+<script> // 영화 제목 리스트 추가 (자동완성 리스트)
 
-</div>
+    List = [];  // 배열 생성
+
+    // List.push('');
+    
+</script>
 <script>
 
     $(function() {
@@ -227,9 +93,88 @@ $(".member_join_pw").on("keyup", function(){ //check라는 클래스에 입력�
 
 });
 </script>
+
+<?php
+
+$method = "GET";
+$api_key = '13e4eba426cd07a638195e968ac8cf19';
+
+// 영화 데이터
+$data = array( 
+    // 플랫폼 가져오기
+    array(
+        'api_key' => $api_key
+    )
+);
+
+// URL 지정
+$base_url = 'https://api.themoviedb.org/3';
+
+$url = array(
+    // 플랫폼
+    $base_url . "/watch/providers/tv?" . http_build_query($data[0], '', )
+);
+
+// TMDB API에서 데이터 불러오기
+for($i = 0; $i < count($url); $i++){
+    $ch = curl_init();                                 //curl 초기화
+    curl_setopt($ch, CURLOPT_URL, $url[$i]);               //URL 지정하기
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    //요청 결과를 문자열로 반환 
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);      //connection timeout 10초 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   //원격 서버의 인증서가 유효한지 검사 안함 
+    //curl_setopt($ch, CURLOPT_SSLVERSION, 3); // SSL 버젼 (https 접속시에 필요)
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+    
+    $response = curl_exec($ch);
+    $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
+    
+    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+}
+
+// 플랫폼 id 리스트
+$providers_id = [8, 337, 97, 356];
+
+// TMDB에서 이미지 가져오기
+$tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
+   
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MovieVerse</title>
+    <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
+
+    <!--css 링크-->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/basic.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!--자동완성 기능 autocomplete-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+
+<!--검색-->
+<script>
+    $(function() {
+        $("#searchInput").autocomplete({
+            source: List,   // 자동완성 대상
+            focus: function(event, ui) { //포커스 시 이벤트
+                return false;
+            },
+            minLength: 1,   // 최소 글자 수
+            delay: 100,     //글자 입력 후 이벤트 발생까지 지연 시간
+        });
+    });
+</script>
 <body>
-    <div class="all">
-    <header class="header_scroll_top">
+    <div class="all"> <!--전체 너비 설정-->
+        <header class="header_scroll_top">
             <div class="head">  <!--header GNB-->
                 <div class="header_left">
                     <ul>
@@ -353,39 +298,56 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="제목, 배우를 검색해주세요"
+                        placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
-                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                         onblur="this.placeholder='찾으시려는 드라마 또는 영화 제목을 입력해 주세요.'"
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
             </div>
         </div>
         <!-- search_modal END -->
-        
-        <img class="logo_text" src="img/logo.png">
-        <form method="post" action="member_join_in.php" name="memform">
-            <div class="memberjoin_tle">
-                <div class="memberjoin">
 
-                    <p id="login_text1">회원가입</p>
+        <div id='wrap' class="main_container">
+            <!-- wrap -->
+            <div><img class="logo_text"src="./img/logo/logo_txt.png"><div>
+            <div class="login_form_container">  
+                <div class="join_form_wrap">
+                    <!-- user 아이콘 -->
+                    <div class="login_user_icon_wrap">
+                        <div class="login_user_icon">
+                            <img src="./img/login/userWhite.png" alt="user_icon_white">
+                        </div>
+                    </div>
+                    <!-- 입력칸 -->
+
+                        <form class="join_container" method="post" action="member_join_in.php" name="memform">
+                            <div class="memberjoin_tle">
+                                <div class="memberjoin">
+
+                                    <p id="login_text1">회원가입</p>
+                                </div>
+                                <input style="margin-top: 146px; width: 263px;	" class="member_join_text" id="lo1" type="text" name="id" placeholder="아이디 입력">
+                                <div onclick="re_check_email()"style="cursor: pointer;" class="re_check">중복확인</div>
+                                <p id="result"></p>
+
+                                <input style="margin-top: 224px;" class="member_join_pw" type="password" id="pw1"name="pw" placeholder="비밀번호 입력">
+                                <input style="margin-top: 312px;" class="member_join_pw" type="password" id="pw2"name="pw" placeholder="비밀번호 확인">
+                            <p class="pwrepl"id="pw_check"style="">비밀번호 중복확인</p>
+                            <input style="margin-top: 410px;width: 263px;" class="member_join_text" id="lo2" type="text" name="name" placeholder="닉네임">
+                            
+                            <div onclick="re_check_name()" style="cursor: pointer;margin-top: 284px;" class="re_check">중복확인</div>
+                                <p style="top:497px" id="result2"></p>
+
+                                <input style="margin-top: 24px;" type="submit" class="memberjoin_btn" value="회원가입" />
+                            </div>
+                        </form>
                 </div>
-                <input style="margin-top: 146px; width: 263px;	" class="member_join_text" id="lo1" type="text" name="id" placeholder="아이디 입력">
-                <div onclick="re_check_email()"style="cursor: pointer;" class="re_check">중복확인</div>
-                <p id="result"></p>
-
-                <input style="margin-top: 224px;" class="member_join_pw" type="password" id="pw1"name="pw" placeholder="비밀번호 입력">
-                <input style="margin-top: 312px;" class="member_join_pw" type="password" id="pw2"name="pw" placeholder="비밀번호 확인">
-               <p class="pwrepl"id="pw_check"style="">비밀번호 중복확인</p>
-			   <input style="margin-top: 410px;width: 263px;" class="member_join_text" id="lo2" type="text" name="name" placeholder="닉네임">
-               
-			   <div onclick="re_check_name()" style="cursor: pointer;margin-top: 284px;" class="re_check">중복확인</div>
-                <p style="top:497px" id="result2"></p>
-
-                <input style="margin-top: 24px;" type="submit" class="memberjoin_btn" value="회원가입" />
+                </div>
+                </div>
             </div>
-        </form>
-</div>
+        </div><!-- wrap END -->
+        
             <!--footer-->
             <footer class="footer">
                 <div class="footer_logos">

@@ -4,17 +4,19 @@
     session_start();
     $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
     
-    $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
-    while ($row = $query3->fetch()) {
+    // $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
+    // while ($row = $query3->fetch()) {
+        // <?=$row['title'];
 ?>
 <script> // 영화 제목 리스트 추가 (자동완성 리스트)
 
     List = [];  // 배열 생성
 
-    List.push('<?=$row['title'];?>');
+    // List.push('');
+    
 </script>
 <?php
-}
+// }
 
 
 /*
@@ -53,9 +55,10 @@
 
 $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
-
+$today = date("Y-m-d");
 // 영화 데이터
 $data = array( 
+    // 영화
     // 최신순
     array(
         'api_key' => $api_key,
@@ -63,7 +66,8 @@ $data = array(
         'sort_by' => 'release_date.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
-        'page' => 1
+        'page' => 1,
+        'release_date.lte' => $today
     ),
     // 인기순
     array(
@@ -72,8 +76,34 @@ $data = array(
         'sort_by' => 'popularity.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
-        'page' => 1
+        'page' => 1,
+        'release_date.lte' => $today
     ),
+    // 드라마
+        // 최신순
+        array(
+            'api_key' => $api_key,
+            // 'with_watch_providers' => '8|337|97|356',
+            'sort_by' => 'release_date.desc',
+            'watch_region' => 'KR',
+            'language' => 'ko',
+            'page' => 1,
+            'air_date.lte' => $today,
+            'first_air_date.lte' => $today,
+            'include_null_first_air_dates' => False
+        ),
+        // 인기순
+        array(
+            'api_key' => $api_key,
+            // 'with_watch_providers' => '8|337|97|356',
+            'sort_by' => 'popularity.desc',
+            'watch_region' => 'KR',
+            'language' => 'ko',
+            'page' => 1,
+            'air_date.lte' => $today,
+            'first_air_date.lte' => $today,
+            'include_null_first_air_dates' => False
+        ),
     // 플랫폼 가져오기
     array(
         'api_key' => $api_key
@@ -95,12 +125,12 @@ $base_url = 'https://api.themoviedb.org/3';
 $url = array(
     // 최신순
     $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
-    $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
+    $base_url . "/discover/tv?" . http_build_query($data[2], '', ),
     // 인기순
     $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
-    $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
+    $base_url . "/discover/tv?" . http_build_query($data[3], '', ),
     // 플랫폼
-    $base_url . "/watch/providers/tv?" . http_build_query($data[2], '', )
+    $base_url . "/watch/providers/tv?" . http_build_query($data[4], '', )
 );
 
 // TMDB API에서 데이터 불러오기
@@ -307,9 +337,9 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             <div class="search_wrapper">
                     <form class="search" action="search_result.php" method="get">
                         <input id="searchInput" type="text" name="search" 
-                        placeholder="제목, 배우를 검색해주세요"
+                        placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
-                         onblur="this.placeholder='제목, 배우를 검색해주세요'"
+                         onblur="this.placeholder='찾으시려는 드라마 또는 영화 제목을 입력해 주세요.'"
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
@@ -360,8 +390,7 @@ foreach($list_arr as $main_lists){
                 <div class="show"><!--리스트 보여지는 틀-->
                     <div class="main_slide_lists"><!--리스트 이미지 출력-->
 <?php
-                    $pxs=0;
-
+                   
     // 짝수로 가져온 컨텐츠면 드라마 >> 제목 가져올 때 title
     // 홀수면 영화 >> 제목 가져올 때 name 
     // $sResponse[$list_count]['results'][$i][$title_change]
@@ -390,7 +419,7 @@ foreach($list_arr as $main_lists){
                             <img class="main_poster_img" 
                                 src="<?=$tmdb_img_base_url.$sResponse[$list_count]['results'][$i]['poster_path']?>" 
                                 alt=""
-                                onerror="this.parentNode.style.display='none'">
+                                onerror="this.parentNode.parentNode.style.display='none';">
                             </span>
                         </div>
     <?php
@@ -398,7 +427,7 @@ foreach($list_arr as $main_lists){
         ?>
 
 <?php
-                    $pxs=24;
+         
                     $list_count++;
 ?>
                     </div>
@@ -407,11 +436,10 @@ foreach($list_arr as $main_lists){
 
             <?php
             }
-
             ?>
         
-            </div>
-        </div><!--main END-->
+            </div><!--wrap END-->
+        </div><!--all END-->
 
             <!--footer-->
             <footer class="footer">

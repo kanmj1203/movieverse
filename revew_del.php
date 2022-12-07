@@ -2,21 +2,19 @@
 session_start();
 require("db_connect.php");
 
-$id = $_REQUEST["id"];
-$tv_movie = $_REQUEST["choice"];
-if($tv_movie=='tv'){
-		$tv_movie='tv_id';
-		}else{
-		$tv_movie='movie_id';
-		}
+$review_num = $_REQUEST["review_num"];
+$id =isset($_REQUEST["id"]) ? $_REQUEST["id"] : "";
+$choice =isset($_REQUEST["choice"]) ? $_REQUEST["choice"] : "";
 
-$db->query("delete from review where member_num='$_SESSION[userNum]' and $tv_movie=$id ");
+$db->query("delete from review where review_num = $review_num");
+$db->query("delete from review_like where like_review_num = $review_num");
 
 
 echo "
     <script>
         alert(\"리뷰가 삭제되었습니다.\");
-        history.back();
+        // history.back();
+        location.href = 'choice.php?choice=$choice&id=$id';
     </script>
 ";
 ?>

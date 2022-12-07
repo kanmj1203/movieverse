@@ -27,7 +27,7 @@ session_start();
 ?>
 	<script>
 		alert('별점과 리뷰가 빈 곳 없이 입력해야 합니다.');
-		location.href = 'choice.php?choice=<?=$choice?>&id=<?=$id?>&re=re';
+		location.href = 'choice.php?choice=<?=$choice?>&id=<?=$id?>';
 	</script>
 
 <?php
@@ -49,19 +49,39 @@ $sv=$sv/16;
 								star_rating = '".$sv."'	,
 								choice_content = '".$choice."'	
 						where choice_content = '".$choice."' and content_id='$id' and member_num='".$_SESSION['userNum']."'");
-}else{
+
+						echo "
+						<script>
+							alert('리뷰가 수정되었습니다');
+							location.href = 'choice.php?choice=$choice&id=$id';
+						</script>
+					";
+					}else{
+
+// $db->exec("insert into review_like (
+// review_date,member_num,review_content,star_rating,choice_content, content_id, like)
+// values('$date','$_SESSION[userNum]','$tr',$sv/16,'$choice', $id, 0)");
 
 $db->exec("insert into review (
 		  review_date,member_num,review_content,star_rating,choice_content, content_id)
 	values('$date','$_SESSION[userNum]','$tr',$sv/16,'$choice', $id)");
+
+$review_num = $db->query("select review_num from review where choice_content='$choice' and content_id=$id and member_num=$_SESSION[userNum]")->fetchColumn();
 	
+
+$db->exec("update  review set  
+like_num = $review_num
+where choice_content = '".$choice."' and content_id='$id' and member_num='".$_SESSION['userNum']."'");
+
+
+	echo "
+	<script>
+		alert('리뷰가 작성되었습니다');
+		location.href = 'choice.php?choice=$choice&id=$id';
+	</script>
+";
 }
- echo "
-      <script>
-          alert('리뷰가 작성되었습니다');
-          location.href = 'choice.php?choice=$choice&id=$id';
-      </script>
-  ";
+
 }
 ?>
 </body>
