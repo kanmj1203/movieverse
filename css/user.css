@@ -1,9 +1,298 @@
+#mypage_container {
+  color : white;
+  width : 80vw;
+  display : flex;
+
+	flex-direction: column;
+	
+	/* align-items: center; */
+	/* text-align: center; */
+	vertical-align: middle;
+	margin:0 auto;
+
+	width : 85vw;
+
+}
+
+.mypage_review_more ul {
+  display : block;
+}
+
+.mypage_bookmark_wrap {
+	/* display : flex; */
+	/* flex-direction: row; */
+	align-items:center;
+  /* justify-content: space-around; */
+  text-align: center;
+
+	margin-top : 3vh;
+}
+
+/* 닉네임, 사진, 북마크 리뷰 갯수 등 출력하는 콘테이너 */
+.mypage_info_container {
+  display : flex;
+	flex-direction: row;
+  align-items: center;
+}
+
+.mypage_info_wrap {
+  display : flex;
+	flex-direction: column;
+
+}
+
+.profile {
+  flex : 1 1 0;
+  align-items: center;
+}
+
+.infos {
+  flex : 3 1 0;
+  margin-left: 15px;
+  font-size : 1rem;
+}
+
+.infos>div:not(:last-child) {
+  margin-bottom : 3vh;
+}
+
+/* 닉네임 */
+.nickname {
+  font-size : 1.5rem;
+}
+
+/* 아이디 */
+.my_id {
+  color : #949494;
+}
+
+/* 북마크, 리뷰 콘테이너 */
+.bookmark_and_review_container {
+  display : flex;
+	flex-direction: column;
+}
+
+.bookmark_and_review_container div {
+  display : flex;
+	flex-direction: row;
+}
+
+.bookmark_and_review_container div p:first-child {
+  width : 100px;
+}
+
+/* 회원정보 변경, 삭제 */
+.change_my_info {
+  display : flex;
+	flex-direction: row;
+  
+}
+
+.change_my_info div:not(:last-child)::after {
+  content : '|';
+  margin : 15px;
+}
+
+.change_my_info div a{
+
+    color : white;
+    transition-duration : 0.5s;
+    transition-timing-function: ease;
+
+    -webkit-transition-duration:0.4s;
+    -webkit-transition-timing-function:ease;
+}
+
+.change_my_info div a:hover {
+    color : #83a1dd;
+}
+
+/* 프로필 사진 변경 */
+.filebox{
+  display : flex;
+  justify-content: space-around;
+  align-items: center;
+  margin : 10px auto;
+}
+
+.profile_img_form {
+  text-align: center;
+}
+
+  .filebox .upload-name {
+    display: inline-block;
+    height: 35px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: none;
+    /* width: 100px; */
+    color: #999999;
+	  border-radius: 5px;
+    font-size : .8rem;
+}
+.filebox label {
+    display: inline-block;
+    color: #fff;
+    vertical-align: middle;
+      background-image: url('../img/edit.png'); 
+    cursor: pointer;
+      width: 40px;
+    height: 40px;
+}
+.filebox input[type="file"] {
+    /* position: absolute; */
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+.submit{
+ height: 35px;
+ border:none;
+ border-radius: 5px;
+ background:   rgba(255,255,255,.2);
+ padding : 0 15px;
+ color:white;
+}
+
+
+/* 페이지네이션 */
+
+/* 페이지네이션 */
+.pagination {
+  display : flex;
+    text-align: center;
+    vertical-align: middle;
+    height : 5vh;
+    padding-top : 3vh;
+    justify-content: center;
+    
+}
+
+.pagination ul{
+  display : flex;
+  width : 20%;
+  justify-content: space-evenly; 
+}
+
+.pagination ul li{
+  font-size : 1.25rem;
+}
+
+
+.pagination_button {
+  cursor: pointer;
+  background:none;
+  font-size : 1.25rem;
+  line-height: 5vh;
+  font-family: 'Nanum Gothic Coding', monospace;
+  color : white;
+  border : none;
+}
+
+.now_page {
+  color : #83a1dd;
+  font-weight: 600;
+}
+
+#mypage_poster {
+  margin-bottom: 5vh;
+
+}
+
+/* 작성한 리뷰 */
+
+.mypage_review_left {
+	flex : 1 1 0;
+}
+
+.mypage_review_content {
+	flex : 4 1 0;
+  margin-left: 30px;
+}
+
+.mypage_review_poster {
+  cursor: pointer;
+	width : 100%;
+	height : auto;
+	/* border:solid 1px white; */
+  /* border-radius: 15px; */
+}
+
+.mypage_review_poster img {
+	width : max(100%, 180px);
+	height : 100%;
+	display : flex;
+	object-fit:cover;
+  border-radius: 15px;
+}
+
+/* 리뷰 관리 콘텐츠 제목 */
+.review_title {
+  font-size : 1.5rem;
+}
+
+.review_user_content {
+  min-height: 13vh;
+}
+
+.my_review_wrap {
+	display : flex;
+	flex-direction: row;
+	align-items:center;
+	margin-top : 3%;
+	font-size : 1rem;
+}
+
+.mypage_review_date {
+  margin-bottom : 2vh;
+}
+
+/* 리뷰 수정하기, 삭제하기 */
+.mypate_review_button{
+  height: 30px;
+  border:none;
+  border-radius: 5px;
+  background:   rgba(255,255,255,.2);
+  padding : 0 20px;
+  color:white;
+  margin-top : 2vh;
+ }
+
+ .mypate_review_button:not(:last-child) {
+    margin-right : max(2vw, 15px);
+ }
+
+ #texts {
+  margin-top : 3vh;
+    text-align: center;
+    font-size : 1rem;
+    line-height: 2;
+ }
+
+ #texts b {
+    font-size : 1.25rem;
+ }
+
+ #texts b:first-child:after,  #texts b:first-child::before {
+  font-size : 1.25rem;
+  content : " !!! ";
+  color : red;
+ }
+
+ 
+
+
+
+
+
 
 .sidenav {
   height: 900px;
   width: 282px;
-  position:relative;
-	margin-left: 360px;
+  /* position:relative; */
+	/* margin-left: 360px; */
   background-color: white;
   overflow-x: hidden;
   padding-top: 20px;
@@ -11,7 +300,7 @@
   border: 1px solid #bcbcbc;
 }
 #side_TEXT{
- position: relative;
+ /* position: relative; */
 width: auto;
 height: 41px;
 left: 20px;
@@ -23,14 +312,14 @@ font-weight: 500;
 font-size: 28px;
 line-height: 41px;
 
-margin-bottom:77px;
+/* margin-bottom:77px; */
 
 color: #030303;
  }
 #side_TEXT:after {
   content: "";
   display: block;
-  margin-left:-20px;
+  /* margin-left:-20px; */
   border-bottom: 1px solid #bcbcbc;
 }
 .sidenav a {
@@ -55,43 +344,48 @@ color: #030303;
 }
 
 .main {
-  position:absolute;
+  /* position:absolute; */
    float: left;
-   width: 1275px;
-	margin-left:644px;
+   width: 80%;
+	/* margin-left:644px; */
 }
 
-.main_Img{
-  position:relative;
-  display:block;
-  width:100%;
-  height:250px;
- background: linear-gradient(92.1deg, #3482EA 0%, #73C6DF 100%);
-}
-.user_Img{
+/* 유저 이미지 */
+
+/* .main_Img{ */
+  /* position:relative; */
+  /* display:block; */
+  /* width:100%; */
+  /* height:250px; */
+ /* background: linear-gradient(92.1deg, #3482EA 0%, #73C6DF 100%); */
+/* } */
+.my_user_img{
   float:left;
+    width: 200px;
+    height: 200px;
 
-  position:relative;
- width: 200px;
-height: 200px;
-left: 24px;
-top: 20px;
-    border-radius: 100px;
+    border-radius: 100%;
 	overflow:hidden;
+}
+.my_user_img img{
+  width : 100%;
+  height : 100%;
+  display : flex;
+  object-fit:cover;
 }
 
 .text_div h1{
-	margin-left: 24px;
-margin-top: 40px;
+	/* margin-left: 24px; */
+/* margin-top: 40px; */
   border-bottom: 1px solid #bcbcbc;
       padding-bottom: 15px;
-	      margin-bottom: 15px;
+	      /* margin-bottom: 15px; */
 }
 .pwall{
 width: 690px;
 height: 480px;
-margin-left: 126px;
-margin-top: 150px;
+/* margin-left: 126px; */
+/* margin-top: 150px; */
 border: 1px solid #707070;
 border-radius: 10px;
 }
@@ -110,45 +404,14 @@ background: #3482EA;
 border-radius: 5px;
 }
 .text_div p{
-margin-left:26px;
-margin-top:5px;
+/* margin-left:26px; */
+/* margin-top:5px; */
 }
-.user_out_div{
-box-sizing: border-box;
 
-position: relative;
-width: 690px;
-height: 402px;
-margin-left: 768px;
-top: 290px;
 
-border: 1px solid #000000;
-border-radius: 10px;
-text-align:center;
-}
-.user_out_div h2{
-	position: absolute;
-width: 161px;
-height: 40px;
-left: 264px;
-top: 40px;
-
-font-family: 'Noto Sans KR';
-
-align-items: center;
-
-}
-.user_out_div #texts{
-position: absolute;
-height: 46px;
-left: 62px;
-top: 100px;
-font-family: 'Noto Sans KR';
-line-height: 23px;
-}
 	
 .pass{
-position: absolute;
+/* position: absolute; */
 
 height: 23px;
 left: 121px;
@@ -167,7 +430,7 @@ color: #030303;
 .pass_input{
 box-sizing: border-box;
 padding-left:10px;
-position: absolute;
+/* position: absolute; */
 width: 384px;
 height: 36px;
 left: 204px;
@@ -177,43 +440,29 @@ background: #FFFFFF;
 border: 1px solid #707070;
 border-radius: 10px;
 }
-.user_out_btn{
-padding: 4px 11px 3px 10px;
-
-width: auto;
-height: 30px;
-margin-left: 57px;
-margin-top: 332px;
-
-border: none;
-background: #3482EA;
-border-radius: 5px;
-color:white;
-}
-
 .other_review {
 
-    position: relative;
+    /* position: relative; */
 
     width: 588px;
 
     height: 200px;
-    margin-bottom: 70px;
-    margin-left: 330px;
+    /* margin-bottom: 70px; */
+    /* margin-left: 330px; */
 }
 .review{
     overflow: auto;
-    margin-left: 10px;
-    margin-top: -200px;
+    /* margin-left: 10px; */
+    /* margin-top: -200px; */
     word-break: break-all;
 width:568px;
 height:92px;
 }
 
 .date {
-    position: relative;
-    margin-top: 110px;
-    margin-left: 410px;
+    /* position: relative; */
+    /* margin-top: 110px; */
+    /* margin-left: 410px; */
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 500;
@@ -234,7 +483,7 @@ border:none;
 background: #9F9F9F;
 border-radius: 5px;
 color:white;
-margin-left:728px;
+/* margin-left:728px; */
 }
 .delbutton{
 color:white;border:none;
@@ -247,10 +496,10 @@ background: #3482EA;
 border-radius: 5px;
 }
 .line{
-    margin: 20px 0 50px 0px;
+    /* margin: 20px 0 50px 0px; */
 }
 .name{
-position: absolute;
+/* position: absolute; */
 width: 140px;
 height: 40px;
 left: 284px;
@@ -269,7 +518,7 @@ color: #FFFFFF;
 }
 
 .id_main{
-position: absolute;
+/* position: absolute; */
 width: 227px;
 height: 26px;
 left: 284px;
@@ -289,54 +538,12 @@ color: #FFFFFF;
 
 }
 
-.filebox{
-	position:absolute;
-	left: 414px;
-top: 57px;
-}
-  .filebox .upload-name {
-    display: inline-block;
-    height: 40px;
-    padding: 0 10px;
-    vertical-align: middle;
-    border: 1px solid #dddddd;
-    width: 100px;
-    color: #999999;
-	border-radius: 10px;
-}
-.filebox label {
-    display: inline-block;
-    color: #fff;
-    vertical-align: middle;
-      background-image: url('../img/edit.png'); 
-    cursor: pointer;
-      width: 40px;
-    height: 40px;
-}
-.filebox input[type="file"] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-}
-.submit{
-	position:absolute;
-	left: 590px;
-top: 57px;
- height: 40px;
- border:none;
- border-radius: 10px;
- background:   #3482EA;
- color:white;
-}
 .bookmark_yes{
-	position: absolute;
-margin-left:14px;
+	/* position: absolute; */
+/* margin-left:14px; */
 z-index:15;
 cursor:pointer;
-margin-left:-55px;
+/* margin-left:-55px; */
 width:28px;
 height:42px
 }
@@ -352,21 +559,22 @@ float:left;
 .page_num{
     left: 500px;
     top: 2450px;
-	position: absolute;
+	/* position: absolute; */
 }
 .review_user_img{
-margin-left: -250px;
+/* margin-left: -250px; */
 width: 180px;
 height: 270px;
 left: 768px;
 top: 542px;
 border-radius:10px;
-margin-top:-50px;
+/* margin-top:-50px; */
 }
 
-.star {margin-left: -30px;
+.star {
+  /* margin-left: -30px; */
 	  left:360px;
-	  position: relative;
+	  /* position: relative; */
 	  font-size: 2rem;
 	  color: #ddd;
 	}
@@ -374,7 +582,7 @@ margin-top:-50px;
 	.star input {
 	  width: 100%;
    	 height: 100%;
-   	 position: absolute;
+   	 /* position: absolute; */
   	  left: 0;
  	   opacity: 0;
   	  cursor: pointer;
@@ -382,9 +590,92 @@ margin-top:-50px;
 	
 	.star span {
 	  width: 0;
-	  position: absolute; 
+	  /* position: absolute;  */
 	  left: 0;
 	  color: #FFE03A;
 	  overflow: hidden;
 	  pointer-events: none;
 	}
+
+
+  
+@media screen and (min-width:1024px) {
+	/* Desktop */
+   #mypage_poster {
+    height : 25vw;
+  }
+}
+@media screen and (min-width:768px) and (max-width: 1023px) {
+	/* Tablet */
+  /* .infos {font-size : 0.8rem;} */
+  /* .nickname {font-size : 1.35rem;} */
+
+    /* 페이지네이션 */
+  .pagination {
+    padding-top : 5vh;
+  }
+
+  .pagination ul{
+  width : 30%;
+}
+
+.mypage_review_poster img {
+  width : 100%;
+}
+  
+.mypage_review_left {
+ flex : 2 1 0;
+}
+
+.mypage_review_content {
+  flex : 4 1 0;
+  margin-left: 25px;
+}
+
+.my_review_wrap { font-size : 0.8rem;}
+
+  .review_user_content {
+    min-height: 10vh;
+  } 
+}
+
+@media screen and (max-width:767px){ 
+	/* Mobile */
+  .infos {font-size : 0.8rem; margin-top : 2.5vh;}
+  .nickname {font-size : 1.35rem;}
+
+  /* 닉네임, 사진, 북마크 리뷰 갯수 등 출력하는 콘테이너 */
+  .mypage_info_container {
+	flex-direction: column;
+  }
+
+    /* 페이지네이션 */
+    .pagination {
+      padding-top : 8vh;
+    }
+    
+    .pagination ul{
+    width : 50%;
+    }
+    
+    .mypage_review_poster img {
+      width : 100%;
+    }
+
+    .mypage_review_left {
+      flex : 2 1 0;
+     }
+     
+     .mypage_review_content {
+       flex : 4 1 0;
+       margin-left: 20px;
+     }
+
+     .review_title {font-size : 1.35rem;}
+     .my_review_wrap { font-size : 0.8rem;}
+
+     .review_user_content {
+      min-height: 6.5vh;
+    } 
+	 
+}

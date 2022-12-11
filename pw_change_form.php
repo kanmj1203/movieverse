@@ -60,23 +60,6 @@ $providers_id = [8, 337, 97, 356];
 // TMDB에서 이미지 가져오기
 $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
    
-
-// 내 리뷰 총 개수
-$review_count = $db->query("select count(*) from review where member_num='$_SESSION[userNum]'")->fetchColumn(); 
-$bookmark_count = $db->query("select count(*) from bookmark where member_num='$_SESSION[userNum]'")->fetchColumn();  
-
-// 내 리뷰 전체 가져오기 (최신순)
-$review_query = $db->query("select * from review where member_num='$_SESSION[userNum]' order by review_date desc, review_num desc limit 0, 5");  
-
-// 내 북마크 전체 가져오기 (최신순)
-$bookmark_query = $db->query("select * from bookmark where member_num='$_SESSION[userNum]' order by join_date desc,  bookmark_num desc limit 0, 4");  
-
-// 내 계정 정보 전체 가져오기
-$my_info_query = $db->query("select * from user where member_num='$_SESSION[userNum]'");  
-
-
-$pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
-$pougodd_desc = $pougodd ==  "like_num" ? "" : "desc";
 ?>
 
 <!DOCTYPE html>
@@ -88,12 +71,8 @@ $pougodd_desc = $pougodd ==  "like_num" ? "" : "desc";
     <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
 
     <!--css 링크-->
-    <link rel="stylesheet" type="text/css" href="css/user.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/basic.css">
-    <link rel="stylesheet" type="text/css" href="css/choice.css">
-    <link rel="stylesheet" type="text/css" href="css/poster_hover.css">
-    <link rel="stylesheet" type="text/css" href="css/pwre.css">
-    <!-- http://localhost/movieverse/js/list.css  -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!--자동완성 기능 autocomplete-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -114,6 +93,45 @@ $pougodd_desc = $pougodd ==  "like_num" ? "" : "desc";
         });
     });
 </script>
+
+<script>
+var new_pw,ps_ok;
+$(document).ready(function(e) { 
+
+$(".member_join_pw").on("keyup", function(){ //check라는 클래스에 입력을 감지
+		var self = $(this); 
+		
+		if(self.attr("id") === "pw1"){ 
+			new_pw = self.val(); 
+		} 
+		
+		if(self.attr("id") === "pw2"){ 
+			ps_ok = self.val(); 
+
+		if(new_pw==ps_ok){
+			ps_ok='ok';
+		}else{
+			ps_ok='no';
+		}
+
+		
+			$.post( //post방식으로 id_check.php에 입력한 userid값을 넘깁니다
+			"pw_check_ajax.php",
+			{ ps_ok : ps_ok }, 
+			function(data){ 
+				if(data){ //만약 data값이 전송되면
+					self.parent().parent().parent().parent().find("#pw_check").html(data); //div태그를 찾아 html방식으로 data를 뿌려줍니다.
+					// self.parent().parent().parent().find("#pw_check").css("color", "#F00"); //div 태그를 찾아 css효과로 빨간색을 설정합니다
+				}
+			}
+		);
+}
+	});
+
+
+});
+</script>
+
 <body>
     <div class="all"> <!--전체 너비 설정-->
         <header class="header_scroll_top">
@@ -150,7 +168,6 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
-
 ?>
                         <img class="user_img" src="user_img/<?= $iset?>">
 <?php
@@ -233,7 +250,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-       
+        
 <!-- 검색창 -->
 <div class="search_modal">
             <div class="search_modal_close">
@@ -273,97 +290,54 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
         <!-- search_modal END -->
 
         <div id='wrap' class="main_container">
-            <!-- wrap -->  
-            <div id="mypage_container">
-                <?php
-                    if($my_info = $my_info_query->fetch()) {
-                ?>
-                <div class="mypage_info_container">
-                    <div class="mypage_info_wrap profile">
-                        <div class="my_user_img">
-                            <img src="user_img/<?= $iset?>">
-                        </div>
-                        <div>
-                            <form class="profile_img_form" name='tmp_name' method="post" action="img_plus.php" enctype="multipart/form-data">
-	 
-                                <div class="filebox">
-                                <label for="file"></label> 
-                                <input type="file" name="imgFile" id="file" class="upload-hidden">
-                                <input class="upload-name" value="" placeholder="첨부파일" >
-                                </div> 
-
-                                <button class="submit" type="submit">프로필 사진 수정</button>
-                            </form>
+            <!-- wrap -->
+            <div><img class="logo_text"src="./img/logo/logo_txt.png"><div>
+            <div class="login_form_container">  
+                <div class="login_form_wrap">
+                    <!-- user 아이콘 -->
+                    <div class="login_user_icon_wrap">
+                        <div class="login_user_icon">
+                            <img src="./img/login/userWhite.png" alt="user_icon_white">
                         </div>
                     </div>
+                    <!-- 입력칸 -->
+                    
+                        <form class="login_container" action="pw_update.php" method="post">
+                            <input type='hidden' id="pw_find_form" name='pw_find_form' value="true">
+                            <input type='hidden' id='id' name='id' value="<?=$_REQUEST['id']?>">
+                            <input type='hidden' id='email' name='email' value="<?=$_REQUEST['email']?>">
+                            <div class="login_form_container">
+                                <div class="join_input_container">
+                                    <div class="find_page_title">비밀번호 재설정</div>
+                                    <div class="login_input_wrap">
+                                        <div class="input_title"><div><img src="./img/login/pwicon.png"></div></div>        
+                                        <div><input class="login_input member_join_pw" type="password" id="pw1"name="new_pw" autocomplete="on" placeholder="새 비밀번호"/></div>
+                                    </div>
 
-                    <div class="mypage_info_wrap infos">
-                        <div>
-                            <div class="nickname"><?=$my_info['nickname']?></div>
-                            <div class="my_id"><span>ID : </span><?=$my_info['identification']?></div>
-                        </div>
-                        <div class="bookmark_and_review_container">
-                            <div><p>북마크</p><p><?=$bookmark_count?>개</p></div>
-                            <div><p>내가 쓴 리뷰</p><p><?=$review_count?>개</p></div>
-                        </div>
-                        <div class="change_my_info">
-                            <div><a href="user_out.php">회원 탈퇴</a></div>
-                            <div><a href="pwre.php">비밀번호 변경</a></div>
-                            <div><a href="mynick_update_form.php">닉네임 변경</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- mypage_info_container END -->
-                <?php
-                    }
-                ?>
-
-                <form action="pw_update.php?" method="post">
-
-                    <div class="pwre_container">
-                        <div class="other_review_header">
-                            <div class="other_review_title">현재 비밀번호</div>
-                        </div>
-                        <div class="pwre_wrap">
-                            <input class="pw_boxs"name="userpw" id="userpw" type="text" placeholder="현재 비밀번호를 입력하세요." required />
-                        </div>
-                    </div>
-                    <!-- other_review_container END -->
-
-                    <div class="pwre_container">
-                        <div class="other_review_header">
-                            <div class="other_review_title">새로운 비밀번호</div>
-                        </div>
-                        <div class="pwre_wrap">
-                            <input class="pw_boxs"name="new_pw"  id="new_pw" type="password" placeholder="새로운 비밀번호를 입력하세요." autocomplete="off" >
-                        </div>
-                    </div>
-                    <!-- other_review_container END -->
-
-                    <div class="pwre_container">
-                        <div class="other_review_header">
-                            <div class="other_review_title">비밀번호 확인</div>
-                        </div>
-                        <div class="pwre_wrap">
-                            <input class="pw_boxs"  name="ps_ok" id="ps_ok" type="password" placeholder="위에서 입력한 비밀번호를 입력하세요." autocomplete="off" >
-                        </div>
-                    </div>
-                    <!-- other_review_container END -->
-                    <div class="mypage_pwre_button_wrap">
-                        <button type="submit" class="mypage_pwre_button" name="submit">수정하기</button>
-                        <button type="button" class="mypage_pwre_button" onclick="location.href='myinfo.php';">취소하기</button>
-                    </div>
-                </form>
-
-
-
-                </div> 
-                <!--show END-->
+                                    <div class="login_input_wrap">
+                                        <div class="input_title"><div><img src="./img/login/pwicon.png"></div></div>        
+                                        <div><input class="login_input member_join_pw" type="password" id="pw2"name="ps_ok" autocomplete="on" placeholder="새 비밀번호 확인"/></div>
+                                    </div>
+                                    <p class="pwrepl"id="pw_check">비밀번호 중복확인</p>
+                                </div>
+                                <div class="find_join">
+                                    <p class="find"><a href="id_pw_find.php">아이디 찾기</a> | <a href="member_join.php">회원가입</a></p>
+                                </div>
+                            </div> 
+                            <!-- submit button -->
+                            <div class="submit_button_text">
+                                <!-- <a class="next_text_button" href="login.php">확인</a> -->
+                                <input type="submit" name="submit" class="next_text_button" value="확인"/>
+                            </div>
+                        </form>
+                <!-- form END -->
+                   
+              </div>
             </div>
-            <!-- mypage_container END -->
+        </div><!-- wrap END -->
     </div>
-    <!-- all END -->
-        
+</div><!-- all END -->
+
             <!--footer-->
             <footer class="footer">
                 <div class="footer_logos">
@@ -400,30 +374,8 @@ foreach($provider_logo_path as $prov_logo_path){
                 </div>
             </footer>
             <!--footer END-->
-            
   </body>
  
 </html>
 <script type="text/javascript" src="./js/header.js"></script>
-<script>
-$(document).ready(function(){
-  var fileTarget = $('.filebox .upload-hidden');
-
-    fileTarget.on('change', function(){
-        if(window.FileReader){
-            var filename = $(this)[0].files[0].name;
-        } else {
-            var filename = $(this).val().split('/').pop().split('\\').pop();
-        }
-
-        $(this).siblings('.upload-name').val(filename);
-    });
-}); 
-
-  </script>	 
-
-
-        
-
-
 

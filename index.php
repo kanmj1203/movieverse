@@ -62,7 +62,7 @@ $data = array(
     // 최신순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => '8|337|97|356',
+        // 'with_watch_providers' => '8|337|97|356',
         'sort_by' => 'release_date.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
@@ -72,25 +72,26 @@ $data = array(
     // 인기순
     array(
         'api_key' => $api_key,
-        'with_watch_providers' => '8|337|97|356',
+        // 'with_watch_providers' => '8|337|97|356',
         'sort_by' => 'popularity.desc',
         'watch_region' => 'KR',
         'language' => 'ko',
         'page' => 1,
         'release_date.lte' => $today
+        
     ),
     // 드라마
         // 최신순
         array(
             'api_key' => $api_key,
             // 'with_watch_providers' => '8|337|97|356',
-            'sort_by' => 'release_date.desc',
+            'sort_by' => 'first_air_date.desc',
             'watch_region' => 'KR',
             'language' => 'ko',
             'page' => 1,
             'air_date.lte' => $today,
             'first_air_date.lte' => $today,
-            'include_null_first_air_dates' => False
+            'include_null_first_air_dates' => false,
         ),
         // 인기순
         array(
@@ -102,7 +103,7 @@ $data = array(
             'page' => 1,
             'air_date.lte' => $today,
             'first_air_date.lte' => $today,
-            'include_null_first_air_dates' => False
+            'include_null_first_air_dates' => false,
         ),
     // 플랫폼 가져오기
     array(
@@ -243,7 +244,7 @@ $overview = str_replace("\n", "<br>", $overview); //줄바꿈
 <?php 
 // 사용자 프로필 사진
 if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
-    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    $query3 = $db->query("select * from user where identification='$_SESSION[userId]'"); 
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
@@ -329,13 +330,13 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-        <!-- 검색창 -->
-        <div class="search_modal">
+<!-- 검색창 -->
+<div class="search_modal">
             <div class="search_modal_close">
                 <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
-                    <form class="search" action="search_result.php" method="get">
+                    <form class="search" action="search_cookie.php" method="get">
                         <input id="searchInput" type="text" name="search" 
                         placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
@@ -343,6 +344,26 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
+                    <div class="search_cookie_wrap">
+                        <?php
+                        if (isset($_COOKIE['search_cookie'])) {
+                        ?>
+                            <?php
+                            foreach($_COOKIE['search_cookie'] as $name => $value) {
+                            ?>
+                                <div class="search_cookie_box">
+                                    <div><a href="search_cookie.php?search=<?=$name?>"><?=$name?></a></div>
+                                    <div class="cookie_delete">
+                                        <a href="search_cookie.php?cookie_del=<?=$name?>"><img src="./img/close_icon_white.png" alt="X"/></a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
             </div>
         </div>
         <!-- search_modal END -->
@@ -354,7 +375,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                 <div style="width : 100%;" class="main_text">
                     <span class="main_title"><?=$sResponse[2]['results'][0]['title']?></span>
                     <p class="main_scenario"><?=$overview?></p>
-                    <a href="choice.php?choice=movie&id=<?=$sResponse[0]['results'][0]['id']?>"class="main_view_detail">상세 보기</a>
+                    <a href="choice.php?choice=movie&id=<?=$sResponse[2]['results'][0]['id']?>"class="main_view_detail">상세 보기</a>
                 </div>
 
             <div class="main_img_gradient_top"></div>

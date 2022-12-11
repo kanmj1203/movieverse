@@ -13,8 +13,9 @@ $db->query("delete from review_like where like_review_num = $review_num");
 echo "
     <script>
         alert(\"리뷰가 삭제되었습니다.\");
-        // history.back();
-        location.href = 'choice.php?choice=$choice&id=$id';
+        history.back();
     </script>
 ";
+        // location.href = 'choice.php?choice=$choice&id=$id';
 ?>
+

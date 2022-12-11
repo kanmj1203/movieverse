@@ -8,8 +8,10 @@
 <?php
 	$id =isset($_REQUEST["id"]) ? $_REQUEST["id"] : "";
 	$pw =isset($_REQUEST["pw"]) ? $_REQUEST["pw"] : "";
+	$email =isset($_REQUEST["email"]) ? $_REQUEST["email"] : "";
 	$name =isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
 	
+
 	require("db_connect.php");
 
 	if(!($id && $pw && $name)) {
@@ -20,7 +22,7 @@
 		history.back();
 	</script>
 <?php
-	}else if($db->query("select count(*) from user where email='$id'")->fetchColumn() > 0){
+	}else if($db->query("select count(*) from user where identification='$id'")->fetchColumn() > 0){
 ?>		
 	<script>
 		alert('이미 등록된 아이디입니다');
@@ -34,15 +36,22 @@
 		history.back();
 	</script>	
 <?php
+	}else if($db->query("select count(*) from user where email='$email'")->fetchColumn() > 0){
+		?>		
+			<script>
+				alert('이미 등록된 이메일입니다');
+				history.back();
+			</script>	
+		<?php
 	}else{
 	$date =   date("Y-m-d H:i:s");
-		  $db->exec("insert into user (email,passwd,nickname,join_date,img_link) 
-	values('$id','$pw','$name','$date','user_img.png')"); 
+		  $db->exec("insert into user (email,passwd,nickname,join_date,img_link,identification) 
+	values('$email','$pw','$name','$date','sample.jpg','$id')"); 
 		
 ?>
 	<script>
 		alert('가입이 완료되었습니다.');
-		location.href="index.php";
+		location.href="login.php";
 	</script>	
 <?php
 	}

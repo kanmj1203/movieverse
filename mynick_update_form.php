@@ -318,42 +318,40 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     }
                 ?>
 
-                <form action="pw_update.php?" method="post">
+                <form action="mynick_update.php?" method="post">
 
                     <div class="pwre_container">
                         <div class="other_review_header">
-                            <div class="other_review_title">현재 비밀번호</div>
+                            <div class="other_review_title">현재 닉네임</div>
                         </div>
                         <div class="pwre_wrap">
-                            <input class="pw_boxs"name="userpw" id="userpw" type="text" placeholder="현재 비밀번호를 입력하세요." required />
+                            <input class="nick_box"name="now_nickname" id="now_nickname" type="text" placeholder="<?=$_SESSION['userName']?>" required readonly />
                         </div>
                     </div>
                     <!-- other_review_container END -->
 
                     <div class="pwre_container">
                         <div class="other_review_header">
-                            <div class="other_review_title">새로운 비밀번호</div>
+                            <div class="other_review_title">새로운 닉네임</div>
                         </div>
                         <div class="pwre_wrap">
-                            <input class="pw_boxs"name="new_pw"  id="new_pw" type="password" placeholder="새로운 비밀번호를 입력하세요." autocomplete="off" >
+                            <input class="pw_boxs" name="new_nickname"  id="new_nickname" type="text" placeholder="새로운 닉네임을 입력하세요." autocomplete="off">
                         </div>
                     </div>
                     <!-- other_review_container END -->
 
-                    <div class="pwre_container">
-                        <div class="other_review_header">
-                            <div class="other_review_title">비밀번호 확인</div>
-                        </div>
-                        <div class="pwre_wrap">
-                            <input class="pw_boxs"  name="ps_ok" id="ps_ok" type="password" placeholder="위에서 입력한 비밀번호를 입력하세요." autocomplete="off" >
-                        </div>
-                    </div>
-                    <!-- other_review_container END -->
                     <div class="mypage_pwre_button_wrap">
                         <button type="submit" class="mypage_pwre_button" name="submit">수정하기</button>
                         <button type="button" class="mypage_pwre_button" onclick="location.href='myinfo.php';">취소하기</button>
                     </div>
                 </form>
+
+
+
+
+
+
+
 
 
 

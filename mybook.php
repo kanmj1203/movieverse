@@ -1,58 +1,37 @@
 <?php
+
+    require("db_connect.php");
+    session_start();
+    $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
+    
+    // $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
+    // while ($row = $query3->fetch()) {
+        // <?=$row['title'];
+?>
+<script> // 영화 제목 리스트 추가 (자동완성 리스트)
+
+    List = [];  // 배열 생성
+
+    // List.push('');
+    
+</script>
+<?php
+
 $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
 
 // 영화 데이터
 $data = array( 
-    // 최신순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => 8,
-    //     'with_watch_providers' => 337,
-    //     'with_watch_providers' => 97,
-    //     'with_watch_providers' => 356,
-    //     'sort_by' => 'release_date.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
-    // 인기순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => [8, 337, 97, 356],
-    //     // 'with_watch_providers' => 337,
-    //     // 'with_watch_providers' => 97,
-    //     // 'with_watch_providers' => 356,
-    //     'sort_by' => 'popularity.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
     // 플랫폼 가져오기
     array(
         'api_key' => $api_key
     )
 );
 
-// 드라마/시리즈 데이터
-// $tv_data = array(
-//     'api_key' => '13e4eba426cd07a638195e968ac8cf19',
-//     'with_watch_providers' => 8,
-//     'watch_region' => 'KR',
-//     'language' => 'ko',
-//     'page' => 1
-// );
-
 // URL 지정
 $base_url = 'https://api.themoviedb.org/3';
 
 $url = array(
-    // 최신순
-    // $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
-    // 인기순
-    // $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
     // 플랫폼
     $base_url . "/watch/providers/tv?" . http_build_query($data[0], '', )
 );
@@ -68,9 +47,8 @@ for($i = 0; $i < count($url); $i++){
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
     
     $response = curl_exec($ch);
-
     $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
-
+    
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $error = curl_error($ch);
     curl_close($ch);
@@ -81,81 +59,104 @@ $providers_id = [8, 337, 97, 356];
 
 // TMDB에서 이미지 가져오기
 $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
+   
 
-// // 시나리오
-// $overview = $sResponse[2]['results'][0]['overview'];
-// // 공백문자, 줄바꿈 치환
-// $overview = str_replace(" ", "&nbsp;", $overview); //공백
-// $overview = str_replace("\n", "<br>", $overview); //줄바꿈
 
-// return $response;
-// function getTitle($count) {
-    // $a = $sResponse['results'];
-    // for ($i=0; $i<count($sResponse['results']); $i++) {
-    //     // print($sResponse['results'][$i]['title']);
-    //     // $a =  $sResponse['results'];
-    //     print_r($sResponse['results'][$i]);
-    //     print("<br><br>");
-        
-    // }
-// }
-// print("<br><br><br>" . $url);
-
-             
-        ?>
+// $pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
+// $pougodd_desc = $pougodd ==  "like_num" ? "" : "desc";
 
 
 
+// 페이지네이션
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>MovieVerse</title>
-    <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
-	
-	<link rel="stylesheet" type="text/css"href="css/user.css">
-	<link rel="stylesheet" type="text/css"href="css/basic.css">
-	<link rel="stylesheet" type="text/css"href="js/list.css">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+// 현재 페이지 0보다 작으면 1로 설정
+$page = 0 < $page ? $page : 1;
 
-	
-  </head>
-  
-<script>
-List = [];
-</script>
+$page_count = 8;
+$page_lines = 5;
 
-<div>
-<?php 
-	require("db_connect.php");
-	session_start();
+$numRecords = $db->query("select count(*) from bookmark where member_num='$_SESSION[userNum]'")->fetchColumn();
+// $numRecords = (int)$numRecords;
+$page_total = (int)$numRecords;
+$page_total_pages = ceil($page_total  / $page_count);
+
+// 현재 페이지 page_count보다 크면 page_total_pages로 설정
+$page = $page_total_pages < $page ? $page_total_pages : $page;
+
+
+$page_list = ceil($page / $page_lines);
+
+$page_last = $page_list <= $page_total_pages ? $page_list * $page_count : $page_total_pages;
+$page_last = $page_count > $page_total_pages ? $page_total_pages : $page_last;
+
+$page_start = $page_last - ($page_count - 1) <= 0 ? 1 : $page_last - ($page_count - 1);
+// echo gettype($page_start);
+$page_prev = $page_start - 1;
+$page_next = $page_last + 1;
+
+$stat = $page >= 1 ? ($page -1) * $page_count : $page * $page_count;
+
+
+
+// 내 리뷰 총 개수
+$review_count = $db->query("select count(*) from review where member_num='$_SESSION[userNum]'")->fetchColumn(); 
+$bookmark_count = $db->query("select count(*) from bookmark where member_num='$_SESSION[userNum]'")->fetchColumn();  
+
+
+// 내 리뷰 전체 가져오기 (최신순)
+// $review_query = $db->query("select * from review where member_num='$_SESSION[userNum]' order by review_date desc, review_num desc ");  
+
+// 내 북마크 전체 가져오기 (최신순)
+$bookmark_query = $db->query("select * from bookmark where member_num='$_SESSION[userNum]' order by join_date desc, bookmark_num desc LIMIT $stat, $page_count");  
+
+// 내 계정 정보 전체 가져오기
+$my_info_query = $db->query("select * from user where member_num='$_SESSION[userNum]'");  
+
+
 
 ?>
 
-</div>
-<script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MovieVerse</title>
+    <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
 
+    <!--css 링크-->
+    <link rel="stylesheet" type="text/css" href="css/user.css">
+    <link rel="stylesheet" type="text/css" href="css/basic.css">
+    <link rel="stylesheet" type="text/css" href="css/choice.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/movie_tv.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/poster_hover.css">
+    
+    <!-- <link rel="stylesheet" type="text/css" href="js/list.css"> -->
+    <!-- http://localhost/movieverse/js/list.css  -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!--자동완성 기능 autocomplete-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+
+<!--검색-->
+<script>
     $(function() {
         $("#searchInput").autocomplete({
-            source: List,
-            focus: function(event, ui) {
+            source: List,   // 자동완성 대상
+            focus: function(event, ui) { //포커스 시 이벤트
                 return false;
             },
-            minLength: 1,
-            delay: 100,
-
-
+            minLength: 1,   // 최소 글자 수
+            delay: 100,     //글자 입력 후 이벤트 발생까지 지연 시간
         });
     });
 </script>
-
-  
- <body>
- <div class="all">
- <header class="header_scroll_top">
+<body>
+    <div class="all"> <!--전체 너비 설정-->
+        <header class="header_scroll_top">
             <div class="head">  <!--header GNB-->
                 <div class="header_left">
                     <ul>
@@ -189,6 +190,7 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
+
 ?>
                         <img class="user_img" src="user_img/<?= $iset?>">
 <?php
@@ -271,13 +273,14 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-        <!-- 검색창 -->
-        <div class="search_modal">
+        
+<!-- 검색창 -->
+<div class="search_modal">
             <div class="search_modal_close">
                 <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
-                    <form class="search" action="search_result.php" method="get">
+                    <form class="search" action="search_cookie.php" method="get">
                         <input id="searchInput" type="text" name="search" 
                         placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
@@ -285,153 +288,167 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
+                    <div class="search_cookie_wrap">
+                        <?php
+                        if (isset($_COOKIE['search_cookie'])) {
+                        ?>
+                            <?php
+                            foreach($_COOKIE['search_cookie'] as $name => $value) {
+                            ?>
+                                <div class="search_cookie_box">
+                                    <div><a href="search_cookie.php?search=<?=$name?>"><?=$name?></a></div>
+                                    <div class="cookie_delete">
+                                        <a href="search_cookie.php?cookie_del=<?=$name?>"><img src="./img/close_icon_white.png" alt="X"/></a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
             </div>
         </div>
         <!-- search_modal END -->
-        
+
+        <div id='wrap' class="main_container">
+            <!-- wrap -->  
+            <div id="mypage_container">
+                <?php
+                    if($my_info = $my_info_query->fetch()) {
+                ?>
+                <div class="mypage_info_container">
+                    <div class="mypage_info_wrap profile">
+                        <div class="my_user_img">
+                            <img src="user_img/<?= $iset?>">
+                        </div>
+                        <div>
+                            <form class="profile_img_form" name='tmp_name' method="post" action="img_plus.php" enctype="multipart/form-data">
+	 
+                                <div class="filebox">
+                                <label for="file"></label> 
+                                <input type="file" name="imgFile" id="file" class="upload-hidden">
+                                <input class="upload-name" value="" placeholder="첨부파일" >
+                                </div> 
+
+                                <button class="submit" type="submit">프로필 사진 수정</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="mypage_info_wrap infos">
+                        <div>
+                            <div class="nickname"><?=$my_info['nickname']?></div>
+                            <div class="my_id"><span>ID : </span><?=$my_info['identification']?></div>
+                        </div>
+                        <div class="bookmark_and_review_container">
+                            <div><p>북마크</p><p><?=$bookmark_count?>개</p></div>
+                            <div><p>내가 쓴 리뷰</p><p><?=$review_count?>개</p></div>
+                        </div>
+                        <div class="change_my_info">
+                            <div><a href="user_out.php">회원 탈퇴</a></div>
+                            <div><a href="pwre.php">비밀번호 변경</a></div>
+                            <div><a href="mynick_update_form.php">닉네임 변경</a></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- mypage_info_container END -->
+                <?php
+                    }
+                ?>
+
+                <!-- <div class="mypage_wrap"> -->
+
+            <div class="similar_genres_container">
+                <div class="similar_genres_header">
+                    <div class="similar_genres_title">북마크</div>
+                    
+                </div>
+                <div class="mypage_bookmark_wrap"><!--리스트 이미지 출력-->
+                <?php
+                        if ($bookmark_count == '0') {
+                            ?>
+                            <div class="defind_review">
+                                    <div>
+                                        <p>북마크된 콘텐츠가 없습니다. 첫 북마크를 등록해 보세요!</p>
+                                    </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
 
 <?php 
-	require("db_connect.php");
 
-	$query3 = $db->query("select *  from user where email='$_SESSION[userId]' "); 
-	while ($row = $query3->fetch()) {
-		if($row['img_link']){
-		$iset=$row['img_link'];
-	}else{
-			$iset="user_img";
-		}
-	
-	
-	
-?>
+    while($row=$bookmark_query->fetch()){
 
-  <div  style="display: none;margin-top:-1px;" id="userDiv">
-                <h3><img class="userimg_2" src="user_img/<?=$iset;?>"><?=$_SESSION["userName"]?></h3>
-                <ul>
-                    <li  onclick="location.href='myinfo.php';"><img class="userimg" src="img/user.png">내 계정정보</li>
-                    <li onclick="location.href='pwre.php';"><img class="userimg" src="img/lock.png">비밀번호 수정</li>
-                    <li style="background: #E5E5E5;" onclick="location.href='mybook.php';"><img class="userimg" src="img/bookmark.png">내 북마크</li>
-                    <li onclick="location.href='myreview.php';"><img class="userimg" src="img/review.png">작성한 평가</li>
-                    <li onclick="location.href='log_out.php';"><img class="userimg" src="img/logout.png">로그아웃 </li>
-            </div>
-
-
-<div style="height:1468px;" class="sidenav">
-  <p id="side_TEXT">계정정보</p>
-  <a href="myinfo.php">내 계정정보</a>
-  <a  href="pwre.php">비밀번호 수정</a>
-  <a style="background: #E5E5E5;" href="mybook.php">내 북마크</a>
-  <a href="myreview.php">작성한 평가</a>
-</div>
-
-<div class="main">
-
-   <div class="main_Img">
-     <div class="user_Img"><img style="width:100%;"src="user_img/<?= $iset?>"></div>
-	 <p class="name"><?=$row['nickname']?></p>
-	 
-	 
- <script>
-$(document).ready(function(){
-  var fileTarget = $('.filebox .upload-hidden');
-
-    fileTarget.on('change', function(){
-        if(window.FileReader){
-            var filename = $(this)[0].files[0].name;
-        } else {
-            var filename = $(this).val().split('/').pop().split('\\').pop();
+        // 시나리오 글자수 제한
+        $poster_overview = $row["overview"];
+        
+        if (strlen($poster_overview) >= 330) {
+            $poster_overview = iconv_substr($poster_overview,0,140,"utf-8").'...';
         }
+    ?>
 
-        $(this).siblings('.upload-name').val(filename);
-    });
-}); 
-
-  </script>	 
-	 
-	 <form name='tmp_name' method="post" action="img_plus.php" enctype="multipart/form-data">
-	 
-	 <div class="filebox">
-    <label for="file"></label> 
-	    <input type="file"  name="imgFile" id="file"class="upload-hidden">
-    <input class="upload-name" value="" placeholder="첨부파일" >
-	</div> 
-
-   <button class="submit" type="submit">저장</button>
-	 </form>
-     <p class="id_main"><?=$row['email']?></p>
-
- </div>
-
-<h2 style="margin-top:40px;margin-left:24px;">내 북마크 </h2>
-<div style="width:1200px">
- <?php
-	}
-
-	$numLines= 6;
-	$numLinke= 3;
-
-	$page = empty($_REQUEST["page"]) ? 1 : $_REQUEST["page"];
-	$stat = ($page -1) * $numLines;
-
-
-	  $query3 = $db->query("(SELECT * FROM bookmark,tv WHERE bookmark.member_num='$_SESSION[userNum]' AND tv.id=bookmark.review_num)
-UNION ALL
-(SELECT * FROM bookmark,movie WHERE bookmark.member_num='$_SESSION[userNum]' AND movie.id=bookmark.review_num)LIMIT $stat , $numLines"); 
-	while ($row = $query3->fetch()) {
-	   $bookmark=$db->query("select count(*) from  bookmark  where member_num='$_SESSION[userNum]' and review_num='$row[review_num]'  ")->fetchColumn();
-
-?>
-<div style="margin:24px 0 0 24px;widht:700px;" class="movie_bookmark">
-            <img class="moive"  class="movie" src="https://image.tmdb.org/t/p/w220_and_h330_face<?=$row['poster_path'];?>">
-
-	<img class="bookmark_yes" src="img/bookmark_yes.png"onclick="location.href='join_bookmark.php?id=<?= $row['review_num'] ?>&choice=<?= $row['choice']?>';">
-
-</div>
-
- <?php
-	}
-?>
-</div>
-
-        <?php
-	$firstLink = floor(($page - 1)/$numLinke)*$numLinke+1;
-	$lastLink = $firstLink + $numLinke -1;
-
-	$numRecords = $db->query("select count(*) from  bookmark  where member_num='$_SESSION[userNum]'")->fetchColumn();
-	$numPage = ceil($numRecords / $numLines);
-
-	if($lastLink  >$numPage){
-	   $lastLink = $numPage;
-	}//올림은 ceil
-
-?>
-        <div class="page_num">
-            <?php
-		if($firstLink>1){
-?>
-            <a class="nones" href="mybook.php?page=<?= $firstLink -1 ?>"> 이전 </a>
-            <?php
-	 }
-
-		for ($i=$firstLink; $i <= $lastLink; $i++){
-?>
-            <a class="nones" href="mybook.php?page=<?=$i?>"> <?=($i == $page) ? "<u>$i</u>" : $i?> </a>
-            <?php
-		}
-
-		if($lastLink<$numPage){
-?>
-            <a class="nones" style='margin:0;' href="mybook.php?page=<?=$lastLink +1?>"> 다음 </a>
-            <?php
-		}
-
-?>
-
+                        <div id = "mypage_poster" class="main_poster_img_container poster_container " onclick="location.href='choice.php?choice=<?=$row['choice']?>&id=<?=$row['choice_num']?>';">
+                            <div class="poster_hover_wrapper">
+                                <p class="main_poster_title"><?=$row["title"]?></p>
+                                <p class="main_poster_overview"><?=$poster_overview?></p>
+                            </div>
+                            <span class="poster_wrap">
+                            <img class="main_poster_img" 
+                                src="<?=$tmdb_img_base_url.$row['poster']?>" 
+                                alt=""
+                                onerror="this.parentNode.parentNode.style.display='none';">
+                            </span>
+                        </div>
+    <?php
+        }
+        ?>
         </div>
+
+                    <!-- main_slide_lists END -->
+                </div>
+                <!-- similar_genres_container END -->
+                 <!-- pagination -->
+            <div class="pagination">
+                <ul>
+                    <li>
+                    <button 
+                    class="pagination_button"
+                    type="button"
+                    onclick="location.href='mybook.php?page=<?=$page_prev?>'">
+                    <
+                    </button></li>
+<?php
+                for($i = $page_start; $i <= $page_last; $i++){
+?>
+                    <li><button
+                    class="pagination_button <?=$i == $page ? 'now_page' : ''?>"
+                    type="button"
+                    onclick="location.href='mybook.php?page=<?=$i?>'"
+                    >
+                    <?=$i?></button></li>
+<?php
+                }
+?>
+                    <li><button 
+                    class="pagination_button"
+                    type="button"
+                    onclick="location.href='mybook.php?page=<?=$page_next?>'" >
+                    >
+                    </button></li>
+            </ul>
+            </div>
+                </div> 
+                <!--show END-->
+            </div>
+            <!-- mypage_container END -->
     </div>
-</div>
-  <!--footer-->
-  <footer class="footer">
+    <!-- all END -->
+        
+            <!--footer-->
+            <footer class="footer">
                 <div class="footer_logos">
         <?php
 
@@ -466,8 +483,38 @@ foreach($provider_logo_path as $prov_logo_path){
                 </div>
             </footer>
             <!--footer END-->
+            
   </body>
  
 </html>
 <script type="text/javascript" src="./js/header.js"></script>
+<script>
+$(document).ready(function(){
+  var fileTarget = $('.filebox .upload-hidden');
+
+    fileTarget.on('change', function(){
+        if(window.FileReader){
+            var filename = $(this)[0].files[0].name;
+        } else {
+            var filename = $(this).val().split('/').pop().split('\\').pop();
+        }
+
+        $(this).siblings('.upload-name').val(filename);
+    });
+}); 
+
+  </script>	 
+
+
+        
+
+
+
+
+
+
+
+
+
+
 

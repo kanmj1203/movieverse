@@ -4,7 +4,7 @@
 	// $db = new PDO("mysql:host=localhost;dbname=데이터베이스명", "아이디", "비밀번호");	
 	// https://movieverse.cafe24.com/html/index.php
 	//$db = new PDO("mysql:host=localhost;port=3306;dbname=movieverse", "movieverse", "ww970714**");
-	// $db = new PDO("mysql:host=movieverse123.cafe24.com;dbname=movieverse123", "movieverse123", "q2w3e4r5t6!!");
+	// $db = new PDO("mysql:host=localhost;dbname=movieverse123", "movieverse123", "q2w3e4r5t6!!");
 	
 	$db = new PDO("mysql:host=localhost;port=3307;dbname=movieverse", "movieverse", "1234");
 	

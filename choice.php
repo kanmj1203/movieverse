@@ -112,25 +112,25 @@ $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
 // print("<br><br><br>" . $url);
 
 // 크롤링 (플랫폼 클릭 시 해당 페이지로 이동)
-include('./simple_html_dom/simple_html_dom.php'); 
-        //가져올 url 설정
+// include('./simple_html_dom/simple_html_dom.php'); 
+//         //가져올 url 설정
         
-    $open_ott_page = [];
+//     $open_ott_page = [];
 
-if (isset($sResponse[1]['results']['KR']['link'])) {
-    $platform_url = $sResponse[1]['results']['KR']['link']; 
-    $platform_html = @file_get_html($platform_url); 
+//     if (isset($sResponse[1]['results']['KR']['link'])) {
+//         $platform_url = $sResponse[1]['results']['KR']['link']; 
+//         $platform_html = @file_get_html($platform_url); 
 
-    unset($arr_result); 
-    $arr_result = $platform_html->find('#ott_offers_window > section > div.header_poster_wrapper > div > div:nth-child(4) > div > ul > li.ott_filter_best_price > div > a');   //1위 ~ 3위 랭킹순위 및 프로그램명 가져오기
-    if(count($arr_result) > 0){                         //위의 이미지에서 a 태그에 포함되는 html dom 객체를 가져옴
-        foreach($arr_result as $e){
+//         unset($arr_result); 
+//         $arr_result = $platform_html->find('#ott_offers_window > section > div.header_poster_wrapper > div > div:nth-child(4) > div > ul > li.ott_filter_best_price > div > a');   //1위 ~ 3위 랭킹순위 및 프로그램명 가져오기
+//         if(count($arr_result) > 0){                         //위의 이미지에서 a 태그에 포함되는 html dom 객체를 가져옴
+//             foreach($arr_result as $e){
 
-            //children 속성을 이용해 맨 처음(0)의 태그 가져오기(<span class="rank_num">1</span>값 가져옴)
-            array_push($open_ott_page, [$e->href, $e->children(0)->src]);     //위의 값 중 1 값을 가져옴
-        } 
-} 
-}
+//                 //children 속성을 이용해 맨 처음(0)의 태그 가져오기(<span class="rank_num">1</span>값 가져옴)
+//                 array_push($open_ott_page, [$e->href, $e->children(0)->src]);     //위의 값 중 1 값을 가져옴
+//             } 
+// } 
+// }
 
 $content = $sResponse[0];
 
@@ -183,18 +183,23 @@ $open_date = $choice_content == 'movie' ? $content['release_date'] : $content['l
 // 페이지네이션
 
 $page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+// 현재 페이지 0보다 작으면 1로 설정
 $page = 0 < $page ? $page : 1;
 
 $page_count = 3;
+$page_lines = 2;
 $numRecords = $db->query("select count(*) from  review  where choice_content='$choice_content' and content_id = $choice_id")->fetchColumn();
 // $numRecords = (int)$numRecords;
 $page_total = (int)$numRecords;
-$page_total_pages = ceil($page_total  / 2);
-// $page = ceil($page_total  / 2) > $page ? $page : 1;
+$page_total_pages = ceil($page_total  / $page_count);
+
+// 현재 페이지 page_count보다 크면 page_total_pages로 설정
+$page = $page_total_pages < $page ? $page_total_pages : $page;
 
 
-$page_list = ceil($page / $page_count);
-$page_last = $page_list < $page_total_pages ? $page_list * $page_count : $page_total_pages;
+$page_list = ceil($page / $page_lines);
+
+$page_last = $page_list <= $page_total_pages ? $page_list * $page_count : $page_total_pages;
 $page_last = $page_count > $page_total_pages ? $page_total_pages : $page_last;
 
 $page_start = $page_last - ($page_count - 1) <= 0 ? 1 : $page_last - ($page_count - 1);
@@ -203,7 +208,7 @@ $page_prev = $page_start - 1;
 $page_next = $page_last + 1;
 
 // $numLines= 2;
-$stat = ($page -1) * $page_count;
+$stat = $page >= 1 ? ($page -1) * $page_count : $page * $page_count;
 
 
 // $numLines= 2;
@@ -281,6 +286,9 @@ if($_SESSION["userId"]!=""){
     $bookmark=$db->query("select count(*) from  bookmark  where member_num='$_SESSION[userNum]' and choice_num = $choice_id and choice ='$choice_content'")->fetchColumn();
 
     $bookmark_link = 'join_bookmark.php?id='.$choice_id.'&choice='.$choice_content;
+    // '&poster='.$content['poster_path'].
+    // '&overview='.$content['overview'];
+
     if($bookmark>0){
         $bookmark_checked_class = 'checked_bm';
     } else {
@@ -350,7 +358,7 @@ if($_SESSION["userId"]!=""){
 <?php 
 // 사용자 프로필 사진
 if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
-    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    $query3 = $db->query("select * from user where identification='$_SESSION[userId]'"); 
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
@@ -436,13 +444,13 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-        <!-- 검색창 -->
-        <div class="search_modal">
+         <!-- 검색창 -->
+         <div class="search_modal">
             <div class="search_modal_close">
                 <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
-                    <form class="search" action="search_result.php" method="get">
+                    <form class="search" action="search_cookie.php" method="get">
                         <input id="searchInput" type="text" name="search" 
                         placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
@@ -450,6 +458,26 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
+                    <div class="search_cookie_wrap">
+                        <?php
+                        if (isset($_COOKIE['search_cookie'])) {
+                        ?>
+                            <?php
+                            foreach($_COOKIE['search_cookie'] as $name => $value) {
+                            ?>
+                                <div class="search_cookie_box">
+                                    <div><a href="search_cookie.php?search=<?=$name?>"><?=$name?></a></div>
+                                    <div class="cookie_delete">
+                                        <a href="search_cookie.php?cookie_del=<?=$name?>"><img src="./img/close_icon_white.png" alt="X"/></a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
             </div>
         </div>
         <!-- search_modal END -->
@@ -488,17 +516,17 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                                     <img src="./img/bookmark_icon.png" alt="bookmark_icon"/>북마크
                                     </a>
                                 </div>
-                        <div class="providers_link">
+                        <!-- <div class="providers_link">
                             <?php
-                            foreach($open_ott_page as $ott_url) {
+                            // foreach($open_ott_page as $ott_url) {
                             ?>
-                                <span><a href="<?=$ott_url[0]?>" target='_blank'>
-                                    <img width="50" height="50" src="<?=$tmdb_img_base_url.$ott_url[1]?>"/>
+                                <span><a href="<=$ott_url[0]?>" target='_blank'>
+                                    <img width="50" height="50" src="<=$tmdb_img_base_url.$ott_url[1]?>"/>
                                 </a></span>
                             <?php
-                            }
+                            // }
                             ?>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- choice_left END -->
                     <div class="choice_wrap_center">
@@ -631,6 +659,8 @@ if ($_SESSION["userNum"]=="") {
                         <form class="" action="<?=$review_action?>" method="post">
                             <input id="starvalue" name="starvalue" type="hidden" value="" />
                             <input name="id" type="hidden" value="<?=$choice_id?>">
+                            <input name="choice" type="hidden" value="<?=$choice_content?>">
+
                             <textarea id="text_crear" class="text_review" name="textreview" 
                             value=""
                             placeholder="<?=$default_text?>"
@@ -668,6 +698,7 @@ if ($_SESSION["userNum"]=="") {
 <?php 
 $review_count = $db->query("select count(*) from review where content_id=$choice_id")->fetchColumn();  
 $pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
+$pougodd_desc = $pougodd ==  "like_num" ? "" : "desc";
 ?>
 
                 <div class="other_review_container">
@@ -727,7 +758,7 @@ $pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
                         <?php
                     }
                         $limit_start = $page_start-1;
-                        $other_review_query = $db->query("select * from review where choice_content='$choice_content' and content_id=$choice_id order by $pougodd desc LIMIT $stat, $page_count");
+                        $other_review_query = $db->query("select * from review where choice_content='$choice_content' and content_id=$choice_id order by $pougodd $pougodd_desc, review_num $pougodd_desc LIMIT $stat, $page_count");
                         while ($row = $other_review_query->fetch()) {
                             $user_nickname = $db->query("select nickname from user where member_num = '$row[member_num]'")->fetchColumn();
                             $user_review_like = $db->query("select count(*) from review_like where like_review_num = '$row[like_num]'")->fetchColumn();
@@ -788,7 +819,7 @@ $pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
                         <?php
 
                         $list_count = 3;   
-                        $title_change = '';
+                        // $title_change = '';
 
                         ?>
                                     <!-- <div class="main_content_view"> -->
@@ -805,11 +836,11 @@ $pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
                             // 짝수로 가져온 컨텐츠면 드라마 >> 제목 가져올 때 title
                             // 홀수면 영화 >> 제목 가져올 때 name 
                             // $sResponse[$list_count]['results'][$i][$title_change]
-                            if ($choice_content == 'tv') {
-                                $title_change = 'name';
-                            } else {
-                                $title_change = 'title';
-                            }
+                            // if ($choice_content == 'tv') {
+                            //     $title_change = 'name';
+                            // } else {
+                            //     $title_change = 'title';
+                            // }
                             for ($i = 0; $i < count($sResponse[3]['results']); $i++) {
 
                                 // 시나리오 글자수 제한
@@ -877,7 +908,7 @@ foreach($provider_logo_path as $prov_logo_path){
     $prov_count++;
 }
     ?>
-    </div>
+    
                 <div class="footer_text">신구대학교 팀프로젝트 6조
                     <br>
                     권은진 강민지 천서정 시지원 김나영

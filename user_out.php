@@ -1,93 +1,37 @@
 <?php
 
-/*
-넷플 : 
-{
-    "display_priority": 0,
-    "logo_path": "/9A1JSVmSxsyaBK4SUFsYVqbAYfW.jpg",
-    "provider_name": "Netflix",
-    "provider_id": 8
-    },
+    require("db_connect.php");
+    session_start();
+    $_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
+    
+    // $query3 = $db->query("SELECT title FROM tv UNION SELECT title  FROM movie "); 
+    // while ($row = $query3->fetch()) {
+        // <?=$row['title'];
+?>
+<script> // 영화 제목 리스트 추가 (자동완성 리스트)
 
-왓챠 :
-{
-    "display_priority": 3,
-    "logo_path": "/cNi4Nv5EPsnvf5WmgwhfWDsdMUd.jpg",
-    "provider_name": "Watcha",
-    "provider_id": 97
-},
+    List = [];  // 배열 생성
 
-디즈니 : 
-{
-    "display_priority": 1,
-    "logo_path": "/dgPueyEdOwpQ10fjuhL2WYFQwQs.jpg",
-    "provider_name": "Disney Plus",
-    "provider_id": 337
-},
-
-웨이브 :
-{
-    "display_priority": 2,
-    "logo_path": "/8N0DNa4BO3lH24KWv1EjJh4TxoD.jpg",
-    "provider_name": "wavve",
-    "provider_id": 356
-},
-*/
+    // List.push('');
+    
+</script>
+<?php
 
 $method = "GET";
 $api_key = '13e4eba426cd07a638195e968ac8cf19';
 
 // 영화 데이터
 $data = array( 
-    // 최신순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => 8,
-    //     'with_watch_providers' => 337,
-    //     'with_watch_providers' => 97,
-    //     'with_watch_providers' => 356,
-    //     'sort_by' => 'release_date.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
-    // 인기순
-    // array(
-    //     'api_key' => $api_key,
-    //     'with_watch_providers' => [8, 337, 97, 356],
-    //     // 'with_watch_providers' => 337,
-    //     // 'with_watch_providers' => 97,
-    //     // 'with_watch_providers' => 356,
-    //     'sort_by' => 'popularity.desc',
-    //     'watch_region' => 'KR',
-    //     'language' => 'ko',
-    //     'page' => 1
-    // ),
     // 플랫폼 가져오기
     array(
         'api_key' => $api_key
     )
 );
 
-// 드라마/시리즈 데이터
-// $tv_data = array(
-//     'api_key' => '13e4eba426cd07a638195e968ac8cf19',
-//     'with_watch_providers' => 8,
-//     'watch_region' => 'KR',
-//     'language' => 'ko',
-//     'page' => 1
-// );
-
 // URL 지정
 $base_url = 'https://api.themoviedb.org/3';
 
 $url = array(
-    // 최신순
-    // $base_url . "/discover/movie?" . http_build_query($data[0], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[0], '', ),
-    // 인기순
-    // $base_url . "/discover/movie?" . http_build_query($data[1], '', ),
-    // $base_url . "/discover/tv?" . http_build_query($data[1], '', ),
     // 플랫폼
     $base_url . "/watch/providers/tv?" . http_build_query($data[0], '', )
 );
@@ -103,9 +47,8 @@ for($i = 0; $i < count($url); $i++){
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
     
     $response = curl_exec($ch);
-
     $sResponse[$i] = json_decode($response , true);		//배열형태로 반환
-
+    
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $error = curl_error($ch);
     curl_close($ch);
@@ -116,81 +59,64 @@ $providers_id = [8, 337, 97, 356];
 
 // TMDB에서 이미지 가져오기
 $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
+   
 
-// // 시나리오
-// $overview = $sResponse[2]['results'][0]['overview'];
-// // 공백문자, 줄바꿈 치환
-// $overview = str_replace(" ", "&nbsp;", $overview); //공백
-// $overview = str_replace("\n", "<br>", $overview); //줄바꿈
+// 내 리뷰 총 개수
+$review_count = $db->query("select count(*) from review where member_num='$_SESSION[userNum]'")->fetchColumn(); 
+$bookmark_count = $db->query("select count(*) from bookmark where member_num='$_SESSION[userNum]'")->fetchColumn();  
 
-// return $response;
-// function getTitle($count) {
-    // $a = $sResponse['results'];
-    // for ($i=0; $i<count($sResponse['results']); $i++) {
-    //     // print($sResponse['results'][$i]['title']);
-    //     // $a =  $sResponse['results'];
-    //     print_r($sResponse['results'][$i]);
-    //     print("<br><br>");
-        
-    // }
-// }
-// print("<br><br><br>" . $url);
+// 내 리뷰 전체 가져오기 (최신순)
+$review_query = $db->query("select * from review where member_num='$_SESSION[userNum]' order by review_date desc, review_num desc limit 0, 5");  
 
-             
-        ?>
+// 내 북마크 전체 가져오기 (최신순)
+$bookmark_query = $db->query("select * from bookmark where member_num='$_SESSION[userNum]' order by join_date desc,  bookmark_num desc limit 0, 4");  
 
+// 내 계정 정보 전체 가져오기
+$my_info_query = $db->query("select * from user where member_num='$_SESSION[userNum]'");  
+
+
+$pougodd=empty($_REQUEST["pougodd"]) ? "like_num" : $_REQUEST["pougodd"];
+$pougodd_desc = $pougodd ==  "like_num" ? "" : "desc";
+?>
 
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>MovieVerse</title>
     <link rel="shortcut icon" href="./img/logo/logo_text_x.png">
-	
-	<link rel="stylesheet" type="text/css"href="css/user.css">
-	<link rel="stylesheet" type="text/css"href="css/basic.css">
 
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="js/data.js"></script>
-	
-  </head>
+    <!--css 링크-->
+    <link rel="stylesheet" type="text/css" href="css/user.css">
+    <link rel="stylesheet" type="text/css" href="css/basic.css">
+    <link rel="stylesheet" type="text/css" href="css/choice.css">
+    <link rel="stylesheet" type="text/css" href="css/poster_hover.css">
+    <link rel="stylesheet" type="text/css" href="css/pwre.css">
+    <!-- http://localhost/movieverse/js/list.css  -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!--자동완성 기능 autocomplete-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+
+<!--검색-->
 <script>
-List = [];
-</script>
-
-<div>
-<?php 
-	require("db_connect.php");
-	session_start();
-	$_SESSION["userId"] = empty($_SESSION["userId"]) ? "" : $_SESSION["userId"];
-
-?>
-
-</div>
-<script>
-
     $(function() {
         $("#searchInput").autocomplete({
-            source: List,
-            focus: function(event, ui) {
+            source: List,   // 자동완성 대상
+            focus: function(event, ui) { //포커스 시 이벤트
                 return false;
             },
-            minLength: 1,
-            delay: 100,
-
-
+            minLength: 1,   // 최소 글자 수
+            delay: 100,     //글자 입력 후 이벤트 발생까지 지연 시간
         });
     });
 </script>
-
-
-  
- <body>
-
- <div class="all">
- <header class="header_scroll_top">
+<body>
+    <div class="all"> <!--전체 너비 설정-->
+        <header class="header_scroll_top">
             <div class="head">  <!--header GNB-->
                 <div class="header_left">
                     <ul>
@@ -220,10 +146,11 @@ List = [];
 <?php 
 // 사용자 프로필 사진
 if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
-    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    $query3 = $db->query("select * from user where identification='$_SESSION[userId]'"); 
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
+
 ?>
                         <img class="user_img" src="user_img/<?= $iset?>">
 <?php
@@ -306,13 +233,14 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-        <!-- 검색창 -->
-        <div class="search_modal">
+       
+<!-- 검색창 -->
+<div class="search_modal">
             <div class="search_modal_close">
                 <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
-                    <form class="search" action="search_result.php" method="get">
+                    <form class="search" action="search_cookie.php" method="get">
                         <input id="searchInput" type="text" name="search" 
                         placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
@@ -320,73 +248,76 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
+                    <div class="search_cookie_wrap">
+                        <?php
+                        if (isset($_COOKIE['search_cookie'])) {
+                        ?>
+                            <?php
+                            foreach($_COOKIE['search_cookie'] as $name => $value) {
+                            ?>
+                                <div class="search_cookie_box">
+                                    <div><a href="search_cookie.php?search=<?=$name?>"><?=$name?></a></div>
+                                    <div class="cookie_delete">
+                                        <a href="search_cookie.php?cookie_del=<?=$name?>"><img src="./img/close_icon_white.png" alt="X"/></a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
             </div>
         </div>
         <!-- search_modal END -->
-        
-<?php 
-	require("db_connect.php");
 
-
-	$query3 = $db->query("select *  from user where email='$_SESSION[userId]' "); 
-	while ($row = $query3->fetch()) {
-		if($row['img_link']){
-		$iset=$row['img_link'];
-	}else{
-			$iset="user_img";
-		}
-	
-
-?>
-
-       
-
-<div class="sidenav">
-  <p id="side_TEXT">계정정보</p>
-  <a style="background-Color: #E5E5E5;"href="myinfo.php">내 계정정보</a>
-  <a href="pwre.php">비밀번호 수정</a>
-  <a href="mybook.php">내 북마크</a>
-  <a href="myreview.php">작성한 평가</a>
-</div>
-
-<div class="main">
-
-   <div class="main_Img">
-     <div class="user_Img"><img style="width:100%;"src="user_img/<?= $iset?>"></div>
-	 <p class="name"><?=$row['nickname']?></p>
-	
- <script>
-$(document).ready(function(){
-  var fileTarget = $('.filebox .upload-hidden');
-
-    fileTarget.on('change', function(){
-        if(window.FileReader){
-            var filename = $(this)[0].files[0].name;
-        } else {
-            var filename = $(this).val().split('/').pop().split('\\').pop();
-        }
-
-        $(this).siblings('.upload-name').val(filename);
-    });
-}); 
-
-  </script>	 
+        <div id='wrap' class="main_container">
+            <!-- wrap -->  
+            <div id="mypage_container">
+                <?php
+                    if($my_info = $my_info_query->fetch()) {
+                ?>
+                <div class="mypage_info_container">
+                    <div class="mypage_info_wrap profile">
+                        <div class="my_user_img">
+                            <img src="user_img/<?= $iset?>">
+                        </div>
+                        <div>
+                            <form class="profile_img_form" name='tmp_name' method="post" action="img_plus.php" enctype="multipart/form-data">
 	 
-	 <form name='tmp_name' method="post" action="img_plus.php" enctype="multipart/form-data">
-	 
-	 <div class="filebox">
-    <label for="file"></label> 
-	    <input type="file"  name="imgFile" id="file"class="upload-hidden">
-    <input class="upload-name" value="" placeholder="첨부파일" >
-	</div> 
+                                <div class="filebox">
+                                <label for="file"></label> 
+                                <input type="file" name="imgFile" id="file" class="upload-hidden">
+                                <input class="upload-name" value="" placeholder="첨부파일" >
+                                </div> 
 
-   <button class="submit" type="submit">저장</button>
-	 </form>
-     <p class="id_main"><?=$row['email']?></p>
+                                <button class="submit" type="submit">프로필 사진 수정</button>
+                            </form>
+                        </div>
+                    </div>
 
- </div>
+                    <div class="mypage_info_wrap infos">
+                        <div>
+                            <div class="nickname"><?=$my_info['nickname']?></div>
+                            <div class="my_id"><span>ID : </span><?=$my_info['identification']?></div>
+                        </div>
+                        <div class="bookmark_and_review_container">
+                            <div><p>북마크</p><p><?=$bookmark_count?>개</p></div>
+                            <div><p>내가 쓴 리뷰</p><p><?=$review_count?>개</p></div>
+                        </div>
+                        <div class="change_my_info">
+                            <div><a href="user_out.php">회원 탈퇴</a></div>
+                            <div><a href="pwre.php">비밀번호 변경</a></div>
+                            <div><a href="mynick_update_form.php">닉네임 변경</a></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- mypage_info_container END -->
+                <?php
+                    }
+                ?>
 
-  </div>
 <script>
 function popup(){
 	
@@ -403,56 +334,62 @@ var popupY= (window.screen.height /2.5) - (popupHeight / 2);
 </script>
 
 
-<div class="user_out_div">
-<h2>회원탈퇴</h2>
-<p id="texts">회원탈퇴 시 저장되어있는 작품목록이 사라지고, 작성한 평가내용도 사라집니다.<br>
-회원탈퇴를 계속 진행하려면 비밀번호를 입력해주세요. </p>
-<p class="pass" >비밀번호</p>
+<p id="texts"><b>회원탈퇴 시 저장되어있는 작품목록이 사라지고, 작성한 평가내용도 사라집니다.</b>
+<br>
+<t>회원탈퇴를 계속 진행하시려면 아래 내용들을 입력해 주세요.</t></p>
+
 <form name="f1" action="user_out_ok.php" target="popwin" method="post">
- <input  class="pass_input" type="text"name="userpw" id="userpw"  placeholder="비밀번호" name="pass" size="35" required /> 
-</form>
-<td><div style="    margin:250px 0px 0px 210px;  position: absolute;"id="id_check">현재 비밀번호 확인</div></td>
+                    <div class="pwre_container">
+                        <div class="other_review_header">
+                            <div class="other_review_title">닉네임</div>
+                        </div>
+                        <div class="pwre_wrap">
+                            <input class="pw_boxs"name="nickname" type="text" placeholder="닉네임을 입력해 주세요." autocomplete="off" >
+                        </div>
+                    </div>
+                    <!-- other_review_container END -->
 
- 
- 
- <script>
- var userpw;
- $(document).ready(function(e) { 
-	$(".pass_input").on("keyup", function(){ //check라는 클래스에 입력을 감지
-		var self = $(this); 
-		
-		if(self.attr("id") === "userpw"){ 
-			userpw = self.val(); 
-		} 
-		$.post( //post방식으로 id_check.php에 입력한 userid값을 넘깁니다
-			"pw_check_ajax.php",
-			{ userpw : userpw }, 
-			function(data){ 
-				if(data){ //만약 data값이 전송되면
-					self.parent().parent().find("#id_check").html(data); //div태그를 찾아 html방식으로 data를 뿌려줍니다.
-					self.parent().parent().find("#id_check").css("color", "#F00"); //div 태그를 찾아 css효과로 빨간색을 설정합니다
-				}
-			}
-		);
-			
-	});
-		});
-</script>
- 
+                    <div class="pwre_container">
+                        <div class="other_review_header">
+                            <div class="other_review_title">아이디</div>
+                        </div>
+                        <div class="pwre_wrap">
+                            <input class="pw_boxs "name="identification" type="text" placeholder="아이디를 입력해 주세요." autocomplete="off" >
+                        </div>
+                    </div>
+                    <!-- other_review_container END -->
+
+                    <div class="pwre_container">
+                        <div class="other_review_header">
+                            <div class="other_review_title">비밀번호</div>
+                        </div>
+                        <div class="pwre_wrap">
+                            <input class="pw_boxs"name="password" type="password" placeholder="비밀번호를 입력해 주세요." autocomplete="off" >
+                        </div>
+                    </div>
+                    <!-- other_review_container END -->
+                    <div class="mypage_pwre_button_wrap">
+                        <button type="button" onclick="popup()" class="mypage_pwre_button">회원탈퇴</button>
+                        <button type="button" class="mypage_pwre_button" onclick="location.href='myinfo.php';">취소하기</button>
+                    </div>
+
+                </form>
+
+<!--  
 <button  onclick="popup()" type="button"class="user_out_btn">회원탈퇴</button>
-<button style="margin-left: 0px;background:grey;" onclick="history.back()"class="user_out_btn">취소하기</button>
-</div>
-
-<?php
-	  
-	   }
-?>
+<button style="margin-left: 0px;background:grey;" onclick="history.back()"class="user_out_btn">취소하기</button> -->
 
 
-</div>
-  <!--footer-->
-  <footer class="footer">
-            <div class="footer_logos">
+                    </div> 
+                <!--show END-->
+            </div>
+            <!-- mypage_container END -->
+    </div>
+    <!-- all END -->
+        
+            <!--footer-->
+            <footer class="footer">
+                <div class="footer_logos">
         <?php
 
 $provider_logo_path = [];
@@ -486,7 +423,38 @@ foreach($provider_logo_path as $prov_logo_path){
                 </div>
             </footer>
             <!--footer END-->
-</body>
-
+            
+  </body>
+ 
 </html>
 <script type="text/javascript" src="./js/header.js"></script>
+<script>
+$(document).ready(function(){
+  var fileTarget = $('.filebox .upload-hidden');
+
+    fileTarget.on('change', function(){
+        if(window.FileReader){
+            var filename = $(this)[0].files[0].name;
+        } else {
+            var filename = $(this).val().split('/').pop().split('\\').pop();
+        }
+
+        $(this).siblings('.upload-name').val(filename);
+    });
+}); 
+
+  </script>	 
+
+
+        
+
+
+
+
+
+
+
+
+
+
+

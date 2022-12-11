@@ -8,92 +8,6 @@
     // while ($row = $query3->fetch()) {
         // <?=$row['title'];
 ?>
-<script> // 영화 제목 리스트 추가 (자동완성 리스트)
-
-    List = [];  // 배열 생성
-
-    // List.push('');
-    
-</script>
-<script>
-
-    $(function() {
-        $("#searchInput").autocomplete({
-            source: List,
-            focus: function(event, ui) {
-                return false;
-            },
-            minLength: 1,
-            delay: 100,
-
-
-        });
-    });
-</script>
-<script>
-    function re_check_name() {
-        $.ajax({
-            url: "rechecke_name_ajax.php",
-            type: "post",
-            data: {
-                name: $('#lo2').val(),
-            }
-        }).done(function(data) {
-            $('#result2').text(data);
-        });
-    }
-</script>
-<script>
-    function re_check_email() {
-        $.ajax({
-            url: "rechecke_mail_ajax.php",
-            type: "post",
-            data: {
-                email: $('#lo1').val(),
-            }
-        }).done(function(data) {
-            $('#result').text(data);
-        });
-    }
-</script>
-<script>
-var new_pw,ps_ok;
-$(document).ready(function(e) { 
-
-$(".member_join_pw").on("keyup", function(){ //check라는 클래스에 입력을 감지
-		var self = $(this); 
-		
-		if(self.attr("id") === "pw1"){ 
-			new_pw = self.val(); 
-		} 
-		
-		if(self.attr("id") === "pw2"){ 
-			ps_ok = self.val(); 
-
-		if(new_pw==ps_ok){
-			ps_ok='ok';
-		}else{
-			ps_ok='no';
-		}
-
-		
-			$.post( //post방식으로 id_check.php에 입력한 userid값을 넘깁니다
-			"pw_check_ajax.php",
-			{ ps_ok : ps_ok }, 
-			function(data){ 
-				if(data){ //만약 data값이 전송되면
-					self.parent().parent().find("#pw_check").html(data); //div태그를 찾아 html방식으로 data를 뿌려줍니다.
-					self.parent().parent().find("#pw_check").css("color", "#F00"); //div 태그를 찾아 css효과로 빨간색을 설정합니다
-				}
-			}
-		);
-}
-	});
-
-
-});
-</script>
-
 <?php
 
 $method = "GET";
@@ -172,6 +86,105 @@ $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
         });
     });
 </script>
+
+<script> // 영화 제목 리스트 추가 (자동완성 리스트)
+
+    List = [];  // 배열 생성
+
+    // List.push('');
+    
+</script>
+<script>
+    $(function() {
+        $("#searchInput").autocomplete({
+            source: List,
+            focus: function(event, ui) {
+                return false;
+            },
+            minLength: 1,
+            delay: 100,
+
+
+        });
+    });
+</script>
+<script>
+    function re_check_id() {
+        $.ajax({
+            url: "rechecke_id_ajax.php",
+            type: "post",
+            data: {
+                id: $('#lo1').val(),
+            }
+        }).done(function(data) {
+            $('#result').text(data);
+        });
+    }
+</script>
+<script>
+    function re_check_name() {
+        $.ajax({
+            url: "rechecke_name_ajax.php",
+            type: "post",
+            data: {
+                name: $('#lo2').val(),
+            }
+        }).done(function(data) {
+            $('#result2').text(data);
+        });
+    }
+</script>
+<script>
+    function re_check_email() {
+        $.ajax({
+            url: "rechecke_email_ajax.php",
+            type: "post",
+            data: {
+                email: $('#lo3').val(),
+            }
+        }).done(function(data) {
+            $('#result3').text(data);
+        });
+    }
+</script>
+<script>
+var new_pw,ps_ok;
+$(document).ready(function(e) { 
+
+$(".member_join_pw").on("keyup", function(){ //check라는 클래스에 입력을 감지
+		var self = $(this); 
+		
+		if(self.attr("id") === "pw1"){ 
+			new_pw = self.val(); 
+		} 
+		
+		if(self.attr("id") === "pw2"){ 
+			ps_ok = self.val(); 
+
+		if(new_pw==ps_ok){
+			ps_ok='ok';
+		}else{
+			ps_ok='no';
+		}
+
+		
+			$.post( //post방식으로 id_check.php에 입력한 userid값을 넘깁니다
+			"pw_check_ajax.php",
+			{ ps_ok : ps_ok }, 
+			function(data){ 
+				if(data){ //만약 data값이 전송되면
+					self.parent().parent().parent().find("#pw_check").html(data); //div태그를 찾아 html방식으로 data를 뿌려줍니다.
+					// self.parent().parent().parent().find("#pw_check").css("color", "#F00"); //div 태그를 찾아 css효과로 빨간색을 설정합니다
+				}
+			}
+		);
+}
+	});
+
+
+});
+</script>
+
 <body>
     <div class="all"> <!--전체 너비 설정-->
         <header class="header_scroll_top">
@@ -204,7 +217,7 @@ $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
 <?php 
 // 사용자 프로필 사진
 if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
-    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    $query3 = $db->query("select * from user where identification='$_SESSION[userId]'"); 
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
@@ -290,13 +303,14 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-        <!-- 검색창 -->
-        <div class="search_modal">
+
+<!-- 검색창 -->
+<div class="search_modal">
             <div class="search_modal_close">
                 <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
-                    <form class="search" action="search_result.php" method="get">
+                    <form class="search" action="search_cookie.php" method="get">
                         <input id="searchInput" type="text" name="search" 
                         placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
@@ -304,6 +318,26 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
+                    <div class="search_cookie_wrap">
+                        <?php
+                        if (isset($_COOKIE['search_cookie'])) {
+                        ?>
+                            <?php
+                            foreach($_COOKIE['search_cookie'] as $name => $value) {
+                            ?>
+                                <div class="search_cookie_box">
+                                    <div><a href="search_cookie.php?search=<?=$name?>"><?=$name?></a></div>
+                                    <div class="cookie_delete">
+                                        <a href="search_cookie.php?cookie_del=<?=$name?>"><img src="./img/close_icon_white.png" alt="X"/></a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
             </div>
         </div>
         <!-- search_modal END -->
@@ -322,31 +356,56 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                     <!-- 입력칸 -->
 
                         <form class="join_container" method="post" action="member_join_in.php" name="memform">
-                            <div class="memberjoin_tle">
-                                <div class="memberjoin">
-
-                                    <p id="login_text1">회원가입</p>
+                            <div class="join_page">
+                                <div class="join_input_container">
+                                    <div class="join_input_wrap">
+                                        <div><input class="join_input member_join_text" id="lo1" type="text" name="id" placeholder="아이디"></div>
+                                        <div onclick="re_check_id()"style="cursor: pointer;" class="re_check"><p>중복확인</p></div>
+                                        <!-- <p id="result"></p> -->
+                                    </div>
+                                    <p class="result_style" id="result"></p>
                                 </div>
-                                <input style="margin-top: 146px; width: 263px;	" class="member_join_text" id="lo1" type="text" name="id" placeholder="아이디 입력">
-                                <div onclick="re_check_email()"style="cursor: pointer;" class="re_check">중복확인</div>
-                                <p id="result"></p>
-
-                                <input style="margin-top: 224px;" class="member_join_pw" type="password" id="pw1"name="pw" placeholder="비밀번호 입력">
-                                <input style="margin-top: 312px;" class="member_join_pw" type="password" id="pw2"name="pw" placeholder="비밀번호 확인">
-                            <p class="pwrepl"id="pw_check"style="">비밀번호 중복확인</p>
-                            <input style="margin-top: 410px;width: 263px;" class="member_join_text" id="lo2" type="text" name="name" placeholder="닉네임">
-                            
-                            <div onclick="re_check_name()" style="cursor: pointer;margin-top: 284px;" class="re_check">중복확인</div>
-                                <p style="top:497px" id="result2"></p>
-
-                                <input style="margin-top: 24px;" type="submit" class="memberjoin_btn" value="회원가입" />
+                                <div class="join_input_container">
+                                    <div class="join_input_wrap">
+                                        <input class="join_input_not_btn member_join_pw" type="password" id="pw1"name="pw" placeholder="비밀번호">
+                                    </div>
+                                </div>
+                                <div class="join_input_container">
+                                    <div class="join_input_wrap">
+                                        <!-- <div><input class="member_join_pw" type="password" id="pw1"name="pw" placeholder="비밀번호 입력"></div> -->
+                                        <input class="join_input_not_btn member_join_pw" type="password" id="pw2"name="pw" placeholder="비밀번호 확인">
+                                    </div>
+                                    <p class="pwrepl"id="pw_check">비밀번호 중복확인</p>
+                                </div>
+                                <div class="join_input_container">
+                                    <div class="join_input_wrap">
+                                        <div><input class="join_input member_join_text" id="lo3" type="text" name="email" placeholder="이메일"></div>
+                                        <div onclick="re_check_email()" style="cursor: pointer;" class="re_check"><p>중복확인</p></div>
+                                    </div>
+                                    <p class="result_style" style="" id="result3"></p>
+                                 </div>
+                                <div class="join_input_container">
+                                    <div class="join_input_wrap">
+                                        <div><input class="join_input member_join_text" id="lo2" type="text" name="name" placeholder="닉네임"></div>
+                                        <div onclick="re_check_name()" style="cursor: pointer;" class="re_check"><p>중복확인</p></div>
+                                    </div>
+                                    <p class="result_style" id="result2"></p>
+                                 </div>
+                            </div>
+                            <!-- </div>   -->
+                            <div class="find_join">
+                                <p class="find"><a href="id_pw_find.php">아이디 찾기</a> | <a href="pw_find.php">비밀번호 찾기</a></p>
+                            </div>
+                            <!-- submit button -->
+                            <div class="submit_button">
+                                <input type="image" name="submit"  class="next"src="./img/login/arrow.png">
                             </div>
                         </form>
                 </div>
-                </div>
-                </div>
+            </div>
             </div>
         </div><!-- wrap END -->
+    </div><!-- all END -->
         
             <!--footer-->
             <footer class="footer">
@@ -384,6 +443,7 @@ foreach($provider_logo_path as $prov_logo_path){
                 </div>
             </footer>
             <!--footer END-->
+            
   </body>
  
 </html>

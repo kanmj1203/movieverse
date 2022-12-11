@@ -125,7 +125,7 @@ $tmdb_img_base_url = "https://image.tmdb.org/t/p/original/";
 <?php 
 // 사용자 프로필 사진
 if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
-    $query3 = $db->query("select * from user where email='$_SESSION[userId]'"); 
+    $query3 = $db->query("select * from user where identification='$_SESSION[userId]'"); 
     while ($row = $query3->fetch()) {
         $iset=$row['img_link'];
     }
@@ -211,13 +211,14 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div>
         </header>
 
-        <!-- 검색창 -->
-        <div class="search_modal">
+        
+<!-- 검색창 -->
+<div class="search_modal">
             <div class="search_modal_close">
                 <img src="./img/close_icon_white.png">
             </div>
             <div class="search_wrapper">
-                    <form class="search" action="search_result.php" method="get">
+                    <form class="search" action="search_cookie.php" method="get">
                         <input id="searchInput" type="text" name="search" 
                         placeholder="찾으시려는 드라마 또는 영화 제목을 입력해 주세요."
                          onfocus="this.placeholder=''" 
@@ -225,6 +226,26 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                         size="70" required="required"/>
                         <input class="search_Img" name="button" type="image" src="img/search_img.png" />
                     </form>
+                    <div class="search_cookie_wrap">
+                        <?php
+                        if (isset($_COOKIE['search_cookie'])) {
+                        ?>
+                            <?php
+                            foreach($_COOKIE['search_cookie'] as $name => $value) {
+                            ?>
+                                <div class="search_cookie_box">
+                                    <div><a href="search_cookie.php?search=<?=$name?>"><?=$name?></a></div>
+                                    <div class="cookie_delete">
+                                        <a href="search_cookie.php?cookie_del=<?=$name?>"><img src="./img/close_icon_white.png" alt="X"/></a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
             </div>
         </div>
         <!-- search_modal END -->
@@ -253,16 +274,17 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
                                 <div><input id="pw" class="login_input" type="password" name="pw" placeholder="비밀번호"/></div>
                             </div>
                             <div class="find_join">
-                                <p style="cursor:pointer;"class="find"onclick="location.href='id_pw_find.php';">아이디 / <a style="color: white;"href="pw_find.php">비밀번호 찾기</a></p>
-                                <p style="cursor:pointer;" class="find join"onclick="location.href='member_join.php';">계정이 없으신가요?가입</p>
+                                <p class="find"><a href="id_pw_find.php">아이디 찾기</a> | <a href="pw_find.php">비밀번호 찾기</a> | <a href="member_join.php">회원가입</a></p>
                             </div>
                                 <!--<div class="google_login"><img class="google"src="img/google.png">Google로 로그인</div>-->
                          </div>  
+                         <!-- submit button -->
                          <div class="submit_button">
                             <input type="image" name="submit"  class="next"src="./img/login/arrow.png">
                         </div>
                        
                     </form>
+                    <!-- form END -->
                    
                 </div>
             </div>

@@ -247,6 +247,16 @@ $prov_array = array(
   // 'with_watch_providers' => '8|337|97|356',
 );
 
+$movie_search_array = array(
+  'api_key' => $api_key,
+  'language'=> 'ko',
+  'region' => 'KR',
+  'page' => 1,
+  'watch_region' => 'KR',
+  // 'with_watch_providers' => '8|337|97|356',
+  // 'id' => '1049233&436270',
+);
+
 $choice_id = 119051;
 
 $base_url_aaa = 'https://api.themoviedb.org/3';
@@ -261,6 +271,9 @@ $similar = 'https://api.themoviedb.org/3/tv/1402/similar?' . http_build_query($s
 
 $prov_check = "https://api.themoviedb.org/3/watch/providers/movie?". http_build_query($prov_array, '', );
 
+$movie_search = "https://api.themoviedb.org/3/search/movie?id=1049233&". http_build_query($movie_search_array, '', );
+
+
 $url = $base_url . "?" . http_build_query($data, '', );
 $url2 = $provide_base_url . "?" . http_build_query($provide, '', );
 $url3 = $provide_link_url;
@@ -270,9 +283,10 @@ $url6 = $genre_url;
 $url7 = $choice_provider_url;
 $url8 = $similar;
 $url9 = $prov_check;
+$url10 = $movie_search;
 
 $ch = curl_init();                                 //curl 초기화
-curl_setopt($ch, CURLOPT_URL, $url4);               //URL 지정하기
+curl_setopt($ch, CURLOPT_URL, $url9);               //URL 지정하기
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);    //요청 결과를 문자열로 반환 
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);      //connection timeout 10초 
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);   //원격 서버의 인증서가 유효한지 검사 안함 
