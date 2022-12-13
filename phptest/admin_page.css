@@ -1,0 +1,129 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css); 
+@import url(https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap);
+
+
+body {
+    font-family: 'Noto Sans KR',sans-serif,'NanumGothic', 'serif';
+    padding-top: 70px;
+    height:100%;
+}
+table     {width : 100%; margin:0 auto; text-align:center ;font-size:1rem; margin-bottom: 5vh;}
+
+th        { background-color:grey; }
+
+.review_table {padding-bottom : 5vh;}
+/* 
+.id      { width: 80px; }
+.original_title    	{ width:400px; }
+.titla   { width:400px; }
+
+.release_date  { width:120px; } */
+        
+a:link    { text-decoration:none; color:black; }
+a:visited { text-decoration:none; color:black; }
+a:hover   { text-decoration:none; color:white;  }
+
+.logo {
+    cursor: pointer;
+    position: absolute;
+    width: 212px;
+    height: 40px;
+    left: 10px;
+    top: 30px;
+}
+
+.all {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+
+.head {
+    position: fixed;
+    width: 100vw;
+    height: 100px;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #6469c4;
+    box-sizing: border-box;
+}
+
+#container {
+    width : 100%;
+   
+}
+
+.main_view {
+    margin-left : 200px;
+    /* width : 100%; */
+    /* display : flex; */
+    text-align: center;
+    
+}
+
+.write_main_view {
+    text-align: center;
+}
+
+.sidenav {
+    height: 100vh;
+    width: 200px;
+    background-color: #6469c4;
+    position: fixed;
+    margin-left: -10px;
+    overflow-x: hidden;
+    padding-top: 20px;
+   
+    font-size:1.25rem;
+    color:#ffffff;
+    float: left;
+    border: 1px solid #bcbcbc;
+}
+
+.sidenav a {
+   padding-left: 20px;
+}
+
+.rect3{
+    cursor: pointer;
+    background-color: white;
+    font-size:1rem;
+    border-radius: 5px;
+    border : 2px solid grey;
+}
+
+
+/* 업데이트 버튼 */
+#update_btn {
+padding : 15px;
+border-radius : 15px;
+background-color : #cecece;
+}
+
+.admin_button {
+    font-size : 1rem;
+    background-color: #c2c2c2;
+}
+
+/* 페이지네이션 */
+.pagination ul li{
+    list-style:none;
+    display :inline;
+}
+
+.pagination_button {
+    cursor: pointer;
+    background:none;
+    font-size : 1.25rem;
+    font-family: 'Noto Sans KR';
+    color : black;
+    border : none;
+}
+
+.now_page {
+    border-radius: 5px;
+    background-color: #6469c4;
+    color : white;
+}

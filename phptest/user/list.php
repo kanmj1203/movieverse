@@ -1,75 +1,47 @@
+<?php
+
+require("../db_connect.php");
+	
+
+// 페이지네이션
+
+$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : 1;
+// 현재 페이지 0보다 작으면 1로 설정
+$page = 0 < $page ? $page : 1;
+
+$page_count = 5;
+$page_lines = 5;
+
+$numRecords = $db->query("select count(*) from user")->fetchColumn();
+// $numRecords = (int)$numRecords;
+$page_total = (int)$numRecords;
+$page_total_pages = ceil($page_total  / $page_count);
+
+// 현재 페이지 page_count보다 크면 page_total_pages로 설정
+$page = $page_total_pages < $page ? $page_total_pages : $page;
+
+
+$page_list = ceil($page / $page_lines);
+
+$page_last = $page_list <= $page_total_pages ? $page_list * $page_count : $page_total_pages;
+$page_last = $page_count > $page_total_pages ? $page_total_pages : $page_last;
+
+$page_start = $page_last - ($page_count - 1) <= 0 ? 1 : $page_last - ($page_count - 1);
+// echo gettype($page_start);
+$page_prev = $page_start - 1;
+$page_next = $page_last + 1;
+
+$stat = $page >= 1 ? ($page -1) * $page_count : $page * $page_count;
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-
+	<link rel="stylesheet" type="text/css"href="../admin_page.css">
     <style>
-		html, body {
-			width:100%;
-			padding-top: 35px;
-			height:100%;
-		}
-        table     { width:1200px; text-align:center; text-align:20px; font-size: 20px;}
-        th        { background-color:#3482EA; }
-        
-        .id      { width: 80px; }
-        .original_title    	{ width:400px; }
-        .titla   { width:400px; }
-        
-        .release_date  { width:120px; }
-                
-        a:link    { text-decoration:none; color:black; }
-        a:visited { text-decoration:none; color:black; }
-        a:hover   { text-decoration:none; color:red;  }
-        
-        .logo {
-		    cursor: pointer;
-		    position: absolute;
-		    width: 212px;
-		    height: 40px;
-		    left: 10px;
-		    top: 30px;
-		}
-        
-        .all {
-		    width: 100%;
-		    height: 100%;
-		    margin: 0 auto;
-		}
-        
-        
-        .head {
-		    position: fixed;
-		    width: 1920px;
-		    height: 100px;
-		    left: 0px;
-		    top: 0px;
-		    background: #FFFFFF;
-		    border: 1px solid #3482EA;
-		    box-sizing: border-box;
-		}
-		
-		.sidenav {
-		    height: 100vh;
-		    width: 300px;
-		    position: fixed;
-		    margin-left: -10px;
-		    background-color: white;
-		    overflow-x: hidden;
-		    padding-top: 20px;
-			padding-left: 20px;
-			font-size:20px;
-			color:#ffffff;
-			background-color:#3482EA;
-		    float: left;
-		    border: 1px solid #bcbcbc;
-		}
-		
-	.rect3{
-	  top: 10px;
-	  left: 1350px;
-	  position: relative;
-	}
 		
     </style>
 </head>
@@ -77,65 +49,103 @@
 <body>
 <div class="all">
  <div class="head">
-
-	<a href="/movieverse/index.php"><img class="logo"src="/movieverse/img/logo.png"></a>			<!-- 링크걸기 -->
+ 	<a href="../../index.php"><img class="logo"src="../../img/logo/logo_txt.png"></a>
 </div>
 <div class="sidenav">
-  <a href="../list.php">관리자 페이지</p>
-  <a href="../user/list.php">회원 정보</a>
-  <br><br>
-  <a href="../movie/list.php">영화 정보</a>
-  <br><br>
-  <a href="../tv/list.php">TV 정보</a>
- 
-</div>
+	<a href="../list.php">관리자 페이지</p>
+	<a href="../user/list.php">회원 관리</a>
+	<br><br>
+	<a href="../review/list.php">리뷰 관리</a>
 
+	</div>
+
+<div class="main_view">
 <h1 style="text-align: center;"> 관리자 페이지 </h1>
 <h2 style="text-align: center;"> User 정보 </h2>
 
+<table>
 
-
-<table style="margin-left: auto; margin-right: auto;">
-
-    <tr style="font-size:20px; color: #ffffff;">
-        <th class="member_num"    >번호    </th>
+    <tr style="color: #ffffff;">
+        <th class="member_num">유저 번호    </th>
         <th class="email"  >이메일    </th>
+		<th class="" >아이디  </th>
+		<th class="" >비밀번호  </th>
         <th class="nickname" >닉네임  </th>
         <th class="join_date">가입날짜</th>
-        <th class="bookmark_num" >북마크  </th>
-        <th class="review_num" >리뷰  </th>
+        <th class="bookmark_num" >북마크 개수</th>
+        <th class="review_num" >리뷰 개수</th>
         
     </tr>
+
 <?php
 
-	require("../db_connect.php");
-	
-	$query = $db->query("select * from user");	
+	$query = $db->query("select * from user limit $stat, $page_count ");
+
     while ($row = $query->fetch()) {
 
+	$review_count = $db->query("select count(*) from review where member_num='$row[member_num]'")->fetchColumn(); 
+	$bookmark_count = $db->query("select count(*) from bookmark where member_num='$row[member_num]'")->fetchColumn();  
+	// $my_info_query = $db->query("select * from user where member_num='$_SESSION[userNum]'");
+		
+
 ?>
-
-
-
+<!-- <a href="view.php?member_num=<=$row["member_num"]?>"> -->
 		<tr style="border-bottom: 50px solid #fffff;"	>
             <td><?=$row["member_num"]?></td>
             <td style="text-align:left;">
-                <a href="view.php?member_num=<?=$row["member_num"]?>">
-                    <?=$row["email"]?>
-                </a>
+                <?=$row["email"]?>
             </td>
-    
+			<td><?=$row["identification"]?></td>
+			<td><?=$row["passwd"]?></td>
             <td><?=$row["nickname"]?></td>
 			<td><?=$row["join_date"]?></td>
-			<td><?=$row["bookmark_num"]?></td>
-			<!-- <td><?=$row["review_num"]?></td> -->
+
+			<td><?=$bookmark_count?></td>
+			<td><?=$review_count?></td>
+			<td class="admin_button"><a href="view.php?member_num=<?=$row["member_num"]?>">정보보기</a></td>
+			<td class="admin_button"><a href="delete.php?member_num=<?=$row["member_num"]?>">삭제하기</a></td>
         </tr>
-<?php
+		<?php
 	}
 ?>
+<?php
+                    
+                ?>
+			
+
 
 </table>
 
+<div class="pagination">
+                <ul>
+                    <li>
+                    <button 
+                    class="pagination_button"
+                    type="button"
+                    onclick="location.href='list.php?page=<?=$page_prev?>'">
+                    <
+                    </button></li>
+<?php
+                for($i = $page_start; $i <= $page_last; $i++){
+?>
+                    <li><button
+                    class="pagination_button <?=$i == $page ? 'now_page' : ''?>"
+                    type="button"
+                    onclick="location.href='list.php?page=<?=$i?>'"
+                    >
+                    <?=$i?></button></li>
+<?php
+                }
+?>
+                    <li><button 
+                    class="pagination_button"
+                    type="button"
+                    onclick="location.href='list.php?page=<?=$page_next?>'" >
+                    >
+                    </button></li>
+            </ul>
+            </div>
+</div>
 
 
 </body>

@@ -67,7 +67,7 @@ if($fileType == 'image'){
 
 	}
 }else{		echo "<script>
-			alert('파일이 없습니다.');
+			alert('파일이 없다.');
 			history.back();</script>";
 }
 ?>
