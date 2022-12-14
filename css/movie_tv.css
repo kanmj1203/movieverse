@@ -25,7 +25,7 @@ position: fixed;
 
 width: 100%;
 height: 70px;
-top : 145px;
+top : max(13vh,145px);
 
 background: #1d243f;
 z-index : 50;
@@ -402,7 +402,7 @@ width: 28px;
     #carta {margin-right : 5px;}
     /* 카테고리 메뉴*/
   .category_container {
-    top : 120px;
+    top : max(13vh,145px);
   }
 
   .category_scroll_top {
@@ -461,7 +461,8 @@ width: 28px;
 
     /* 카테고리 메뉴*/
   .category_container {
-    top : 120px;
+    /* top : 120px; */
+    top : max(12vh,120px);
   }
   .category_scroll_top {
     top : max(5vh, 125px);

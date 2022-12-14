@@ -383,10 +383,10 @@ if($_SESSION["userId"]!=""){ // 로그인 됐을 경우
             </div><!--main_img_div END-->
            
 <?php
-$list_arr = [["영화 최신 순", "movie_release_list", "movie"],
-            ["드라마 최신 순", "drama_release_list", "tv"],
-            ["영화 인기 순", "movie_popularity_list", "movie"],
-            ["드라마 인기 순","drama_popularity_list", "tv"]];
+$list_arr = [["영화 최신 순", "movie_release_list", "movie", "release_date.desc"],
+            ["드라마 최신 순", "drama_release_list", "tv", "release_date.desc"],
+            ["영화 인기 순", "movie_popularity_list", "movie", "popularity.desc"],
+            ["드라마 인기 순","drama_popularity_list", "tv", "popularity.desc"]];
 
 $list_count = 0;   
 $title_change = '';
@@ -397,7 +397,7 @@ foreach($list_arr as $main_lists){
                 <!--드라마 리스트-->
                 <p class="main_slide_title"><?=$main_lists[0]?></p>
                 <span class="remote_wrapper">
-                    <p class="more_view" onclick="location.href='movie.php?bid=';">ALL</p>
+                    <p class="more_view" onclick="location.href='movie.php?sort_by=<?=$main_lists[3]?>&bid=';">ALL</p>
                     <div class="move_buttons_remote">
                         <div class="prev_remote" onclick='move("left","<?=$main_lists[1]?>")'><</div>  
                         <div class="next_remote" onclick='move("right","<?=$main_lists[1]?>")'>></div>  
